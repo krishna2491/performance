@@ -3,10 +3,75 @@
  */
 package com.gomap.performance.organisastion.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.gomap.performance.master.constant.UrlConstants;
+import com.gomap.performance.organisastion.dto.EmTeamDto;
+import com.gomap.performance.organisastion.dto.EmTeamMemberDto;
+import com.gomap.performance.organisastion.dto.ResponseDTO;
+import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
+import com.gomap.performance.organisastion.service.EmployeeService;
+import com.gomap.performance.organisastion.util.ResponseWriter;
+
 /**
  * @author krishnakant.bairagi
  *
  */
+@RestController
 public class TeamManagmentController {
+private static final Logger logger = LoggerFactory.getLogger(TeamManagmentController.class);
+	
+	@Autowired
+	EmployeeService employeeService;
+	
+	@RequestMapping(value = {UrlConstants.API_GET_TEAM}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO addEmployee(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+				responseDTO.setDataObj(emTeamDto);//
+				//responseDTO=(ResponseDTO) employeeService.addEmployee(emTeamDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@RequestMapping(value = {UrlConstants.API_GET_TEAM_MEMBER}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO getTeamMember(@RequestBody EmTeamMemberDto emTeamMemberDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				//responseDTO=(ResponseDTO) employeeService.addEmployee(emTeamDto);
+				responseDTO=new ResponseDTO();
+				responseDTO.setDataObj(emTeamMemberDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	
 
 }

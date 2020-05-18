@@ -33,6 +33,8 @@ public final class UrlConstants {
 	public static final String API_ADD_FEEDBACK = "rest/addFeedabck";
 	public static final String API_GET_FEEBBACK = "rest/getFeddback";
 	public static final String API_CREATE_TEAM = "rest/addTeam";
+	public static final String API_GET_TEAM = "rest/getTeam";
+	public static final String API_GET_TEAM_MEMBER = "rest/getTeamMember";
 	public static final String API_MANAGE_TEAM = "rest/manageTeam";
 	public static final String API_GET_SKILL = "rest/getSkill";
 	public static final String API_GET_GOAL = "rest/getGoal";

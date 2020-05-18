@@ -39,11 +39,11 @@ public class HibernateConfig {
 	private static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
 	private static final String HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
 	private static final String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";
-	private static final String COM_TCS_MAB_MHCSMS_MODEL = "com.gomap.performance.master.model";
+	private static final String MASTER_MODEL = "com.gomap.performance.master.model";
 	private static final String HIBERNATE_BATCH_SIZE = "hibernate.jdbc.batch_size";
 	private static final String HIBERNATE_ORDER_INSERTS= "hibernate.order_inserts";
 	private static final String HIBERNATE_ORDER_UPDATES= "hibernate.order_updates";
-	
+	private static final String ORG_MODEL = "com.gomap.performance.organisastion.model";
 
 	@Autowired
 	private Environment environment;
@@ -53,7 +53,7 @@ public class HibernateConfig {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory
-				.setPackagesToScan(new String[] { "com.gomap.performance.organisastion.model" });
+				.setPackagesToScan(new String[] {ORG_MODEL});
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
