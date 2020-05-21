@@ -3,51 +3,249 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.gomap.performance.master.constant.AppConstants;
+import com.gomap.performance.organisastion.dao.TeamManagmentDao;
 import com.gomap.performance.organisastion.dto.EmTeamDto;
 import com.gomap.performance.organisastion.dto.EmTeamMemberDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
+import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
+import com.gomap.performance.organisastion.model.EmEmployee;
+import com.gomap.performance.organisastion.model.EmTeam;
+import com.gomap.performance.organisastion.model.EmTeamMember;
 import com.gomap.performance.organisastion.service.TeamManagmentService;
 
 /**
  * @author krishnakant.bairagi
  *
  */
+@Service
 public class TeamManagmentServiceImpl implements TeamManagmentService {
+	private static final Logger logger = LoggerFactory.getLogger(TeamManagmentServiceImpl.class);
+	
+	@Autowired
+	private TeamManagmentDao teamManagmentDao;
 
 	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.service.TeamManagmentService#createTeam(com.gomap.performance.organisastion.dto.EmTeamDto)
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO createTeam(EmTeamDto emTeamDto) throws Exception {
+		ResponseDTO responseDTO=new ResponseDTO();
+		try {
+			logger.info("createTeam ");
+			EmTeam emTeam = new EmTeam();
+			if (emTeamDto.getDepartmentId() != null) {
+				emTeam.setDepartmentId(emTeamDto.getDepartmentId());
+			}
+			if (emTeamDto.getProjectId() != null) {
+				emTeam.setProjectId(emTeamDto.getProjectId());
+			}
+			if (emTeamDto.getTeamCreatedBy() != null) {
+				emTeam.setTeamCreatedBy(emTeamDto.getTeamCreatedBy());
+			}
+			if (emTeamDto.getTeamName() != null) {
+				emTeam.setTeamName(emTeamDto.getTeamName());
+			}
+			emTeam.setActivateFlag(1);
+			emTeam.setTeamCreatedDate(new Date());
+			teamManagmentDao.createTeam(emTeam);
+			responseDTO.setSuccessMsg("Team created Successfully");
+			responseDTO.setDataObj(emTeam);
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error("Getting Error while creating Team");
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return responseDTO;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.service.TeamManagmentService#updateTeam(com.gomap.performance.organisastion.dto.EmTeamDto)
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO updateTeam(EmTeamDto emTeamDto) throws Exception {
+		ResponseDTO responseDTO=new ResponseDTO();
+		try {
+			logger.info("updateTeam ");
+			if(emTeamDto.getTeamId()!=null)
+			{
+				EmTeam emTeam = new EmTeam();
+				emTeam.setTeamId(emTeamDto.getTeamId());
+				List<EmTeam> teamList=teamManagmentDao.getTeam(emTeam);
+				if(teamList.isEmpty())
+				{
+					responseDTO.setErrorMsg("Team data is not avalaible in system");
+					responseDTO.setDataObj(null);
+					responseDTO.setErrorCode(411);
+				}else {
+					emTeam=teamList.get(0);
+					if (emTeamDto.getDepartmentId() != null) {
+						emTeam.setDepartmentId(emTeamDto.getDepartmentId());
+					}
+					if (emTeamDto.getProjectId() != null) {
+						emTeam.setProjectId(emTeamDto.getProjectId());
+					}
+					if (emTeamDto.getTeamUpdatedBy() != null) {
+						emTeam.setTeamUpdatedBy(emTeamDto.getTeamUpdatedBy());
+					}
+					if (emTeamDto.getTeamName() != null) {
+						emTeam.setTeamName(emTeamDto.getTeamName());
+					}
+					if(emTeamDto.getActivateFlag()!=null)
+					{
+						emTeam.setActivateFlag(emTeamDto.getActivateFlag());
+							
+					}
+					emTeam.setTeamUpdatedDate(new Date());
+					teamManagmentDao.updateTeam(emTeam);
+					responseDTO.setSuccessMsg("Team updated Successfully");
+					responseDTO.setDataObj(emTeam);
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());	
+						
+				}
+				
+			}else {
+				responseDTO.setErrorMsg("Team id can not be blank");
+				responseDTO.setDataObj(null);
+				responseDTO.setErrorCode(411);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error("Getting Error while updating Team");
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return responseDTO;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.service.TeamManagmentService#getTeam(com.gomap.performance.organisastion.dto.EmTeamDto)
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO getTeam(EmTeamDto emTeamDto) throws Exception {
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			logger.info("getTeam...... ");
+			EmTeam emTeam = new EmTeam();
+
+			if (emTeamDto.getDepartmentId() != null) {
+				emTeam.setDepartmentId(emTeamDto.getDepartmentId());
+			}
+			if (emTeamDto.getProjectId() != null) {
+				emTeam.setProjectId(emTeamDto.getProjectId());
+			}
+			if (emTeamDto.getTeamUpdatedBy() != null) {
+				emTeam.setTeamUpdatedBy(emTeamDto.getTeamUpdatedBy());
+			}
+			if (emTeamDto.getTeamName() != null) {
+				emTeam.setTeamName(emTeamDto.getTeamName());
+			}
+			if (emTeamDto.getTeamCreatedBy() != null) {
+				emTeam.setTeamCreatedBy(emTeamDto.getTeamCreatedBy());
+			}
+			
+			responseDTO.setDataObj(teamManagmentDao.getTeam(emTeam));
+			responseDTO.setSuccessMsg("Team List is available here");
+			
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error("Getting Error while retrieving Team");
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return responseDTO;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.service.TeamManagmentService#addTeamMember(com.gomap.performance.organisastion.dto.EmTeamMemberDto)
 	 */
 	@Override
-	public ResponseDTO addTeamMember(EmTeamMemberDto emTeamMemberDto) throws Exception {
+	@Transactional
+	public ResponseDTO addTeamMember(List<EmTeamMemberDto> emTeamMemberDtoList) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		ResponseDTO responseDTO =new ResponseDTO();
+		logger.info("addTeamMember...... ");
+		try {
+			EmTeamMember emTeamMember=null;//new EmTeamMember();
+			for(EmTeamMemberDto dto:emTeamMemberDtoList)
+			{
+				emTeamMember=new EmTeamMember();
+				if(dto.getTeamMemberId()==null)
+				{
+					// create mapping
+					emTeamMember.setTeamMemberCreatedDate(new Date());
+					emTeamMember.setActivateFlag(AppConstants.ACTIVE_FLAG);
+					if(dto.getEmployeeId()!=null)
+					{
+						emTeamMember.setEmployeeId(dto.getEmployeeId());
+					}
+					if(dto.getTeamId()!=null)
+					{
+						emTeamMember.setTeamId(dto.getTeamId());
+					}
+					teamManagmentDao.addTeamMember(emTeamMember);
+				}else
+				{
+					// update mapping
+					emTeamMember.setTeamMemberId(dto.getTeamMemberId());
+					
+					emTeamMember.setTeamMemberUpdatedDate(new Date());
+					if(dto.getEmployeeId()!=null)
+					{
+						emTeamMember.setEmployeeId(dto.getEmployeeId());
+					}
+					if(dto.getTeamId()!=null)
+					{
+						emTeamMember.setTeamId(dto.getTeamId());
+					}
+					if(dto.getActivateFlag()!=null)
+					{
+					emTeamMember.setActivateFlag(dto.getActivateFlag());	
+					}
+					if(dto.getTeamMemberCreatedDate()!=null)
+					{
+						emTeamMember.setTeamMemberCreatedDate(dto.getTeamMemberCreatedDate());
+					}
+					teamManagmentDao.addTeamMember(emTeamMember);
+					
+				}
+				responseDTO.setDataObj(null);
+				responseDTO.setSuccessMsg("All mapping completed");
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				logger.info("addTeamMember...... successfully completed ");
+						
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg("problem while adding employee in team");
+			responseDTO.setErrorCode(411);
+			
+			logger.error("Error in addTeamMember...... ",e);
+			
+		}
+		return responseDTO;
 	}
 
 	/* (non-Javadoc)
@@ -63,9 +261,38 @@ public class TeamManagmentServiceImpl implements TeamManagmentService {
 	 * @see com.gomap.performance.organisastion.service.TeamManagmentService#getTeamMember(com.gomap.performance.organisastion.dto.EmTeamMemberDto)
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO getTeamMember(EmTeamMemberDto emTeamMemberDto) throws Exception {
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			logger.info("getTeam...... ");
+			EmTeamMember emTeamMember = new EmTeamMember();
+
+			if (emTeamMemberDto.getTeamId() != null) {
+				emTeamMember.setTeamId(emTeamMemberDto.getTeamId());
+			}
+			if (emTeamMemberDto.getEmployeeId() != null) {
+				emTeamMember.setEmployeeId(emTeamMemberDto.getEmployeeId());
+			}
+			if(emTeamMemberDto.getTeamMemberId()!=null)
+			{
+				emTeamMember.setTeamMemberId(emTeamMemberDto.getTeamMemberId());
+			}
+			
+			
+			responseDTO.setDataObj(teamManagmentDao.getTeamMember(emTeamMember));
+			responseDTO.setSuccessMsg("Team Member List is available here");
+			
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error("Getting Error while retrieving Team");
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return responseDTO;
 	}
 
 }

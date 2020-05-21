@@ -4,6 +4,8 @@
 package com.gomap.performance.organisastion.service;
 
 
+import java.util.List;
+
 import com.gomap.performance.organisastion.dto.EmTeamDto;
 import com.gomap.performance.organisastion.dto.EmTeamMemberDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
@@ -17,7 +19,7 @@ public interface TeamManagmentService {
 	public ResponseDTO createTeam(EmTeamDto emTeamDto) throws Exception;
 	public ResponseDTO updateTeam(EmTeamDto emTeamDto) throws Exception;
 	public ResponseDTO getTeam(EmTeamDto emTeamDto) throws Exception;
-	public ResponseDTO addTeamMember(EmTeamMemberDto emTeamMemberDto) throws Exception;
+	public ResponseDTO addTeamMember(List<EmTeamMemberDto> emTeamMemberDtoList) throws Exception;
 	public ResponseDTO removeTeamMember(EmTeamMemberDto emTeamMemberDto) throws Exception;
 	public ResponseDTO getTeamMember(EmTeamMemberDto emTeamMemberDto) throws Exception;
 	

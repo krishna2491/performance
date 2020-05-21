@@ -50,7 +50,7 @@ public class EmTeam implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "department_id")
-    private int departmentId;
+    private Integer departmentId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -59,23 +59,21 @@ public class EmTeam implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "project_id")
-    private int projectId;
+    private Integer projectId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "team_created_by")
-    private int teamCreatedBy;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "team_updated_by")
-    private int teamUpdatedBy;
+    private Integer teamCreatedBy;
+    @Column(name = "team_updated_by", nullable = true)
+    private Integer teamUpdatedBy;
     @Column(name = "team_created_date")
     @Temporal(TemporalType.DATE)
     private Date teamCreatedDate;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "team_updated_date")
     @Temporal(TemporalType.DATE)
     private Date teamUpdatedDate;
+    @Column(name = "activate_flag")
+    private Integer activateFlag;
 
     public EmTeam() {
     }
@@ -84,7 +82,7 @@ public class EmTeam implements Serializable {
         this.teamId = teamId;
     }
 
-    public EmTeam(Integer teamId, int departmentId, String teamName, int projectId, int teamCreatedBy, int teamUpdatedBy, Date teamUpdatedDate) {
+    public EmTeam(Integer teamId, Integer departmentId, String teamName, Integer projectId, Integer teamCreatedBy, Integer teamUpdatedBy, Date teamUpdatedDate) {
         this.teamId = teamId;
         this.departmentId = departmentId;
         this.teamName = teamName;
@@ -102,11 +100,11 @@ public class EmTeam implements Serializable {
         this.teamId = teamId;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 
@@ -118,27 +116,27 @@ public class EmTeam implements Serializable {
         this.teamName = teamName;
     }
 
-    public int getProjectId() {
+    public Integer getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
-    public int getTeamCreatedBy() {
+    public Integer getTeamCreatedBy() {
         return teamCreatedBy;
     }
 
-    public void setTeamCreatedBy(int teamCreatedBy) {
+    public void setTeamCreatedBy(Integer teamCreatedBy) {
         this.teamCreatedBy = teamCreatedBy;
     }
 
-    public int getTeamUpdatedBy() {
+    public Integer getTeamUpdatedBy() {
         return teamUpdatedBy;
     }
 
-    public void setTeamUpdatedBy(int teamUpdatedBy) {
+    public void setTeamUpdatedBy(Integer teamUpdatedBy) {
         this.teamUpdatedBy = teamUpdatedBy;
     }
 
@@ -158,29 +156,24 @@ public class EmTeam implements Serializable {
         this.teamUpdatedDate = teamUpdatedDate;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (teamId != null ? teamId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmTeam)) {
-            return false;
-        }
-        EmTeam other = (EmTeam) object;
-        if ((this.teamId == null && other.teamId != null) || (this.teamId != null && !this.teamId.equals(other.teamId))) {
-            return false;
-        }
-        return true;
-    }
-
+    
     @Override
     public String toString() {
         return "com.gomap.performance.organisation.EmTeam[ teamId=" + teamId + " ]";
     }
+
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
+
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
     
 }

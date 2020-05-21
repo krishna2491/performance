@@ -16,13 +16,14 @@ public class EmTeamDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer teamId;
-    private int departmentId;
+    private Integer departmentId;
     private String teamName;
-    private int projectId;
-    private int teamCreatedBy;
-    private int teamUpdatedBy;
+    private Integer projectId;
+    private Integer teamCreatedBy;
+    private Integer teamUpdatedBy;
     private Date teamCreatedDate;
     private Date teamUpdatedDate;
+    private Integer activateFlag;
 
     public EmTeamDto() {
     }
@@ -31,7 +32,7 @@ public class EmTeamDto implements Serializable {
         this.teamId = teamId;
     }
 
-    public EmTeamDto(Integer teamId, int departmentId, String teamName, int projectId, int teamCreatedBy, int teamUpdatedBy, Date teamUpdatedDate) {
+    public EmTeamDto(Integer teamId, Integer departmentId, String teamName, Integer projectId, Integer teamCreatedBy, Integer teamUpdatedBy, Date teamUpdatedDate) {
         this.teamId = teamId;
         this.departmentId = departmentId;
         this.teamName = teamName;
@@ -49,11 +50,11 @@ public class EmTeamDto implements Serializable {
         this.teamId = teamId;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 
@@ -65,27 +66,27 @@ public class EmTeamDto implements Serializable {
         this.teamName = teamName;
     }
 
-    public int getProjectId() {
+    public Integer getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
-    public int getTeamCreatedBy() {
+    public Integer getTeamCreatedBy() {
         return teamCreatedBy;
     }
 
-    public void setTeamCreatedBy(int teamCreatedBy) {
+    public void setTeamCreatedBy(Integer teamCreatedBy) {
         this.teamCreatedBy = teamCreatedBy;
     }
 
-    public int getTeamUpdatedBy() {
+    public Integer getTeamUpdatedBy() {
         return teamUpdatedBy;
     }
 
-    public void setTeamUpdatedBy(int teamUpdatedBy) {
+    public void setTeamUpdatedBy(Integer teamUpdatedBy) {
         this.teamUpdatedBy = teamUpdatedBy;
     }
 
@@ -105,29 +106,24 @@ public class EmTeamDto implements Serializable {
         this.teamUpdatedDate = teamUpdatedDate;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (teamId != null ? teamId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmTeamDto)) {
-            return false;
-        }
-        EmTeamDto other = (EmTeamDto) object;
-        if ((this.teamId == null && other.teamId != null) || (this.teamId != null && !this.teamId.equals(other.teamId))) {
-            return false;
-        }
-        return true;
-    }
-
+   
     @Override
     public String toString() {
         return "com.gomap.performance.organisation.EmTeam[ teamId=" + teamId + " ]";
     }
+
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
+
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
     
 }

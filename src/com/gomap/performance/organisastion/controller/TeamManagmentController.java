@@ -3,6 +3,8 @@
  */
 package com.gomap.performance.organisastion.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.gomap.performance.organisastion.dto.EmTeamMemberDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.service.EmployeeService;
+import com.gomap.performance.organisastion.service.TeamManagmentService;
 import com.gomap.performance.organisastion.util.ResponseWriter;
 
 /**
@@ -30,10 +33,10 @@ public class TeamManagmentController {
 private static final Logger logger = LoggerFactory.getLogger(TeamManagmentController.class);
 	
 	@Autowired
-	EmployeeService employeeService;
+	TeamManagmentService teamManagmentService;
 	
-	@RequestMapping(value = {UrlConstants.API_GET_TEAM}, method = RequestMethod.POST)
-	public @ResponseBody ResponseDTO addEmployee(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
+	@RequestMapping(value = {UrlConstants.API_CREATE_TEAM}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO createTeam(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
 		try {  
 			if(result.hasErrors()){
@@ -42,8 +45,7 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=new ResponseDTO();
-				responseDTO.setDataObj(emTeamDto);//
-				//responseDTO=(ResponseDTO) employeeService.addEmployee(emTeamDto);
+				responseDTO=teamManagmentService.createTeam(emTeamDto);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
@@ -52,6 +54,46 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 		} 
 		return responseDTO;
 	}
+	
+	@RequestMapping(value = {UrlConstants.API_GET_TEAM}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO getTeam(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+				responseDTO=teamManagmentService.getTeam(emTeamDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@RequestMapping(value = {UrlConstants.API_UPDATE_TEAM}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO updateTeam(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+				responseDTO=teamManagmentService.updateTeam(emTeamDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+
 	@RequestMapping(value = {UrlConstants.API_GET_TEAM_MEMBER}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getTeamMember(@RequestBody EmTeamMemberDto emTeamMemberDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -63,7 +105,48 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 			} else {
 				//responseDTO=(ResponseDTO) employeeService.addEmployee(emTeamDto);
 				responseDTO=new ResponseDTO();
-				responseDTO.setDataObj(emTeamMemberDto);
+				responseDTO=teamManagmentService.getTeamMember(emTeamMemberDto);
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	
+	@RequestMapping(value = {UrlConstants.API_MANAGE_TEAM}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO manageTeamMember(@RequestBody List<EmTeamMemberDto> emTeamMemberList, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				//responseDTO=(ResponseDTO) employeeService.addEmployee(emTeamDto);
+				responseDTO=new ResponseDTO();
+				responseDTO=teamManagmentService.addTeamMember(emTeamMemberList);
+				
+				
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@RequestMapping(value = {UrlConstants.API_UPDATE_MANAGE_TEAM}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO updateTeamMember(@RequestBody EmTeamMemberDto emTeamMemberDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				//responseDTO=(ResponseDTO) employeeService.addEmployee(emTeamDto);
+			//	responseDTO=teamManagmentService.addTeamMember(emTeamMemberDtoList);
+				//responseDTO.setDataObj(emTeamMemberDto);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
@@ -73,5 +156,4 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 		return responseDTO;
 	}
 	
-
 }

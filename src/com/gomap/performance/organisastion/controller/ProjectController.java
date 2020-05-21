@@ -32,7 +32,7 @@ public class ProjectController {
 	private ProjectService projectSrvc;
 	
 	@RequestMapping(value = {UrlConstants.API_ADD_PROJECT}, method = RequestMethod.POST)
-	public @ResponseBody ResponseDTO authenticate(@RequestBody ProjectDto projectDto, BindingResult result) {
+	public @ResponseBody ResponseDTO addProject(@RequestBody ProjectDto projectDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
 		try {  
 			if(result.hasErrors()){

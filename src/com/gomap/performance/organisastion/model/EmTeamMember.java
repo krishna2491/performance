@@ -46,17 +46,19 @@ public class EmTeamMember implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "team_id")
-    private int teamId;
+    private Integer teamId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "employee_id")
-    private int employeeId;
+    private Integer employeeId;
     @Column(name = "team_member_created_date")
     @Temporal(TemporalType.DATE)
     private Date teamMemberCreatedDate;
     @Column(name = "team_member_updated_date")
     @Temporal(TemporalType.DATE)
     private Date teamMemberUpdatedDate;
+    @Column(name = "activate_flag")
+    private Integer activateFlag;
 
     public EmTeamMember() {
     }
@@ -65,7 +67,7 @@ public class EmTeamMember implements Serializable {
         this.teamMemberId = teamMemberId;
     }
 
-    public EmTeamMember(Integer teamMemberId, int teamId, int employeeId) {
+    public EmTeamMember(Integer teamMemberId, Integer teamId, Integer employeeId) {
         this.teamMemberId = teamMemberId;
         this.teamId = teamId;
         this.employeeId = employeeId;
@@ -79,19 +81,19 @@ public class EmTeamMember implements Serializable {
         this.teamMemberId = teamMemberId;
     }
 
-    public int getTeamId() {
+    public Integer getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(Integer teamId) {
         this.teamId = teamId;
     }
 
-    public int getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -111,29 +113,19 @@ public class EmTeamMember implements Serializable {
         this.teamMemberUpdatedDate = teamMemberUpdatedDate;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (teamMemberId != null ? teamMemberId.hashCode() : 0);
-        return hash;
-    }
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmTeamMember)) {
-            return false;
-        }
-        EmTeamMember other = (EmTeamMember) object;
-        if ((this.teamMemberId == null && other.teamMemberId != null) || (this.teamMemberId != null && !this.teamMemberId.equals(other.teamMemberId))) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
 
-    @Override
-    public String toString() {
-        return "com.gomap.performance.organisation.EmTeamMember[ teamMemberId=" + teamMemberId + " ]";
-    }
-    
+       
 }

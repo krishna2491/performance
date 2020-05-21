@@ -36,8 +36,6 @@ public class LoginControllerOrg {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginControllerOrg.class);
 	
-	@Autowired
-	private AdminLoginService loginService;
 	
 	@Autowired
 	private HttpSession httpSession;
@@ -79,7 +77,6 @@ public class LoginControllerOrg {
 	@RequestMapping(value = {UrlConstants.API_LOGOUT+"org"}, method = RequestMethod.POST)
 	public void logOut() {
 		 try {
-			loginService.logout();
 		} catch (Exception e) {
 			logger.error("efregt");
 		}

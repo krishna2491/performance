@@ -115,9 +115,12 @@ public class HibernateConfig {
 		properties.put(HIBERNATE_SHOW_SQL,environment.getRequiredProperty(HIBERNATE_SHOW_SQL));
 		properties.put(HIBERNATE_FORMAT_SQL,environment.getRequiredProperty(HIBERNATE_FORMAT_SQL));
 		properties.put(HIBERNATE_DEFAULT_SCHEMA, environment.getRequiredProperty(HIBERNATE_DEFAULT_SCHEMA));
+		
+		//properties.put("hibernate.default_catalog", "emf_test");
+		
 		properties.put(HIBERNATE_ORDER_INSERTS, environment.getRequiredProperty(HIBERNATE_ORDER_INSERTS));
 		properties.put(HIBERNATE_ORDER_UPDATES, environment.getRequiredProperty(HIBERNATE_ORDER_UPDATES));
-		properties.put("hibernate.hbm2ddl.auto", "update");
+		properties.put("hibernate.hbm2ddl.auto", "create");
 		
 		return properties;
 	}

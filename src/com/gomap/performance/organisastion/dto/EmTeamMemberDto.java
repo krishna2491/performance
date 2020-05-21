@@ -29,10 +29,11 @@ public class EmTeamMemberDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer teamMemberId;
-    private int teamId;
-    private int employeeId;
+    private Integer teamId;
+    private Integer employeeId;
     private Date teamMemberCreatedDate;
     private Date teamMemberUpdatedDate;
+    private Integer activateFlag;
 
     public EmTeamMemberDto() {
     }
@@ -41,7 +42,7 @@ public class EmTeamMemberDto implements Serializable {
         this.teamMemberId = teamMemberId;
     }
 
-    public EmTeamMemberDto(Integer teamMemberId, int teamId, int employeeId) {
+    public EmTeamMemberDto(Integer teamMemberId, Integer teamId, Integer employeeId) {
         this.teamMemberId = teamMemberId;
         this.teamId = teamId;
         this.employeeId = employeeId;
@@ -55,19 +56,19 @@ public class EmTeamMemberDto implements Serializable {
         this.teamMemberId = teamMemberId;
     }
 
-    public int getTeamId() {
+    public Integer getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(Integer teamId) {
         this.teamId = teamId;
     }
 
-    public int getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -87,29 +88,29 @@ public class EmTeamMemberDto implements Serializable {
         this.teamMemberUpdatedDate = teamMemberUpdatedDate;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (teamMemberId != null ? teamMemberId.hashCode() : 0);
-        return hash;
-    }
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "EmTeamMemberDto [teamMemberId=" + teamMemberId + ", teamId=" + teamId + ", employeeId=" + employeeId
+				+ ", teamMemberCreatedDate=" + teamMemberCreatedDate + ", teamMemberUpdatedDate="
+				+ teamMemberUpdatedDate + "]";
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmTeamMemberDto)) {
-            return false;
-        }
-        EmTeamMemberDto other = (EmTeamMemberDto) object;
-        if ((this.teamMemberId == null && other.teamMemberId != null) || (this.teamMemberId != null && !this.teamMemberId.equals(other.teamMemberId))) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
 
-    @Override
-    public String toString() {
-        return "com.gomap.performance.organisation.EmTeamMember[ teamMemberId=" + teamMemberId + " ]";
-    }
-    
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
+
+       
 }

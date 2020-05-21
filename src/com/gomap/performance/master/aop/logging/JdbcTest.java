@@ -11,7 +11,7 @@ public class JdbcTest {
 			// Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			Class.forName("com.mysql.jdbc.Driver");
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root");
+			con = DriverManager.getConnection("jdbc:mysql://ec2-3-133-244-20.us-east-2.compute.amazonaws.com:3306/emf","emf_remote","emf_remote");
 				
 			if (con != null) {
 				System.out.println("connect");
