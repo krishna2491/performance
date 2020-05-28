@@ -4,6 +4,7 @@
 package com.gomap.performance.master.service;
 
 import com.gomap.performance.master.dto.EmployeeDto;
+import com.gomap.performance.master.dto.EmployeeMasterDto;
 import com.gomap.performance.master.dto.ResponseDTO;
 
 /**
@@ -11,8 +12,9 @@ import com.gomap.performance.master.dto.ResponseDTO;
  *
  */
 public interface AdminEmployeeService {
-	public Object addEmployee(EmployeeDto employeeDto);
-	public ResponseDTO employeeRoleMapping(EmployeeDto employeeDto);
-	public ResponseDTO employeeDepratmentMapping(EmployeeDto employeeDto);
-
+	public ResponseDTO addEmployee(EmployeeMasterDto employeeDto);
+	public ResponseDTO updateEmployee(EmployeeMasterDto employeeDto);
+	public ResponseDTO employeeRoleMapping(EmployeeMasterDto employeeDto);
+	public ResponseDTO employeeDepratmentMapping(EmployeeMasterDto employeeDto);
+	public ResponseDTO getAdminEmployeeDetails(EmployeeMasterDto employeeDto);
 }

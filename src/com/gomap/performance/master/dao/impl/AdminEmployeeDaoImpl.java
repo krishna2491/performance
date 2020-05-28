@@ -3,6 +3,8 @@
  */
 package com.gomap.performance.master.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,8 +36,8 @@ public class AdminEmployeeDaoImpl implements AdminEmployeeDao {
 
 		Criteria criteria = this.sessionFactory.getCurrentSession()
 				.createCriteria(EmployeeMaster.class);
-		criteria.add(Restrictions.eq("upUserId", userId).ignoreCase());
-		criteria.add(Restrictions.eq("upUserStatus", AppConstants.ACTIVE_FLAG));
+		criteria.add(Restrictions.eq("employeeId", userId).ignoreCase());
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		return (EmployeeMaster) criteria.uniqueResult();
 	
 		
@@ -48,9 +50,56 @@ public class AdminEmployeeDaoImpl implements AdminEmployeeDao {
 	@Override
 	public EmployeeMaster storeEmployeeData(EmployeeMaster employeeMaster) throws Exception {
 		// TODO Auto-generated method stub
-		Session ss=sessionFactory.getCurrentSession();
-		 ss.save(employeeMaster);
+		Session session=sessionFactory.getCurrentSession();
+		 session.save(employeeMaster);
 		return employeeMaster;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.AdminEmployeeDao#updateEmployee(com.gomap.performance.master.model.EmployeeMaster)
+	 */
+	@Override
+	public EmployeeMaster updateEmployee(EmployeeMaster employeeMaster) throws Exception {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(employeeMaster);
+		return employeeMaster;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.AdminEmployeeDao#getAdminEmployee(com.gomap.performance.master.model.EmployeeMaster)
+	 */
+	@Override
+	public List<EmployeeMaster> getAdminEmployee(EmployeeMaster employeeMaster) throws Exception {
+		// TODO Auto-generated method stub
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(EmployeeMaster.class);
+		if(employeeMaster.getEmployeeId()!=null)
+		{
+		criteria.add(Restrictions.eq("employeeId", employeeMaster.getEmployeeId()));	
+		}
+		if(employeeMaster.getCompanyId()!=null)
+		{
+		criteria.add(Restrictions.eq("companyId", employeeMaster.getCompanyId()));	
+		}
+		if(employeeMaster.getMobileNo()!=null)
+		{
+		criteria.add(Restrictions.eq("mobileNo", employeeMaster.getMobileNo()));	
+		}
+		if(employeeMaster.getEmail()!=null)
+		{
+		criteria.add(Restrictions.eq("Email", employeeMaster.getEmail()));	
+		}
+		if(employeeMaster.getfName()!=null)
+		{
+		criteria.add(Restrictions.like("fName", employeeMaster.getfName()));	
+		}
+		if(employeeMaster.getmName()!=null)
+		{
+		criteria.add(Restrictions.like("mName", employeeMaster.getmName()));	
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return criteria.list();
 	}
 
 }

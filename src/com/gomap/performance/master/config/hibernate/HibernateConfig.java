@@ -53,7 +53,7 @@ public class HibernateConfig {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory
-				.setPackagesToScan(new String[] {ORG_MODEL});
+				.setPackagesToScan(new String[] {ORG_MODEL,MASTER_MODEL});
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
@@ -120,7 +120,7 @@ public class HibernateConfig {
 		
 		properties.put(HIBERNATE_ORDER_INSERTS, environment.getRequiredProperty(HIBERNATE_ORDER_INSERTS));
 		properties.put(HIBERNATE_ORDER_UPDATES, environment.getRequiredProperty(HIBERNATE_ORDER_UPDATES));
-		properties.put("hibernate.hbm2ddl.auto", "create");
+		properties.put("hibernate.hbm2ddl.auto", "update");
 		
 		return properties;
 	}

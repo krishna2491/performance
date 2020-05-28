@@ -11,84 +11,110 @@ import java.util.Date;
  *
  */
 public class EmployeeDto implements Serializable {
-	private Long companyId;
+	private Integer companyId;
+	private Integer employeeId;
+	private String employeeFname;
+	private String employeeMname;
+	private String employeeEmail;
+	private String employeePassword;
+	private String employeeMobileNo;
+	private Integer activateFlag;
 	/**
 	 * @return the companyId
 	 */
-	public Long getCompanyId() {
+	public Integer getCompanyId() {
 		return companyId;
 	}
 	/**
 	 * @param companyId the companyId to set
 	 */
-	public void setCompanyId(Long companyId) {
+	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
 	/**
-	 * @return the employee_fname
+	 * @return the employeeId
 	 */
-	public String getEmployee_fname() {
-		return employee_fname;
+	public Integer getEmployeeId() {
+		return employeeId;
 	}
 	/**
-	 * @param employee_fname the employee_fname to set
+	 * @param employeeId the employeeId to set
 	 */
-	public void setEmployee_fname(String employee_fname) {
-		this.employee_fname = employee_fname;
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
 	/**
-	 * @return the employee_mname
+	 * @return the employeeFname
 	 */
-	public String getEmployee_mname() {
-		return employee_mname;
+	public String getEmployeeFname() {
+		return employeeFname;
 	}
 	/**
-	 * @param employee_mname the employee_mname to set
+	 * @param employeeFname the employeeFname to set
 	 */
-	public void setEmployee_mname(String employee_mname) {
-		this.employee_mname = employee_mname;
+	public void setEmployeeFname(String employeeFname) {
+		this.employeeFname = employeeFname;
 	}
 	/**
-	 * @return the employee_email
+	 * @return the employeeMname
 	 */
-	public String getEmployee_email() {
-		return employee_email;
+	public String getEmployeeMname() {
+		return employeeMname;
 	}
 	/**
-	 * @param employee_email the employee_email to set
+	 * @param employeeMname the employeeMname to set
 	 */
-	public void setEmployee_email(String employee_email) {
-		this.employee_email = employee_email;
+	public void setEmployeeMname(String employeeMname) {
+		this.employeeMname = employeeMname;
 	}
 	/**
-	 * @return the employee_password
+	 * @return the employeeEmail
 	 */
-	public String getEmployee_password() {
-		return employee_password;
+	public String getEmployeeEmail() {
+		return employeeEmail;
 	}
 	/**
-	 * @param employee_password the employee_password to set
+	 * @param employeeEmail the employeeEmail to set
 	 */
-	public void setEmployee_password(String employee_password) {
-		this.employee_password = employee_password;
+	public void setEmployeeEmail(String employeeEmail) {
+		this.employeeEmail = employeeEmail;
 	}
 	/**
-	 * @return the employee_mobile_no
+	 * @return the employeePassword
 	 */
-	public String getEmployee_mobile_no() {
-		return employee_mobile_no;
+	public String getEmployeePassword() {
+		return employeePassword;
 	}
 	/**
-	 * @param employee_mobile_no the employee_mobile_no to set
+	 * @param employeePassword the employeePassword to set
 	 */
-	public void setEmployee_mobile_no(String employee_mobile_no) {
-		this.employee_mobile_no = employee_mobile_no;
+	public void setEmployeePassword(String employeePassword) {
+		this.employeePassword = employeePassword;
 	}
-	private String employee_fname;
-	private String employee_mname;
-	private String employee_email;
-	private String employee_password;
-	private String employee_mobile_no;
+	/**
+	 * @return the employeeMobileNo
+	 */
+	public String getEmployeeMobileNo() {
+		return employeeMobileNo;
+	}
+	/**
+	 * @param employeeMobileNo the employeeMobileNo to set
+	 */
+	public void setEmployeeMobileNo(String employeeMobileNo) {
+		this.employeeMobileNo = employeeMobileNo;
+	}
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
 	
 
 

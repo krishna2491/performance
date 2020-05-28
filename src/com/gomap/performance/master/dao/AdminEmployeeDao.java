@@ -3,6 +3,8 @@
  */
 package com.gomap.performance.master.dao;
 
+import java.util.List;
+
 import com.gomap.performance.master.model.EmployeeMaster;
 
 /**
@@ -12,5 +14,7 @@ import com.gomap.performance.master.model.EmployeeMaster;
 public interface AdminEmployeeDao {
 	public EmployeeMaster getUserByUserId(String userId) throws Exception;
 	public EmployeeMaster storeEmployeeData(EmployeeMaster employeeMaster) throws Exception;
+	public EmployeeMaster updateEmployee(EmployeeMaster employeeMaster) throws Exception;
+	public List<EmployeeMaster> getAdminEmployee(EmployeeMaster employeeMaster) throws Exception;
 
 }
