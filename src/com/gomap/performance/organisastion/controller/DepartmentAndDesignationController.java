@@ -62,6 +62,10 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 		ResponseDTO  responseDTO = null;
 		try {  
 			//	
+			if(departmentId.equals(-1))
+			{
+				departmentId=null;
+			}
 				responseDTO=departmentAndDesignationService.getDepartment(departmentId);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			

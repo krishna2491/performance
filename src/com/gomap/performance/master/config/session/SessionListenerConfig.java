@@ -21,6 +21,7 @@ public class SessionListenerConfig implements HttpSessionListener {
 	public void sessionCreated(HttpSessionEvent event) {
 		//int timoutInMinute = Integer.parseInt(userMsgBundle.getString(AppConstants.APP_SESSION_TIMEOUT));
 		//event.getSession().setMaxInactiveInterval(timoutInMinute * 60);
+		System.out.println("seesion created");
 	}
 
 	@Override

@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 
 import com.sun.istack.internal.NotNull;
 
+import javafx.beans.DefaultProperty;
+
 /**
  * @author krishnakant.bairagi
  *
@@ -61,8 +63,11 @@ public class EmployeeMaster implements Serializable {
 	@Column(name = "created_date")
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
+	
 	@Column(name = "updated_date")
 	@Temporal(TemporalType.DATE)
+	@Basic(optional = true)
+	
 	private Date updatedDate;
 	@NotNull
 	@Size(min = 1, max = 5)

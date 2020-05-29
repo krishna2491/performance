@@ -7,9 +7,12 @@ package com.gomap.performance.organisastion.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +26,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import javax.persistence.OneToMany;
+
 /**
  *
  * @author Palash
@@ -30,26 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "em_designation")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "EmDesignation.findAll", query = "SELECT e FROM EmDesignation e")
-    , @NamedQuery(name = "EmDesignation.findByDesignationId", query = "SELECT e FROM EmDesignation e WHERE e.designationId = :designationId")
-    , @NamedQuery(name = "EmDesignation.findByDesignationName", query = "SELECT e FROM EmDesignation e WHERE e.designationName = :designationName")
-    , @NamedQuery(name = "EmDesignation.findByDepartmentId", query = "SELECT e FROM EmDesignation e WHERE e.departmentId = :departmentId")
-    , @NamedQuery(name = "EmDesignation.findByParentDesignationId", query = "SELECT e FROM EmDesignation e WHERE e.parentDesignationId = :parentDesignationId")
-    , @NamedQuery(name = "EmDesignation.findByDesignationLevelNo", query = "SELECT e FROM EmDesignation e WHERE e.designationLevelNo = :designationLevelNo")
-    , @NamedQuery(name = "EmDesignation.findByCanCreateEmployee", query = "SELECT e FROM EmDesignation e WHERE e.canCreateEmployee = :canCreateEmployee")
-    , @NamedQuery(name = "EmDesignation.findByCanCreateFeedbackReq", query = "SELECT e FROM EmDesignation e WHERE e.canCreateFeedbackReq = :canCreateFeedbackReq")
-    , @NamedQuery(name = "EmDesignation.findByCanCreateRateSkill", query = "SELECT e FROM EmDesignation e WHERE e.canCreateRateSkill = :canCreateRateSkill")
-    , @NamedQuery(name = "EmDesignation.findByCanCreateTask", query = "SELECT e FROM EmDesignation e WHERE e.canCreateTask = :canCreateTask")
-    , @NamedQuery(name = "EmDesignation.findByCanCreateProject", query = "SELECT e FROM EmDesignation e WHERE e.canCreateProject = :canCreateProject")
-    , @NamedQuery(name = "EmDesignation.findByCanCreateTeam", query = "SELECT e FROM EmDesignation e WHERE e.canCreateTeam = :canCreateTeam")
-    , @NamedQuery(name = "EmDesignation.findByCanAddEmployeeToTeam", query = "SELECT e FROM EmDesignation e WHERE e.canAddEmployeeToTeam = :canAddEmployeeToTeam")
-    , @NamedQuery(name = "EmDesignation.findByCanEvaluateSkill", query = "SELECT e FROM EmDesignation e WHERE e.canEvaluateSkill = :canEvaluateSkill")
-    , @NamedQuery(name = "EmDesignation.findByCanViewTeam", query = "SELECT e FROM EmDesignation e WHERE e.canViewTeam = :canViewTeam")
-    , @NamedQuery(name = "EmDesignation.findByCanViewAllTask", query = "SELECT e FROM EmDesignation e WHERE e.canViewAllTask = :canViewAllTask")
-    , @NamedQuery(name = "EmDesignation.findByCanApproveGoal", query = "SELECT e FROM EmDesignation e WHERE e.canApproveGoal = :canApproveGoal")
-    , @NamedQuery(name = "EmDesignation.findByDesignationCreatedDate", query = "SELECT e FROM EmDesignation e WHERE e.designationCreatedDate = :designationCreatedDate")
-    , @NamedQuery(name = "EmDesignation.findByDesignationUpdatedDate", query = "SELECT e FROM EmDesignation e WHERE e.designationUpdatedDate = :designationUpdatedDate")})
 public class EmDesignation implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -327,5 +312,11 @@ public class EmDesignation implements Serializable {
 	 */
 	public void setActivateFlag(Integer activateFlag) {
 		this.activateFlag = activateFlag;
-	}    
+	}
+
+	/**
+	 * @return the designationElementMaping
+	 */
+		
+	    
 }

@@ -3,6 +3,8 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +41,8 @@ public class ProjectServiceImpl implements ProjectService {
 					project.setProjectDescription(projectDto.getProjectDescription());
 					project.setDepartmentId(10);
 					project.setProjectAttachment(projectDto.getProjectAttachment());
-					project.setProjectCreatedDate(projectDto.getProjectStartDate());
+					project.setProjectStartDate(projectDto.getProjectStartDate());
+					project.setProjectCreatedDate(new Date());
 					project.setProjectCreatedBy(projectDto.getProjectCreatedBy());
 					project.setProjectPriority(projectDto.getProjectPriority());
 					projectDao.addProject(project);
