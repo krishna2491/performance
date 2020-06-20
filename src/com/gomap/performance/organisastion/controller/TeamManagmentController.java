@@ -9,12 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.organisastion.dto.EmTeamDto;
 import com.gomap.performance.organisastion.dto.EmTeamMemberDto;
@@ -34,7 +36,7 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 	
 	@Autowired
 	TeamManagmentService teamManagmentService;
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_CREATE_TEAM}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO createTeam(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -54,7 +56,7 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 		} 
 		return responseDTO;
 	}
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_TEAM}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getTeam(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -74,6 +76,7 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_UPDATE_TEAM}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO updateTeam(@RequestBody EmTeamDto emTeamDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -93,7 +96,7 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 		} 
 		return responseDTO;
 	}
-
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_TEAM_MEMBER}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getTeamMember(@RequestBody EmTeamMemberDto emTeamMemberDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -113,7 +116,7 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 		} 
 		return responseDTO;
 	}
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_MANAGE_TEAM}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO manageTeamMember(@RequestBody List<EmTeamMemberDto> emTeamMemberList, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -135,6 +138,7 @@ private static final Logger logger = LoggerFactory.getLogger(TeamManagmentContro
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_UPDATE_MANAGE_TEAM}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO updateTeamMember(@RequestBody EmTeamMemberDto emTeamMemberDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;

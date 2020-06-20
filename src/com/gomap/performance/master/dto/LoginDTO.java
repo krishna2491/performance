@@ -17,20 +17,14 @@ public class LoginDTO {
 	@Pattern(regexp = "^[a-z0-9]*$")
 	@NotNull
 	@Size(min = 1, max = 30)
-	private String userName;
+	private String email;
 	
 	@Pattern(regexp = "^[a-z0-9]*$")
 	@NotNull
 	@Size(min = 1, max = 30)
 	private String password;
 	
-	public String getUserName() {
-		return userName;
-	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 	
 	public String getPassword() {
 		return password;
@@ -38,6 +32,20 @@ public class LoginDTO {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

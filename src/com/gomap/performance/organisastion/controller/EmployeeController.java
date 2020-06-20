@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.organisastion.dto.EmEmployeeDto;
 import com.gomap.performance.organisastion.dto.EmployeeDto;
@@ -35,7 +37,7 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeService employeeService;
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_ADD_EMPLOYEE}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addEmployee(@RequestBody EmEmployeeDto employeeDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -45,6 +47,8 @@ public class EmployeeController {
 				responseDTO.setErrorCode(300);
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
+				responseDTO=new ResponseDTO();
+			//	responseDTO.setDataObj(employeeDto);
 				responseDTO=(ResponseDTO) employeeService.addEmployee(employeeDto);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
@@ -54,7 +58,7 @@ public class EmployeeController {
 		} 
 		return responseDTO;
 	}
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_EMPLOYEE}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getEmployee(@RequestBody EmEmployeeDto emEmployeeDto,BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -66,6 +70,21 @@ public class EmployeeController {
 			} else {
 				responseDTO=employeeService.getEmployeeList(emEmployeeDto.getEmployeeId());
 			}
+			
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_EMPLOYEE_LIST}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getEmployee() {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				responseDTO=employeeService.getAllEmployee();
+			
 			
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);

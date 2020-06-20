@@ -89,7 +89,7 @@ public class EmEmployee implements Serializable {
     @Column(name = "employee_mobile_no")
     private String employeeMobileNo;
     @Basic(optional = false)
-    @NotNull
+   
     @Size(min = 1, max = 255)
     @Column(name = "employee_profile_img")
     private String employeeProfileImg;
@@ -106,6 +106,10 @@ public class EmEmployee implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "activate_flag")
     private Integer activateFlag;
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "gender")
+    private String gender;
     /**
 	 * @return the designation
 	 */
@@ -228,5 +232,19 @@ public class EmEmployee implements Serializable {
 	 */
 	public void setActivateFlag(Integer activateFlag) {
 		this.activateFlag = activateFlag;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
 	}    
 }

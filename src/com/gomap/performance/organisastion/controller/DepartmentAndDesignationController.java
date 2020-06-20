@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.organisastion.dto.DepartmentDto;
 import com.gomap.performance.organisastion.dto.DesignationDto;
@@ -34,7 +36,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 	
 	@Autowired
 	private DepartmentAndDesignationService departmentAndDesignationService;
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_ADD_DEPARTMENT}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addDepartment(@RequestBody DepartmentDto departmentDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -57,6 +59,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_DEPARTMENT}, method = RequestMethod.GET)
 	public @ResponseBody ResponseDTO getDepartment(@RequestParam Integer departmentId) {
 		ResponseDTO  responseDTO = null;
@@ -79,6 +82,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_UPDATE_DEPARTMENT}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO updateDepartment(@RequestBody DepartmentDto departmentDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -102,6 +106,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_DELETE_DEPARTMENT}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO deleteDepartment(@RequestBody DepartmentDto departmentDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -124,6 +129,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_ADD_DESIGNATION}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addDesignation(@RequestBody DesignationDto designationDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -144,7 +150,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 		} 
 		return responseDTO;
 	}
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_DESIGNATION}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getDesignation(@RequestBody DesignationDto designationDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -154,7 +160,11 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO.setErrorCode(300);
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
+				responseDTO=new ResponseDTO();
+				
 				responseDTO=departmentAndDesignationService.getDesignation(designationDto.getDesignationId(),designationDto.getDepartmentId());
+				DesignationDto dd=new DesignationDto();
+				//responseDTO.setDataObj(dd);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (PerformanceException ex) {

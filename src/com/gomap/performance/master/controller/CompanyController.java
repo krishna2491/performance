@@ -7,12 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.master.dto.CompanyMasterDto;
 import com.gomap.performance.master.dto.ResponseDTO;
@@ -28,7 +30,7 @@ public class CompanyController {
 	private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 	@Autowired
 	private CompanyService companyServc;
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_ADD_COMPANY}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addCompany(@RequestBody CompanyMasterDto companyMasterDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -47,6 +49,7 @@ public class CompanyController {
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_UPDATE_COMPANY}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO updateCompany(@RequestBody CompanyMasterDto companyMasterDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -65,7 +68,7 @@ public class CompanyController {
 		} 
 		return responseDTO;
 	}
-
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_COMPANY}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getCompany(@RequestBody CompanyMasterDto companyMasterDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;

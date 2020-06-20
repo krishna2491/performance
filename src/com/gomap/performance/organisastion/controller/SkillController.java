@@ -9,12 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.organisastion.dto.EmEmployeeSkillMpgDto;
 import com.gomap.performance.organisastion.dto.EmSkillDto;
@@ -34,6 +36,7 @@ public class SkillController {
 
 	@Autowired
 	private SkillService skillSrvc;
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_ADD_SKILL}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addSkill(@RequestBody EmSkillDto emSkillDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -52,6 +55,7 @@ public class SkillController {
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_SKILL}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getSkill(@RequestBody EmSkillDto emSkillDto, BindingResult result) {
 		ResponseDTO  responseDTO = new ResponseDTO();
@@ -71,7 +75,7 @@ public class SkillController {
 		} 
 		return responseDTO;
 	}
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_UPDATE_SKILL}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO updateSkill(@RequestBody EmSkillDto emSkillDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -91,7 +95,7 @@ public class SkillController {
 		return responseDTO;
 	}
 	
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_MAP_EMPLOYEE_SKILL}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addSkill(@RequestBody List<EmEmployeeSkillMpgDto> emSkillDtoList, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -110,7 +114,7 @@ public class SkillController {
 		} 
 		return responseDTO;
 	}
-	
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_EMPLOYEE_SKILL}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getEmployeeSkill(@RequestBody EmEmployeeSkillMpgDto emSkillDto, BindingResult result) {
 		ResponseDTO  responseDTO = null;

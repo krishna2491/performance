@@ -10,12 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.master.dto.LoginDTO;
 import com.gomap.performance.master.dto.RequestDTO;
@@ -44,6 +46,7 @@ public class LoginControllerOrg {
 	 * This method authenticate the user
 	 * @param loginDTO
 	 */
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_LOGIN_AUTHENTICATE+"org"}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO authenticate(@RequestBody LoginDTO loginDTO, BindingResult result) {
 		ResponseDTO  responseDTO = null;
@@ -66,6 +69,7 @@ public class LoginControllerOrg {
 	/*
 	 * This method validate session of login user
 	 */
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_VALIDATE_SESSION+"org"}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO validateSession(@RequestBody RequestDTO requestDTO, BindingResult bindingResult) {
 		return null;
@@ -74,6 +78,7 @@ public class LoginControllerOrg {
 	/*
 	 * This method logout the user
 	 */
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_LOGOUT+"org"}, method = RequestMethod.POST)
 	public void logOut() {
 		 try {

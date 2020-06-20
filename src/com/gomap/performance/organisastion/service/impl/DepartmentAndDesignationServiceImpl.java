@@ -20,6 +20,9 @@ import com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao;
 import com.gomap.performance.organisastion.dao.impl.DepartmentAndDesignationDaoImpl;
 import com.gomap.performance.organisastion.dto.DepartmentDto;
 import com.gomap.performance.organisastion.dto.DesignationDto;
+import com.gomap.performance.organisastion.dto.ElementMasterDto;
+
+import com.gomap.performance.organisastion.model.DesignationElementMaping;
 import com.gomap.performance.organisastion.model.EmDepartment;
 import com.gomap.performance.organisastion.model.EmDesignation;
 import com.gomap.performance.organisastion.service.DepartmentAndDesignationService;
@@ -141,6 +144,20 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				responseDTO.setErrorMsg("Department id can not be blank");
 				
 			}
+			if(designationDto.getElementMasterDtoList()!=null)
+			{
+				DesignationElementMaping designationElementMaping=null;
+				for(ElementMasterDto elementMasterDto:designationDto.getElementMasterDtoList())
+				{
+					designationElementMaping=new DesignationElementMaping();
+					
+					if(elementMasterDto.getOperationList()!=null)
+					{
+						//for(OperationMaster)
+					}
+				}
+			}
+			
 			emDesignation.setActivateFlag(AppConstants.ACTIVE_FLAG);	
 			departmentAndDesignationDao.createDesignation(emDesignation);
 			responseDTO.setDataObj(emDesignation);

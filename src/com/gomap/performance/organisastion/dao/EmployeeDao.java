@@ -16,4 +16,5 @@ public interface EmployeeDao {
 	public EmEmployee storeEmployeeData(EmEmployee employeeMaster) throws Exception;
 	public List<EmEmployee> getEmployeeList(Integer employeeId) throws Exception;
 	public EmEmployee updateEmployee(EmEmployee employeeMaster) throws Exception;
+	public List<Object> getAllEmplyeeData() throws Exception;
 }

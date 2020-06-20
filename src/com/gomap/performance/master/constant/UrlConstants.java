@@ -41,6 +41,7 @@ public final class UrlConstants {
 	public static final String API_GET_SKILL = "emf/getSkill";
 	public static final String API_GET_GOAL = "emf/getGoal";
 	public static final String API_GET_EMPLOYEE = "emf/getEmployeeData";
+	public static final String API_GET_EMPLOYEE_LIST = "emf/getEmployeeList";
 	public static final String API_GET_TASK = "emf/getTask";
 	public static final String API_UPDATE_TASK = "emf/updateTask";
 	public static final String API_DELETE_TASK = "emf/deleteTask";
@@ -58,6 +59,8 @@ public final class UrlConstants {
 	public static final String API_ADD_ADMIN_MASTER = "emf/addAdminEmployee";
 	public static final String API_UPDATE_ADMIN_MASTER = "emf/updateAdminEmployee";
 	public static final String API_GET_ADMIN_MASTER = "emf/getAdminEmployee";
+	public static final String API_ADD_USER = "emf/addUser";
+
 	
 //	Lead
 	

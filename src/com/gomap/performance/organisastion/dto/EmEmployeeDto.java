@@ -25,6 +25,7 @@ public class EmEmployeeDto implements Serializable {
     private Date employeeCreatedDate;
     private Date employeeUpdatedDate;
     private EmDesignation designation;
+    private String gender;
 
     private Integer activateFlag;
 
@@ -201,5 +202,19 @@ public class EmEmployeeDto implements Serializable {
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 }

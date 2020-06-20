@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.dao.AdminEmployeeDao;
 import com.gomap.performance.master.model.EmployeeMaster;
+import com.gomap.performance.master.model.UserMaster;
 
 /**
  * @author krishnakant.bairagi
@@ -100,6 +101,41 @@ public class AdminEmployeeDaoImpl implements AdminEmployeeDao {
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		return criteria.list();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.AdminEmployeeDao#storeUserData(com.gomap.performance.master.model.UserMaster)
+	 */
+	@Override
+	public UserMaster storeUserData(UserMaster userMaster) throws Exception {
+		Session session=sessionFactory.getCurrentSession();
+		 session.save(userMaster);
+		return userMaster;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.AdminEmployeeDao#getUserData(java.lang.String, java.lang.String, java.lang.Integer)
+	 */
+	@Override
+	public UserMaster getUserData(String email, String password, Integer userId) throws Exception {
+		// TODO Auto-generated method stub
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(UserMaster.class);
+		if(email!=null)
+		{
+			criteria.add(Restrictions.eq("email", email));
+		}
+		if(password!=null)
+		{
+			criteria.add(Restrictions.eq("password", password));
+		}
+		if(userId!=null)
+		{
+			criteria.add(Restrictions.eq("userId", userId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return (UserMaster) criteria.uniqueResult();
 	}
 
 }

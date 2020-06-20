@@ -16,7 +16,9 @@ import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.dao.AdminEmployeeDao;
 import com.gomap.performance.master.dto.EmployeeMasterDto;
 import com.gomap.performance.master.dto.ResponseDTO;
+import com.gomap.performance.master.dto.UserDto;
 import com.gomap.performance.master.model.EmployeeMaster;
+import com.gomap.performance.master.model.UserMaster;
 import com.gomap.performance.master.service.AdminEmployeeService;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 
@@ -240,6 +242,49 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 		}
 		return responseDTO;
 	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.AdminEmployeeService#addUser(com.gomap.performance.master.dto.UserDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO addUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		logger.info("addUser.....");
+		ResponseDTO responseDTO=new ResponseDTO();
+		try {
+			UserMaster userMaster=new UserMaster();
+			if(userDto.getEmail()!=null)
+			{
+				userMaster.setEmail(userDto.getEmail());	
+			}
+		
+			if(userDto.getName()!=null)
+			{
+			userMaster.setName(userDto.getName());	
+			}
+				if(userDto.getPassword()!=null)
+			{
+			userMaster.setPassword(userDto.getPassword());	
+			}
+			
+			userMaster.setCreatedDate(new Date());
+			userMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
+			
+			adminEmployeeDao.storeUserData(userMaster);
+			
+			responseDTO.setDataObj(userMaster);
+			responseDTO.setSuccessMsg("User  Added");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				} catch (Exception e) {
+					logger.error("Errro whhile adding User");
+					responseDTO.setDataObj(e);
+					responseDTO.setErrorMsg(e.getMessage());
+					responseDTO.setErrorCode(411);
+			// TODO: handle exception
+		}
+		return responseDTO;
 	}
 
 }

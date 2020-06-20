@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.EmployeeDao;
+import com.gomap.performance.organisastion.model.EmDepartment;
+import com.gomap.performance.organisastion.model.EmDesignation;
 import com.gomap.performance.organisastion.model.EmEmployee;
 
 /**
@@ -66,6 +68,21 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().update(employeeMaster);
 		return employeeMaster;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#getAllEmplyeeData()
+	 */
+	@Override
+	public List<Object> getAllEmplyeeData() throws Exception {
+		// TODO Auto-generated method stub
+	
+	String empQuery="select new com.gomap.performance.organisastion.dto.EmployeeList(emp,des,dept) from EmEmployee as emp"+
+				 ",EmDesignation des" +
+		 ",EmDepartment dept where dept.departmentId=des.departmentId and des.designationId=emp.designationId";
+	
+	List<Object> objList=this.sessionFactory.getCurrentSession().createQuery(empQuery).list();
+		return objList;
 	}
 
 	/* (non-Javadoc)

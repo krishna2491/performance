@@ -5,6 +5,8 @@ package com.gomap.performance.master.service.impl;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gomap.performance.master.dao.AdminEmployeeDao;
 import com.gomap.performance.master.dto.LoginDTO;
 import com.gomap.performance.master.dto.ResponseDTO;
+import com.gomap.performance.master.enums.ErrorCodeEnums;
 import com.gomap.performance.master.model.EmployeeMaster;
+import com.gomap.performance.master.model.UserMaster;
 import com.gomap.performance.master.service.AdminLoginService;
 import com.gomap.performance.organisastion.model.EmEmployee;
 
@@ -22,6 +26,7 @@ import com.gomap.performance.organisastion.model.EmEmployee;
  */
 @Service
 public class LoginServiceImpl implements AdminLoginService {
+	private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
 	
 	@Autowired
@@ -34,9 +39,34 @@ public class LoginServiceImpl implements AdminLoginService {
 	 * @see com.gomap.performance.master.service.LoginService#authenticate(com.gomap.performance.master.dto.LoginDTO)
 	 */
 	@Override
-	public ResponseDTO authenticate(LoginDTO loginDTO) throws Exception {
+	@Transactional
+	public ResponseDTO authenticate(LoginDTO loginDTO) {
 		// TODO Auto-generated method stub
-		return null;
+		ResponseDTO res=new ResponseDTO();
+		try {
+			UserMaster userMaster=employeeDao.getUserData(loginDTO.getEmail(), loginDTO.getPassword(), null);
+			if(userMaster!=null)
+			{
+				res.setDataObj(userMaster);
+				res.setSuccessMsg("logged in successfully");
+				res.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}else
+			{
+				res.setDataObj(null);
+				res.setErrorMsg("Authentication failed");
+				res.setErrorCode(411);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			logger.error("Errro while login",e);
+			res.setDataObj(e);
+			res.setErrorMsg(e.getMessage());
+			res.setErrorCode(411);
+	// TODO: handle exception
+
+		}
+		return res;
 	}
 
 	/* (non-Javadoc)

@@ -5,6 +5,7 @@ package com.gomap.performance.organisastion.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author krishnakant.bairagi
@@ -29,6 +30,19 @@ public class DesignationDto implements Serializable {
 	    private Integer canApproveGoal;
 	    private Date designationCreatedDate;
 	    private Date designationUpdatedDate;
+	    private List<ElementMasterDto> elementMasterDtoList;
+		/**
+		 * @return the elementMasterDtoList
+		 */
+		public List<ElementMasterDto> getElementMasterDtoList() {
+			return elementMasterDtoList;
+		}
+		/**
+		 * @param elementMasterDtoList the elementMasterDtoList to set
+		 */
+		public void setElementMasterDtoList(List<ElementMasterDto> elementMasterDtoList) {
+			this.elementMasterDtoList = elementMasterDtoList;
+		}
 		/**
 		 * @return the designationId
 		 */

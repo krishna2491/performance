@@ -51,6 +51,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 			{
 				emEmployee.setDesignationId(employeeDto.getDesignationId());
 			}
+			if(employeeDto.getGender()!=null)
+			{
+				emEmployee.setGender(employeeDto.getGender());
+			}
 			if(employeeDto.getEmployeeEmail()!=null)
 			{
 				emEmployee.setEmployeeEmail(employeeDto.getEmployeeEmail());
@@ -177,6 +181,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 							{
 								emEmployee.setDesignationId(employeeDto.getDesignationId());
 							}
+							if(employeeDto.getGender()!=null)
+							{
+								emEmployee.setGender(employeeDto.getGender());
+							}
 							if(employeeDto.getEmployeeEmail()!=null)
 							{
 								emEmployee.setEmployeeEmail(employeeDto.getEmployeeEmail());
@@ -223,6 +231,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 			logger.error("Getting Error while updating Employee");
 		}
 		// TODO Auto-generated method stub
+		return responseDTO;
+	}
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.EmployeeService#getAllEmployee()
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO getAllEmployee() throws Exception {
+		// TODO Auto-generated method stub
+		logger.info("getAllEmployee ");
+		ResponseDTO responseDTO=null;
+		try {
+			responseDTO=new ResponseDTO();
+			responseDTO.setDataObj(empDao.getAllEmplyeeData());
+			responseDTO.setSuccessMsg("Employee sent successfully");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("Error in getAllEmployee",e);
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+		}
 		return responseDTO;
 	}
 	

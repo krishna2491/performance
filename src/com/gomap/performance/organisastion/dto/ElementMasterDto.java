@@ -7,6 +7,7 @@ package com.gomap.performance.organisastion.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -37,10 +38,30 @@ public class ElementMasterDto implements Serializable {
     private Date createdDate;
     private Date updatedDate;
     private Integer activateFlag;
+    private List<OperationMasterDto> operationList;
+
     
     
 
-    public ElementMasterDto() {}
+
+
+	/**
+	 * @return the operationList
+	 */
+	public List<OperationMasterDto> getOperationList() {
+		return operationList;
+	}
+
+
+	/**
+	 * @param operationList the operationList to set
+	 */
+	public void setOperationList(List<OperationMasterDto> operationList) {
+		this.operationList = operationList;
+	}
+
+
+	public ElementMasterDto() {}
 
 
 	/**
