@@ -3,10 +3,86 @@
  */
 package com.gomap.performance.organisastion.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.gomap.performance.master.constant.AppConstants;
+import com.gomap.performance.organisastion.dao.FeedbackDao;
+import com.gomap.performance.organisastion.model.EmFeedbackRequest;
+import com.gomap.performance.organisastion.model.FeedbackRequestParaMpg;
+
 /**
  * @author krishnakant.bairagi
  *
  */
-public class FeedBackDaoImpl {
+@Repository
+public class FeedBackDaoImpl implements FeedbackDao{
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.FeedbackDao#createFeedBackRequest(com.gomap.performance.organisastion.model.EmFeedbackRequest)
+	 */
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@Override
+	public EmFeedbackRequest createFeedBackRequest(EmFeedbackRequest emFeedbackRequest) {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(emFeedbackRequest);
+		return emFeedbackRequest;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.FeedbackDao#mapFeedbackPara(com.gomap.performance.organisastion.model.FeedbackRequestParaMpg)
+	 */
+	@Override
+	public FeedbackRequestParaMpg mapFeedbackPara(FeedbackRequestParaMpg feedbackRequestParaMpg) {
+		sessionFactory.getCurrentSession().save(feedbackRequestParaMpg);
+		return feedbackRequestParaMpg;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.FeedbackDao#getFeedbackList(com.gomap.performance.organisastion.model.EmFeedbackRequest)
+	 */
+	@Override
+	public List<EmFeedbackRequest> getFeedbackList(EmFeedbackRequest emFeedbackRequest) {
+		// TODO Auto-generated method stub
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(EmFeedbackRequest.class);
+		if(emFeedbackRequest.getFeedbackRequesterId()!=null)
+		{
+			criteria.add(Restrictions.eq("feedbackRequesterId", emFeedbackRequest.getFeedbackRequesterId()));
+		}if(emFeedbackRequest.getfeedbackForId()!=null)
+		{
+			criteria.add(Restrictions.eq("feedbackForId", emFeedbackRequest.getfeedbackForId()));
+			criteria.add(Restrictions.eq("feedbackStatus", AppConstants.SUBMITTED));
+			
+		}if(emFeedbackRequest.getFeedbackFromId()!=null)
+		{
+			criteria.add(Restrictions.eq("feedbackFromId", emFeedbackRequest.getFeedbackFromId()));
+			criteria.add(Restrictions.eq("feedbackStatus", AppConstants.CREATED));
+		}
+			criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		
+		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.FeedbackDao#getFeedbackParam(java.lang.Integer)
+	 */
+	@Override
+	public List<FeedbackRequestParaMpg> getFeedbackParam(Integer feedbackRequestId) {
+		// TODO Auto-generated method stub
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(FeedbackRequestParaMpg.class);
+		if(feedbackRequestId!=null)
+		{
+			criteria.add(Restrictions.eq("feedbackRequestId",feedbackRequestId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return criteria.list();
+	}
 
 }

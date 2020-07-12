@@ -21,7 +21,7 @@ public class CompanyMasterDto implements Serializable{
 	private Integer companyId;
 	private String companyName;
 	private String adminEmail;
-	private Integer adminMobile;
+	private String adminMobile;
 	private String companyDomain;
 	private String portalName;
 	private String industryType;
@@ -70,13 +70,13 @@ public class CompanyMasterDto implements Serializable{
 	/**
 	 * @return the adminMobile
 	 */
-	public Integer getAdminMobile() {
+	public String getAdminMobile() {
 		return adminMobile;
 	}
 	/**
 	 * @param adminMobile the adminMobile to set
 	 */
-	public void setAdminMobile(Integer adminMobile) {
+	public void setAdminMobile(String adminMobile) {
 		this.adminMobile = adminMobile;
 	}
 	/**

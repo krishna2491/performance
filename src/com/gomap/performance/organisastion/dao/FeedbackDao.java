@@ -3,10 +3,19 @@
  */
 package com.gomap.performance.organisastion.dao;
 
+import java.util.List;
+
+import com.gomap.performance.organisastion.model.EmFeedbackRequest;
+import com.gomap.performance.organisastion.model.FeedbackRequestParaMpg;
+
 /**
  * @author krishnakant.bairagi
  *
  */
-public class FeedbackDao {
+public interface FeedbackDao {
+	public EmFeedbackRequest createFeedBackRequest(EmFeedbackRequest emFeedbackRequest);
+	public FeedbackRequestParaMpg mapFeedbackPara(FeedbackRequestParaMpg feedbackRequestParaMpg);
+	public List<EmFeedbackRequest> getFeedbackList(EmFeedbackRequest emFeedbackRequest);
+	public List<FeedbackRequestParaMpg> getFeedbackParam(Integer feedbackRequestId);
 
 }

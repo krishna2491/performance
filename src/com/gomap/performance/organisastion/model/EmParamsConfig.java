@@ -27,109 +27,30 @@ import com.sun.istack.internal.NotNull;
 
 /**
  *
- * @author Palash
+ * @author Krishnakant
  */
 @Entity
-@Table(name = "role_element_operation_mpg")
+@Table(name = "Em_Params_Config")
 @XmlRootElement
-public class RoleElementOperationMpg implements Serializable {
+public class EmParamsConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "role_element_operation_id")
-    private Integer roleElementOperationId;
-    /**
-	 * @return the roleElementOperationId
-	 */
-	public Integer getRoleElementOperationId() {
-		return roleElementOperationId;
-	}
-
-
-	/**
-	 * @param roleElementOperationId the roleElementOperationId to set
-	 */
-	public void setRoleElementOperationId(Integer roleElementOperationId) {
-		this.roleElementOperationId = roleElementOperationId;
-	}
-
-
-	/**
-	 * @return the designationElementMpgId
-	 */
-	public Integer getDesignationElementMpgId() {
-		return designationElementMpgId;
-	}
-
-
-	/**
-	 * @param designationElementMpgId the designationElementMpgId to set
-	 */
-	public void setDesignationElementMpgId(Integer designationElementMpgId) {
-		this.designationElementMpgId = designationElementMpgId;
-	}
-
-
-	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-
-	/**
-	 * @param createdDate the createdDate to set
-	 */
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-
-	/**
-	 * @return the updatedDate
-	 */
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-
-	/**
-	 * @param updatedDate the updatedDate to set
-	 */
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-
-	/**
-	 * @return the activateFlag
-	 */
-	public Integer getActivateFlag() {
-		return activateFlag;
-	}
-
-
-	/**
-	 * @param activateFlag the activateFlag to set
-	 */
-	public void setActivateFlag(Integer activateFlag) {
-		this.activateFlag = activateFlag;
-	}
-
-
-	@Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "designation_element_mpg_id")
-    private Integer designationElementMpgId;
+    @Column(name = "param_Id")
+    private Long paramId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "operation_id")
-    private Integer operationId;
+    @Column(name = "param_name")
+    private String paramName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "param_type")
+    private Integer paramType;
+    
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
@@ -142,23 +63,124 @@ public class RoleElementOperationMpg implements Serializable {
     @Column(name = "activate_flag")
     private Integer activateFlag;
     
+    
 
-    public RoleElementOperationMpg() {
+    public EmParamsConfig() {}
+
+
+
+	/**
+	 * @return the paramId
+	 */
+	public Long getParamId() {
+		return paramId;
+	}
+
+
+
+	/**
+	 * @param paramId the paramId to set
+	 */
+	public void setParamId(Long paramId) {
+		this.paramId = paramId;
+	}
+
+
+
+	/**
+	 * @return the paramName
+	 */
+	public String getParamName() {
+		return paramName;
+	}
+
+
+
+	/**
+	 * @param paramName the paramName to set
+	 */
+	public void setParamName(String paramName) {
+		this.paramName = paramName;
+	}
+
+
+
+	/**
+	 * @return the paramType
+	 */
+	public Integer getParamType() {
+		return paramType;
+	}
+
+
+
+	/**
+	 * @param paramType the paramType to set
+	 */
+	public void setParamType(Integer paramType) {
+		this.paramType = paramType;
+	}
+
+
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+
+	/**
+	 * @return the updatedDate
+	 */
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+
+
+	/**
+	 * @param updatedDate the updatedDate to set
+	 */
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+
+
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
+
+
+
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
+
+
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
     }
-
-
-	/**
-	 * @return the operationId
-	 */
-	public Integer getOperationId() {
-		return operationId;
-	}
-
-
-	/**
-	 * @param operationId the operationId to set
-	 */
-	public void setOperationId(Integer operationId) {
-		this.operationId = operationId;
-	}
-}

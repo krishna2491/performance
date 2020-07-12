@@ -164,9 +164,32 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				
 				responseDTO=departmentAndDesignationService.getDesignation(designationDto.getDesignationId(),designationDto.getDepartmentId());
 				DesignationDto dd=new DesignationDto();
-				//responseDTO.setDataObj(dd);
+				
+				responseDTO.setDataObj(dd);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
+		} catch (PerformanceException ex) {
+			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
+			logger.error("error",ex);
+		} 
+		catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_DESIGNATION_ELEMETNS}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getDesignationWithElements(@RequestParam Integer designationId) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				responseDTO=new ResponseDTO();
+				
+				responseDTO=departmentAndDesignationService.getDesignationWithElements(designationId);
+				
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
 			logger.error("error",ex);

@@ -13,5 +13,8 @@ public final class AppConstants {
 	public static final String USR_SESSION="";
 	public static final String USR_MESSAGE_PROPERTY_FILE_NAME="user-messages";
 	public static final String CORS="*";
+	public static final Integer  CREATED=1;
+	public static final Integer  SUBMITTED=2;
+	public static final Integer  COMPLETED=3;
 	
 }

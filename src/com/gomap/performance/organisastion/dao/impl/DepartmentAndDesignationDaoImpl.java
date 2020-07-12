@@ -16,8 +16,10 @@ import org.springframework.stereotype.Repository;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.dto.ResponseDTO;
 import com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao;
+import com.gomap.performance.organisastion.model.DesignationElementMaping;
 import com.gomap.performance.organisastion.model.EmDepartment;
 import com.gomap.performance.organisastion.model.EmDesignation;
+import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
 import com.gomap.performance.organisastion.service.impl.EmployeeServiceImpl;
 
 /**
@@ -123,5 +125,62 @@ public class DepartmentAndDesignationDaoImpl implements DepartmentAndDesignation
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		return criteria.list();
 	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#mapDesignationElement(com.gomap.performance.organisastion.model.DesignationElementMaping)
+	 */
+	@Override
+	public DesignationElementMaping mapDesignationElement(DesignationElementMaping designationElementMaping) throws Exception {
+		// TODO Auto-generated method stub
+this.sessionFactory.getCurrentSession().save(designationElementMaping);
+		
+		return designationElementMaping;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#mapOperation(com.gomap.performance.organisastion.model.RoleElementOperationMpg)
+	 */
+	@Override
+	public RoleElementOperationMpg mapOperation(RoleElementOperationMpg roleElementOperationMpg) throws Exception {
+		// TODO Auto-generated method stub
+this.sessionFactory.getCurrentSession().save(roleElementOperationMpg);
+		
+		return roleElementOperationMpg;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#getDesignationElement(java.lang.Integer)
+	 */
+	@Override
+	public List<DesignationElementMaping> getDesignationElement(Integer designationId) throws Exception {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(DesignationElementMaping.class);
+		if(designationId!=null)
+		{
+			criteria.add(Restrictions.eq("designationId", designationId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#getDesignationElementOperation(java.lang.Integer)
+	 */
+	@Override
+	public List<RoleElementOperationMpg> getDesignationElementOperation(Integer designationElementMpgId)
+			throws Exception {
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(RoleElementOperationMpg.class);
+		if(designationElementMpgId!=null)
+		{
+			criteria.add(Restrictions.eq("designationElementMpgId", designationElementMpgId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#getDesignationElementOperation(com.gomap.performance.organisastion.model.RoleElementOperationMpg)
+	 */
+	
 
 	}

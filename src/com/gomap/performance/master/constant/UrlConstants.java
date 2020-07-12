@@ -31,7 +31,9 @@ public final class UrlConstants {
 	public static final String API_ADD_GOAL = "emf/addGoal";
 	public static final String API_ADD_TASK = "emf/addTask";
 	public static final String API_ADD_FEEDBACK = "emf/addFeedabck";
-	public static final String API_GET_FEEBBACK = "emf/getFeddback";
+	public static final String API_GET_REQUESTED_FEEBBACK = "emf/getRequestedFeedback";
+	public static final String API_GET_SUBMITTED_FEEBBACK = "emf/getSubmittedFeedback";
+	public static final String API_GET_MY_FEEBBACK = "emf/getMyFeedback";
 	public static final String API_CREATE_TEAM = "emf/addTeam";
 	public static final String API_GET_TEAM = "emf/getTeam";
 	public static final String API_UPDATE_TEAM = "emf/updateTeam";
@@ -60,7 +62,12 @@ public final class UrlConstants {
 	public static final String API_UPDATE_ADMIN_MASTER = "emf/updateAdminEmployee";
 	public static final String API_GET_ADMIN_MASTER = "emf/getAdminEmployee";
 	public static final String API_ADD_USER = "emf/addUser";
-
+	public static final String API_GET_ELEMENT = "emf/getElements";
+	public static final String API_GET_OPERATION = "emf/getOperation";
+	public static final String API_ADD_ELEMENT = "emf/addElement";
+	public static final String API_DESIGNATION_ELEMETNS = "emf/getDesignationElements";
+	public static final String API_ADD_PARAMETER = "emf/addParameter";
+	public static final String API_GET_PARAMETER = "emf/getParameter";
 	
 //	Lead
 	

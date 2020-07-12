@@ -25,7 +25,7 @@ public class CompanyMaster {
 	private Integer companyId;
 	private String companyName;
 	private String adminEmail;
-	private Integer adminMobile;
+	private Long adminMobile;
 	private String companyDomain;
 	private String portalName;
 	private String industryType;
@@ -80,14 +80,14 @@ public class CompanyMaster {
 	 * @return the adminMobile
 	 */
 	@Column(name = "admin_mobile", nullable = false, length = 30)
-	public Integer getAdminMobile() {
+	public Long getAdminMobile() {
 		return adminMobile;
 	}
 	/**
 	 * @param adminMobile the adminMobile to set
 	 */
 	
-	public void setAdminMobile(Integer adminMobile) {
+	public void setAdminMobile(Long adminMobile) {
 		this.adminMobile = adminMobile;
 	}
 	/**

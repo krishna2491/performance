@@ -27,114 +27,87 @@ import com.sun.istack.internal.NotNull;
 
 /**
  *
- * @author Palash
+ * @author Krishnakant
  */
 
-public class RoleElementOperationMpgDto implements Serializable {
+public class EmParamsConfigDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private Integer designationElementMpgId;
-   private Integer roleElementOperationId;
-   private Integer operationId;
-    /**
- * @return the operationId
- */
-public Integer getOperationId() {
-	return operationId;
-}
+	private static final long serialVersionUID = 1L;
 
-
-/**
- * @param operationId the operationId to set
- */
-public void setOperationId(Integer operationId) {
-	this.operationId = operationId;
-}
-
-
+	private Long paramId;
+	private String paramName;
+	private Integer paramType;
 	private Date createdDate;
-   
-    private Date updatedDate;
-  
-    private Integer activateFlag;
-    
-
-    public RoleElementOperationMpgDto() {
-    }
-
-
-	/**
-	 * @return the designationElementMpgId
-	 */
-	public Integer getDesignationElementMpgId() {
-		return designationElementMpgId;
+	private Date updatedDate;
+	private Integer activateFlag;
+	public EmParamsConfigDto() {
 	}
-
-
 	/**
-	 * @param designationElementMpgId the designationElementMpgId to set
+	 * @return the paramId
 	 */
-	public void setDesignationElementMpgId(Integer designationElementMpgId) {
-		this.designationElementMpgId = designationElementMpgId;
+	public Long getParamId() {
+		return paramId;
 	}
-
-
 	/**
-	 * @return the roleElementOperationId
+	 * @param paramId the paramId to set
 	 */
-	public Integer getRoleElementOperationId() {
-		return roleElementOperationId;
+	public void setParamId(Long paramId) {
+		this.paramId = paramId;
 	}
-
-
 	/**
-	 * @param roleElementOperationId the roleElementOperationId to set
+	 * @return the paramName
 	 */
-	public void setRoleElementOperationId(Integer roleElementOperationId) {
-		this.roleElementOperationId = roleElementOperationId;
+	public String getParamName() {
+		return paramName;
 	}
-
-
+	/**
+	 * @param paramName the paramName to set
+	 */
+	public void setParamName(String paramName) {
+		this.paramName = paramName;
+	}
+	/**
+	 * @return the paramType
+	 */
+	public Integer getParamType() {
+		return paramType;
+	}
+	/**
+	 * @param paramType the paramType to set
+	 */
+	public void setParamType(Integer paramType) {
+		this.paramType = paramType;
+	}
 	/**
 	 * @return the createdDate
 	 */
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
-
 	/**
 	 * @param createdDate the createdDate to set
 	 */
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
-
 	/**
 	 * @return the updatedDate
 	 */
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
-
-
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
-
 	/**
 	 * @return the activateFlag
 	 */
 	public Integer getActivateFlag() {
 		return activateFlag;
 	}
-
-
 	/**
 	 * @param activateFlag the activateFlag to set
 	 */

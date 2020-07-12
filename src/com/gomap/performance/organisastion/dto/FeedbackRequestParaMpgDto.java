@@ -7,93 +7,105 @@ package com.gomap.performance.organisastion.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.sun.istack.internal.NotNull;
-
 /**
  *
- * @author Palash
+ * @author krishnakant
  */
 
-public class RoleElementOperationMpgDto implements Serializable {
+public class FeedbackRequestParaMpgDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer designationElementMpgId;
-   private Integer roleElementOperationId;
-   private Integer operationId;
-    /**
- * @return the operationId
- */
-public Integer getOperationId() {
-	return operationId;
-}
-
-
-/**
- * @param operationId the operationId to set
- */
-public void setOperationId(Integer operationId) {
-	this.operationId = operationId;
-}
-
-
-	private Date createdDate;
+   
+    private Integer feedbackRequestMpgId;
+   
+	
+    private Integer paramId;
+   
+    private Integer rating;
+   
+    private String description;
+   
+   
+    private Date createdDate;
    
     private Date updatedDate;
-  
+   
     private Integer activateFlag;
-    
 
-    public RoleElementOperationMpgDto() {
+    public FeedbackRequestParaMpgDto() {
     }
 
-
 	/**
-	 * @return the designationElementMpgId
+	 * @return the feedbackRequestMpgId
 	 */
-	public Integer getDesignationElementMpgId() {
-		return designationElementMpgId;
+	public Integer getFeedbackRequestMpgId() {
+		return feedbackRequestMpgId;
 	}
 
-
 	/**
-	 * @param designationElementMpgId the designationElementMpgId to set
+	 * @param feedbackRequestMpgId the feedbackRequestMpgId to set
 	 */
-	public void setDesignationElementMpgId(Integer designationElementMpgId) {
-		this.designationElementMpgId = designationElementMpgId;
+	public void setFeedbackRequestMpgId(Integer feedbackRequestMpgId) {
+		this.feedbackRequestMpgId = feedbackRequestMpgId;
 	}
 
-
 	/**
-	 * @return the roleElementOperationId
+	 * @return the paramId
 	 */
-	public Integer getRoleElementOperationId() {
-		return roleElementOperationId;
+	public Integer getParamId() {
+		return paramId;
 	}
 
-
 	/**
-	 * @param roleElementOperationId the roleElementOperationId to set
+	 * @param paramId the paramId to set
 	 */
-	public void setRoleElementOperationId(Integer roleElementOperationId) {
-		this.roleElementOperationId = roleElementOperationId;
+	public void setParamId(Integer paramId) {
+		this.paramId = paramId;
 	}
 
+	/**
+	 * @return the rating
+	 */
+	public Integer getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	/**
 	 * @return the createdDate
@@ -102,14 +114,12 @@ public void setOperationId(Integer operationId) {
 		return createdDate;
 	}
 
-
 	/**
 	 * @param createdDate the createdDate to set
 	 */
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 
 	/**
 	 * @return the updatedDate
@@ -118,14 +128,12 @@ public void setOperationId(Integer operationId) {
 		return updatedDate;
 	}
 
-
 	/**
 	 * @param updatedDate the updatedDate to set
 	 */
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
 
 	/**
 	 * @return the activateFlag
@@ -134,11 +142,18 @@ public void setOperationId(Integer operationId) {
 		return activateFlag;
 	}
 
-
 	/**
 	 * @param activateFlag the activateFlag to set
 	 */
 	public void setActivateFlag(Integer activateFlag) {
 		this.activateFlag = activateFlag;
 	}
-}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	}

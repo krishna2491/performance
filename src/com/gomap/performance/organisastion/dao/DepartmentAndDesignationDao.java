@@ -6,8 +6,10 @@ package com.gomap.performance.organisastion.dao;
 import java.util.List;
 
 import com.gomap.performance.master.dto.ResponseDTO;
+import com.gomap.performance.organisastion.model.DesignationElementMaping;
 import com.gomap.performance.organisastion.model.EmDepartment;
 import com.gomap.performance.organisastion.model.EmDesignation;
+import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
 
 /**
  * @author krishnakant.bairagi
@@ -27,6 +29,13 @@ public interface DepartmentAndDesignationDao {
 	
 	public List<EmDepartment> getDepartment(Integer departmentId) throws Exception;
 	public List<EmDesignation> getDesignation(Integer designationId,Integer departmentId) throws Exception;
+	
+	public DesignationElementMaping mapDesignationElement(DesignationElementMaping designationElementMaping) throws Exception;
+	public RoleElementOperationMpg mapOperation(RoleElementOperationMpg  roleElementOperationMpg) throws Exception;
+	
+	public List<DesignationElementMaping> getDesignationElement(Integer designationId ) throws Exception;
+	public List<RoleElementOperationMpg> getDesignationElementOperation(Integer  designationElementMpgId) throws Exception;
+	
 	
 	
 

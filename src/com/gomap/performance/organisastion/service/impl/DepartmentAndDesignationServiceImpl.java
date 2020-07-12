@@ -4,6 +4,7 @@
 package com.gomap.performance.organisastion.service.impl;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,17 +15,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gomap.performance.organisastion.dto.ResponseDTO;
+import com.gomap.performance.organisastion.dto.RoleElementOperationMpgDto;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao;
 import com.gomap.performance.organisastion.dao.impl.DepartmentAndDesignationDaoImpl;
 import com.gomap.performance.organisastion.dto.DepartmentDto;
 import com.gomap.performance.organisastion.dto.DesignationDto;
+import com.gomap.performance.organisastion.dto.DesignationElementMapingDto;
 import com.gomap.performance.organisastion.dto.ElementMasterDto;
-
+import com.gomap.performance.organisastion.dto.OperationMasterDto;
 import com.gomap.performance.organisastion.model.DesignationElementMaping;
 import com.gomap.performance.organisastion.model.EmDepartment;
 import com.gomap.performance.organisastion.model.EmDesignation;
+import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
 import com.gomap.performance.organisastion.service.DepartmentAndDesignationService;
 
 /**
@@ -77,57 +81,13 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 			EmDesignation emDesignation=new EmDesignation();
 			
 			emDesignation.setDesignationCreatedDate(new Date());
-			if(designationDto.getCanAddEmployeeToTeam()!=null)
-			{
-				emDesignation.setCanAddEmployeeToTeam(designationDto.getCanAddEmployeeToTeam());	
-			}
-			if(designationDto.getCanApproveGoal()!=null)
-			{
-				emDesignation.setCanApproveGoal(designationDto.getCanApproveGoal());
-			}
-			if(designationDto.getCanCreateEmployee()!=null)
-			{
-				emDesignation.setCanCreateEmployee(designationDto.getCanCreateEmployee());
-			}
-			if(designationDto.getCanCreateFeedbackReq()!=null)
-			{
-				emDesignation.setCanCreateFeedbackReq(designationDto.getCanCreateFeedbackReq());
-			}
-			if(designationDto.getCanCreateProject()!=null)
-			{
-				emDesignation.setCanCreateProject(designationDto.getCanCreateProject());
-			}
-			if(designationDto.getCanCreateRateSkill()!=null)
-			{
-				emDesignation.setCanCreateRateSkill(designationDto.getCanCreateRateSkill());
-			}
 			
-			
-			if(designationDto.getCanCreateTask()!=null)
-			{
-				emDesignation.setCanCreateTask(designationDto.getCanCreateTask());
-			}
-			if(designationDto.getCanCreateTeam()!=null)
-			{
-				emDesignation.setCanCreateTeam(designationDto.getCanCreateTeam());
-			}
-			if(designationDto.getCanEvaluateSkill()!=null)
-			{
-				emDesignation.setCanEvaluateSkill(designationDto.getCanEvaluateSkill());
-			}
-			if(designationDto.getCanViewTeam()!=null)
-			{
-				emDesignation.setCanViewTeam(designationDto.getCanViewTeam());
-			}
 			
 			if(designationDto.getDesignationLevelNo()!=null)
 			{
 				emDesignation.setDesignationLevelNo(designationDto.getDesignationLevelNo());
 			}
-			if(designationDto.getCanViewAllTask()!=null)
-			{
-				emDesignation.setCanViewAllTask(designationDto.getCanViewAllTask());
-			}
+			
 			if(designationDto.getDesignationName()!=null)
 			{
 				emDesignation.setDesignationName(designationDto.getDesignationName());
@@ -144,22 +104,42 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				responseDTO.setErrorMsg("Department id can not be blank");
 				
 			}
-			if(designationDto.getElementMasterDtoList()!=null)
+			
+			emDesignation.setActivateFlag(AppConstants.ACTIVE_FLAG);	
+			departmentAndDesignationDao.createDesignation(emDesignation);
+			
+			if(designationDto.getDesignationElementMappingList()!=null)
 			{
 				DesignationElementMaping designationElementMaping=null;
-				for(ElementMasterDto elementMasterDto:designationDto.getElementMasterDtoList())
+				for(DesignationElementMapingDto designationElementMapingDto:designationDto.getDesignationElementMappingList())
 				{
 					designationElementMaping=new DesignationElementMaping();
 					
-					if(elementMasterDto.getOperationList()!=null)
+					designationElementMaping.setDesignationId(emDesignation.getDesignationId());
+					designationElementMaping.setElementId(designationElementMapingDto.getElementId());
+					designationElementMaping.setActivateFlag(AppConstants.ACTIVE_FLAG);
+					designationElementMaping.setCreatedDate(new Date());
+					departmentAndDesignationDao.mapDesignationElement(designationElementMaping);
+					
+					if(designationElementMapingDto.getRoleElementOprationList()!=null)
 					{
 						//for(OperationMaster)
+						for(RoleElementOperationMpgDto roleElementOperationMpgDto:designationElementMapingDto.getRoleElementOprationList())
+						{
+							RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();
+							roleElementOperationMpg.setOperationId(roleElementOperationMpgDto.getOperationId());
+							roleElementOperationMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
+							roleElementOperationMpg.setDesignationElementMpgId(designationElementMaping.getDesignationElementMpgId());
+							roleElementOperationMpg.setCreatedDate(new Date());
+							departmentAndDesignationDao.mapOperation(roleElementOperationMpg);
+							
+						}
+						
 					}
 				}
 			}
 			
-			emDesignation.setActivateFlag(AppConstants.ACTIVE_FLAG);	
-			departmentAndDesignationDao.createDesignation(emDesignation);
+			
 			responseDTO.setDataObj(emDesignation);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		} catch (Exception e) {
@@ -239,65 +219,19 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 			} else {
 				List<EmDesignation> designalationList = departmentAndDesignationDao
 						.getDesignation(designationDto.getDesignationId(),null);
+				
+				
 				if (designalationList.isEmpty()) {
 					responseDTO.setErrorCode(412);
 					responseDTO.setErrorMsg("Designation data is not availabe in system");
 				} else {
 					EmDesignation emDesignation = designalationList.get(0);
 					if (emDesignation!=null) {
-						
-						
-						if(designationDto.getCanAddEmployeeToTeam()!=null)
-						{
-							emDesignation.setCanAddEmployeeToTeam(designationDto.getCanAddEmployeeToTeam());	
-						}
-						if(designationDto.getCanApproveGoal()!=null)
-						{
-							emDesignation.setCanApproveGoal(designationDto.getCanApproveGoal());
-						}
-						if(designationDto.getCanCreateEmployee()!=null)
-						{
-							emDesignation.setCanCreateEmployee(designationDto.getCanCreateEmployee());
-						}
-						if(designationDto.getCanCreateFeedbackReq()!=null)
-						{
-							emDesignation.setCanCreateFeedbackReq(designationDto.getCanCreateFeedbackReq());
-						}
-						if(designationDto.getCanCreateProject()!=null)
-						{
-							emDesignation.setCanCreateProject(designationDto.getCanCreateProject());
-						}
-						if(designationDto.getCanCreateRateSkill()!=null)
-						{
-							emDesignation.setCanCreateRateSkill(designationDto.getCanCreateRateSkill());
-						}
-						
-						
-						if(designationDto.getCanCreateTask()!=null)
-						{
-							emDesignation.setCanCreateTask(designationDto.getCanCreateTask());
-						}
-						if(designationDto.getCanCreateTeam()!=null)
-						{
-							emDesignation.setCanCreateTeam(designationDto.getCanCreateTeam());
-						}
-						if(designationDto.getCanEvaluateSkill()!=null)
-						{
-							emDesignation.setCanEvaluateSkill(designationDto.getCanEvaluateSkill());
-						}
-						if(designationDto.getCanViewTeam()!=null)
-						{
-							emDesignation.setCanViewTeam(designationDto.getCanViewTeam());
-						}
-						
 						if(designationDto.getDesignationLevelNo()!=null)
 						{
 							emDesignation.setDesignationLevelNo(designationDto.getDesignationLevelNo());
 						}
-						if(designationDto.getCanViewAllTask()!=null)
-						{
-							emDesignation.setCanViewAllTask(designationDto.getCanViewAllTask());
-						}
+						
 						if(designationDto.getDesignationName()!=null)
 						{
 							emDesignation.setDesignationName(designationDto.getDesignationName());
@@ -317,6 +251,77 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				
 						emDesignation.setDesignationUpdatedDate(new Date());
 						departmentAndDesignationDao.updateDesignation(emDesignation);
+						
+						if(designationDto.getDesignationElementMappingList()!=null)
+						{
+							DesignationElementMaping designationElementMaping=null;
+							
+							for(DesignationElementMapingDto designationElementMapingDto:designationDto.getDesignationElementMappingList())
+							{
+								if(designationElementMapingDto.getDesignationElementMpgId()==null)
+								{
+									// insert new element
+									// then store data for operation
+
+										designationElementMaping=new DesignationElementMaping();
+										
+										designationElementMaping.setDesignationId(emDesignation.getDesignationId());
+										designationElementMaping.setElementId(designationElementMapingDto.getElementId());
+										designationElementMaping.setActivateFlag(AppConstants.ACTIVE_FLAG);
+										designationElementMaping.setCreatedDate(new Date());
+										departmentAndDesignationDao.mapDesignationElement(designationElementMaping);
+										
+										if(designationElementMapingDto.getRoleElementOprationList()!=null)
+										{
+											//for(OperationMaster)
+											for(RoleElementOperationMpgDto roleElementOperationMpgDto:designationElementMapingDto.getRoleElementOprationList())
+											{
+												RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();
+												roleElementOperationMpg.setOperationId(roleElementOperationMpgDto.getOperationId());
+												roleElementOperationMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
+												roleElementOperationMpg.setDesignationElementMpgId(designationElementMaping.getDesignationElementMpgId());
+												roleElementOperationMpg.setCreatedDate(new Date());
+												departmentAndDesignationDao.mapOperation(roleElementOperationMpg);
+												
+											}
+											
+										}
+									
+								
+								}else {
+									if(designationElementMapingDto.getRoleElementOprationList()!=null)
+									{
+										for(RoleElementOperationMpgDto roleElementOperationMpgDto:designationElementMapingDto.getRoleElementOprationList())
+										{
+											if(roleElementOperationMpgDto.getRoleElementOperationId()==null)
+											{
+												RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();
+												roleElementOperationMpg.setOperationId(roleElementOperationMpgDto.getOperationId());
+												roleElementOperationMpg.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+												roleElementOperationMpg.setDesignationElementMpgId(designationElementMapingDto.getDesignationElementMpgId());
+												roleElementOperationMpg.setCreatedDate(new Date());
+												departmentAndDesignationDao.mapOperation(roleElementOperationMpg);
+												
+												// insert new  operation
+											}else
+											{
+												if(roleElementOperationMpgDto.getActivateFlag().equals(AppConstants.IN_ACTIVE_FLAG))
+												{
+													//inactive operation here
+													RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();
+													roleElementOperationMpg.setOperationId(roleElementOperationMpgDto.getOperationId());
+													roleElementOperationMpg.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+													roleElementOperationMpg.setDesignationElementMpgId(designationElementMaping.getDesignationElementMpgId());
+													roleElementOperationMpg.setUpdatedDate(new Date());
+													departmentAndDesignationDao.mapOperation(roleElementOperationMpg);
+													
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 						responseDTO.setDataObj(emDesignation);
 						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 					}
@@ -467,5 +472,62 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 		// TODO Auto-generated method stub
 		return responseDTO;
 	
+	}
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.DepartmentAndDesignationService#getDesignationWithElements(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO getDesignationWithElements(Integer designationId) throws Exception {
+		// TODO Auto-generated method stub
+		logger.info("getting getDesignationWithElements designationId="+designationId);
+		ResponseDTO responseDTO=new ResponseDTO();
+		try {
+			
+			List<DesignationElementMaping> designationElementMapings=departmentAndDesignationDao.getDesignationElement(designationId);
+			DesignationElementMapingDto designationElementMapingDto=new DesignationElementMapingDto();
+			List<RoleElementOperationMpgDto> operationMasterDtos=new ArrayList<RoleElementOperationMpgDto>();
+			List<DesignationElementMapingDto> designationElementMapingDtos=new ArrayList<DesignationElementMapingDto>();
+			DesignationElementMapingDto designationElementMapingDto2=new DesignationElementMapingDto();
+			RoleElementOperationMpgDto elementOperationMpgDto=new RoleElementOperationMpgDto();
+			DesignationDto designationDto=new DesignationDto();
+			designationDto.setDesignationId(designationId);
+			for(DesignationElementMaping designationElementMaping:designationElementMapings)
+			{
+				operationMasterDtos = new ArrayList<RoleElementOperationMpgDto>();
+				designationElementMapingDto2 = new DesignationElementMapingDto();
+				List<RoleElementOperationMpg> masterDtos = departmentAndDesignationDao
+						.getDesignationElementOperation(designationElementMaping.getDesignationElementMpgId());
+				if (masterDtos != null && !masterDtos.isEmpty()) {
+					for (RoleElementOperationMpg elementOperationMpg : masterDtos) {
+
+						elementOperationMpgDto = new RoleElementOperationMpgDto();
+						elementOperationMpgDto
+								.setDesignationElementMpgId(elementOperationMpg.getDesignationElementMpgId());
+						elementOperationMpgDto.setOperationId(elementOperationMpg.getOperationId());
+						elementOperationMpgDto
+								.setRoleElementOperationId(elementOperationMpg.getRoleElementOperationId());
+						operationMasterDtos.add(elementOperationMpgDto);
+					}
+					designationElementMapingDto2.setRoleElementOprationList(operationMasterDtos);
+					designationElementMapingDto2.setDesignationId(designationElementMaping.getDesignationId());
+					designationElementMapingDto2.setElementId(designationElementMaping.getElementId());
+					designationElementMapingDto2
+							.setDesignationElementMpgId(designationElementMaping.getDesignationElementMpgId());
+					designationElementMapingDtos.add(designationElementMapingDto2);
+				}
+			}
+			designationDto.setDesignationElementMappingList(designationElementMapingDtos);
+			responseDTO.setDataObj(designationDto);
+			responseDTO.setSuccessMsg("Data sent");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+		}
+		return responseDTO;
 	}
 		}

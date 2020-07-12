@@ -47,7 +47,7 @@ public class CompanyMasterServiceImpl implements CompanyService {
 			}
 			if(companyMasterDto.getAdminMobile()!=null)
 			{
-				companyMaster.setAdminMobile(companyMasterDto.getAdminMobile());
+				companyMaster.setAdminMobile(Long.parseLong(companyMasterDto.getAdminMobile()));
 			}
 			if(companyMasterDto.getApiURLPrefix()!=null)
 			{
@@ -118,7 +118,7 @@ public class CompanyMasterServiceImpl implements CompanyService {
 					}
 					if(companyMasterDto.getAdminMobile()!=null)
 					{
-						companyMaster.setAdminMobile(companyMasterDto.getAdminMobile());
+						companyMaster.setAdminMobile(Long.parseLong(companyMasterDto.getAdminMobile()));
 					}
 					if(companyMasterDto.getApiURLPrefix()!=null)
 					{

@@ -17,31 +17,21 @@ public class DesignationDto implements Serializable {
 	    private Integer departmentId;
 	    private Integer parentDesignationId;
 	    private Integer designationLevelNo;
-	    private Integer canCreateEmployee;
-	    private Integer canCreateFeedbackReq;
-	    private Integer canCreateRateSkill;
-	    private Integer canCreateTask;
-	    private Integer canCreateProject;
-	    private Integer canCreateTeam;
-	    private Integer canAddEmployeeToTeam;
-	    private Integer canEvaluateSkill;
-	    private Integer canViewTeam;
-	    private Integer canViewAllTask;
-	    private Integer canApproveGoal;
+	
 	    private Date designationCreatedDate;
 	    private Date designationUpdatedDate;
-	    private List<ElementMasterDto> elementMasterDtoList;
+	    private List<DesignationElementMapingDto> designationElementMappingList;
 		/**
-		 * @return the elementMasterDtoList
+		 * @return the designationElementMappingList
 		 */
-		public List<ElementMasterDto> getElementMasterDtoList() {
-			return elementMasterDtoList;
+		public List<DesignationElementMapingDto> getDesignationElementMappingList() {
+			return designationElementMappingList;
 		}
 		/**
-		 * @param elementMasterDtoList the elementMasterDtoList to set
+		 * @param designationElementMappingList the designationElementMappingList to set
 		 */
-		public void setElementMasterDtoList(List<ElementMasterDto> elementMasterDtoList) {
-			this.elementMasterDtoList = elementMasterDtoList;
+		public void setDesignationElementMappingList(List<DesignationElementMapingDto> designationElementMappingList) {
+			this.designationElementMappingList = designationElementMappingList;
 		}
 		/**
 		 * @return the designationId
@@ -104,138 +94,6 @@ public class DesignationDto implements Serializable {
 			this.designationLevelNo = designationLevelNo;
 		}
 		/**
-		 * @return the canCreateEmployee
-		 */
-		public Integer getCanCreateEmployee() {
-			return canCreateEmployee;
-		}
-		/**
-		 * @param canCreateEmployee the canCreateEmployee to set
-		 */
-		public void setCanCreateEmployee(Integer canCreateEmployee) {
-			this.canCreateEmployee = canCreateEmployee;
-		}
-		/**
-		 * @return the canCreateFeedbackReq
-		 */
-		public Integer getCanCreateFeedbackReq() {
-			return canCreateFeedbackReq;
-		}
-		/**
-		 * @param canCreateFeedbackReq the canCreateFeedbackReq to set
-		 */
-		public void setCanCreateFeedbackReq(Integer canCreateFeedbackReq) {
-			this.canCreateFeedbackReq = canCreateFeedbackReq;
-		}
-		/**
-		 * @return the canCreateRateSkill
-		 */
-		public Integer getCanCreateRateSkill() {
-			return canCreateRateSkill;
-		}
-		/**
-		 * @param canCreateRateSkill the canCreateRateSkill to set
-		 */
-		public void setCanCreateRateSkill(Integer canCreateRateSkill) {
-			this.canCreateRateSkill = canCreateRateSkill;
-		}
-		/**
-		 * @return the canCreateTask
-		 */
-		public Integer getCanCreateTask() {
-			return canCreateTask;
-		}
-		/**
-		 * @param canCreateTask the canCreateTask to set
-		 */
-		public void setCanCreateTask(Integer canCreateTask) {
-			this.canCreateTask = canCreateTask;
-		}
-		/**
-		 * @return the canCreateProject
-		 */
-		public Integer getCanCreateProject() {
-			return canCreateProject;
-		}
-		/**
-		 * @param canCreateProject the canCreateProject to set
-		 */
-		public void setCanCreateProject(Integer canCreateProject) {
-			this.canCreateProject = canCreateProject;
-		}
-		/**
-		 * @return the canCreateTeam
-		 */
-		public Integer getCanCreateTeam() {
-			return canCreateTeam;
-		}
-		/**
-		 * @param canCreateTeam the canCreateTeam to set
-		 */
-		public void setCanCreateTeam(Integer canCreateTeam) {
-			this.canCreateTeam = canCreateTeam;
-		}
-		/**
-		 * @return the canAddEmployeeToTeam
-		 */
-		public Integer getCanAddEmployeeToTeam() {
-			return canAddEmployeeToTeam;
-		}
-		/**
-		 * @param canAddEmployeeToTeam the canAddEmployeeToTeam to set
-		 */
-		public void setCanAddEmployeeToTeam(Integer canAddEmployeeToTeam) {
-			this.canAddEmployeeToTeam = canAddEmployeeToTeam;
-		}
-		/**
-		 * @return the canEvaluateSkill
-		 */
-		public Integer getCanEvaluateSkill() {
-			return canEvaluateSkill;
-		}
-		/**
-		 * @param canEvaluateSkill the canEvaluateSkill to set
-		 */
-		public void setCanEvaluateSkill(Integer canEvaluateSkill) {
-			this.canEvaluateSkill = canEvaluateSkill;
-		}
-		/**
-		 * @return the canViewTeam
-		 */
-		public Integer getCanViewTeam() {
-			return canViewTeam;
-		}
-		/**
-		 * @param canViewTeam the canViewTeam to set
-		 */
-		public void setCanViewTeam(Integer canViewTeam) {
-			this.canViewTeam = canViewTeam;
-		}
-		/**
-		 * @return the canViewAllTask
-		 */
-		public Integer getCanViewAllTask() {
-			return canViewAllTask;
-		}
-		/**
-		 * @param canViewAllTask the canViewAllTask to set
-		 */
-		public void setCanViewAllTask(Integer canViewAllTask) {
-			this.canViewAllTask = canViewAllTask;
-		}
-		/**
-		 * @return the canApproveGoal
-		 */
-		public Integer getCanApproveGoal() {
-			return canApproveGoal;
-		}
-		/**
-		 * @param canApproveGoal the canApproveGoal to set
-		 */
-		public void setCanApproveGoal(Integer canApproveGoal) {
-			this.canApproveGoal = canApproveGoal;
-		}
-		/**
 		 * @return the designationCreatedDate
 		 */
 		public Date getDesignationCreatedDate() {
@@ -259,6 +117,11 @@ public class DesignationDto implements Serializable {
 		public void setDesignationUpdatedDate(Date designationUpdatedDate) {
 			this.designationUpdatedDate = designationUpdatedDate;
 		}
-
-
+		/**
+		 * @return the designationElementMapingDtoList
+		 */
+		
+	
+		
+		
 }

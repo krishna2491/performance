@@ -3,6 +3,7 @@
  */
 package com.gomap.performance.organisastion.service;
 
+import com.gomap.performance.organisastion.dto.EmFeedbackRequestDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 
 /**
@@ -13,5 +14,7 @@ public interface FeedbackService {
 public ResponseDTO getFeedbackListByParameter(Integer empId,Integer projectId,String emplyeeName,String departmentName) throws Exception;
 public ResponseDTO getFeedbackRequestAlongWithEmp(Integer empId,Integer projectId) throws Exception;
 public ResponseDTO getFeedBack(Integer empId,Integer projectId) throws Exception;
+public ResponseDTO createFeedbackRequest(EmFeedbackRequestDto emFeedbackRequest) throws Exception;
+public ResponseDTO getPendingFeedback(Integer employeeId,Integer level) throws Exception;
 
 }

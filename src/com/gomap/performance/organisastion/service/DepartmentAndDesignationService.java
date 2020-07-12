@@ -27,6 +27,7 @@ public interface DepartmentAndDesignationService {
 	
 	public ResponseDTO getDepartment(Integer departmentId) throws Exception;
 	public ResponseDTO getDesignation(Integer designationId,Integer departmentId) throws Exception;
+	public ResponseDTO getDesignationWithElements(Integer designationId) throws Exception;
 	
 	
 	

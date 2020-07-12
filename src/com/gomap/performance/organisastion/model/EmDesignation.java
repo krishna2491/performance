@@ -60,50 +60,7 @@ public class EmDesignation implements Serializable {
     @NotNull
     @Column(name = "designation_level_no")
     private Integer designationLevelNo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_create_employee")
-    private Integer canCreateEmployee;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_create_feedback_req")
-    private Integer canCreateFeedbackReq;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_create_rate_skill")
-    private Integer canCreateRateSkill;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_create_task")
-    private Integer canCreateTask;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_create_project")
-    private Integer canCreateProject;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_create_team")
-    private Integer canCreateTeam;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_add_employee_to_team")
-    private Integer canAddEmployeeToTeam;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_evaluate_skill")
-    private Integer canEvaluateSkill;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_view_team")
-    private Integer canViewTeam;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_view_all_task")
-    private Integer canViewAllTask;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "can_approve_goal")
-    private Integer canApproveGoal;
+    
     @Column(name = "designation_created_date")
     @Temporal(TemporalType.DATE)
     private Date designationCreatedDate;
@@ -124,24 +81,7 @@ public class EmDesignation implements Serializable {
         this.designationId = designationId;
     }
 
-    public EmDesignation(Integer designationId, String designationName, Integer departmentId, Integer parentDesignationId, Integer designationLevelNo, Integer canCreateEmployee, Integer canCreateFeedbackReq, Integer canCreateRateSkill, Integer canCreateTask, Integer canCreateProject, Integer canCreateTeam, Integer canAddEmployeeToTeam, Integer canEvaluateSkill, Integer canViewTeam, Integer canViewAllTask, Integer canApproveGoal) {
-        this.designationId = designationId;
-        this.designationName = designationName;
-        this.departmentId = departmentId;
-        this.parentDesignationId = parentDesignationId;
-        this.designationLevelNo = designationLevelNo;
-        this.canCreateEmployee = canCreateEmployee;
-        this.canCreateFeedbackReq = canCreateFeedbackReq;
-        this.canCreateRateSkill = canCreateRateSkill;
-        this.canCreateTask = canCreateTask;
-        this.canCreateProject = canCreateProject;
-        this.canCreateTeam = canCreateTeam;
-        this.canAddEmployeeToTeam = canAddEmployeeToTeam;
-        this.canEvaluateSkill = canEvaluateSkill;
-        this.canViewTeam = canViewTeam;
-        this.canViewAllTask = canViewAllTask;
-        this.canApproveGoal = canApproveGoal;
-    }
+   
 
     public Integer getDesignationId() {
         return designationId;
@@ -183,93 +123,7 @@ public class EmDesignation implements Serializable {
         this.designationLevelNo = designationLevelNo;
     }
 
-    public Integer getCanCreateEmployee() {
-        return canCreateEmployee;
-    }
-
-    public void setCanCreateEmployee(Integer canCreateEmployee) {
-        this.canCreateEmployee = canCreateEmployee;
-    }
-
-    public Integer getCanCreateFeedbackReq() {
-        return canCreateFeedbackReq;
-    }
-
-    public void setCanCreateFeedbackReq(Integer canCreateFeedbackReq) {
-        this.canCreateFeedbackReq = canCreateFeedbackReq;
-    }
-
-    public Integer getCanCreateRateSkill() {
-        return canCreateRateSkill;
-    }
-
-    public void setCanCreateRateSkill(Integer canCreateRateSkill) {
-        this.canCreateRateSkill = canCreateRateSkill;
-    }
-
-    public Integer getCanCreateTask() {
-        return canCreateTask;
-    }
-
-    public void setCanCreateTask(Integer canCreateTask) {
-        this.canCreateTask = canCreateTask;
-    }
-
-    public Integer getCanCreateProject() {
-        return canCreateProject;
-    }
-
-    public void setCanCreateProject(Integer canCreateProject) {
-        this.canCreateProject = canCreateProject;
-    }
-
-    public Integer getCanCreateTeam() {
-        return canCreateTeam;
-    }
-
-    public void setCanCreateTeam(Integer canCreateTeam) {
-        this.canCreateTeam = canCreateTeam;
-    }
-
-    public Integer getCanAddEmployeeToTeam() {
-        return canAddEmployeeToTeam;
-    }
-
-    public void setCanAddEmployeeToTeam(Integer canAddEmployeeToTeam) {
-        this.canAddEmployeeToTeam = canAddEmployeeToTeam;
-    }
-
-    public Integer getCanEvaluateSkill() {
-        return canEvaluateSkill;
-    }
-
-    public void setCanEvaluateSkill(Integer canEvaluateSkill) {
-        this.canEvaluateSkill = canEvaluateSkill;
-    }
-
-    public Integer getCanViewTeam() {
-        return canViewTeam;
-    }
-
-    public void setCanViewTeam(Integer canViewTeam) {
-        this.canViewTeam = canViewTeam;
-    }
-
-    public Integer getCanViewAllTask() {
-        return canViewAllTask;
-    }
-
-    public void setCanViewAllTask(Integer canViewAllTask) {
-        this.canViewAllTask = canViewAllTask;
-    }
-
-    public Integer getCanApproveGoal() {
-        return canApproveGoal;
-    }
-
-    public void setCanApproveGoal(Integer canApproveGoal) {
-        this.canApproveGoal = canApproveGoal;
-    }
+   
 
     public Date getDesignationCreatedDate() {
         return designationCreatedDate;
@@ -311,6 +165,30 @@ public class EmDesignation implements Serializable {
 	 * @param activateFlag the activateFlag to set
 	 */
 	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
+
+	/**
+	 * @param designationId
+	 * @param designationName
+	 * @param departmentId
+	 * @param parentDesignationId
+	 * @param designationLevelNo
+	 * @param designationCreatedDate
+	 * @param designationUpdatedDate
+	 * @param activateFlag
+	 */
+	public EmDesignation(Integer designationId, String designationName, Integer departmentId,
+			Integer parentDesignationId, Integer designationLevelNo, Date designationCreatedDate,
+			Date designationUpdatedDate, Integer activateFlag) {
+		super();
+		this.designationId = designationId;
+		this.designationName = designationName;
+		this.departmentId = departmentId;
+		this.parentDesignationId = parentDesignationId;
+		this.designationLevelNo = designationLevelNo;
+		this.designationCreatedDate = designationCreatedDate;
+		this.designationUpdatedDate = designationUpdatedDate;
 		this.activateFlag = activateFlag;
 	}
 

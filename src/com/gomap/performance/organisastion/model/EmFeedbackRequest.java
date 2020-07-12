@@ -25,20 +25,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Palash
+ * @author krishnakant
  */
 @Entity
 @Table(name = "em_feedback_request")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "EmFeedbackRequest.findAll", query = "SELECT e FROM EmFeedbackRequest e")
-    , @NamedQuery(name = "EmFeedbackRequest.findByFeedbackRequestId", query = "SELECT e FROM EmFeedbackRequest e WHERE e.feedbackRequestId = :feedbackRequestId")
-    , @NamedQuery(name = "EmFeedbackRequest.findByFeedbackFromId", query = "SELECT e FROM EmFeedbackRequest e WHERE e.feedbackFromId = :feedbackFromId")
-    , @NamedQuery(name = "EmFeedbackRequest.findByFeedbackRequesterId", query = "SELECT e FROM EmFeedbackRequest e WHERE e.feedbackRequesterId = :feedbackRequesterId")
-    , @NamedQuery(name = "EmFeedbackRequest.findByFeedbackStatus", query = "SELECT e FROM EmFeedbackRequest e WHERE e.feedbackStatus = :feedbackStatus")
-    , @NamedQuery(name = "EmFeedbackRequest.findByFeedbackReply", query = "SELECT e FROM EmFeedbackRequest e WHERE e.feedbackReply = :feedbackReply")
-    , @NamedQuery(name = "EmFeedbackRequest.findByFeedbackCreatedDate", query = "SELECT e FROM EmFeedbackRequest e WHERE e.feedbackCreatedDate = :feedbackCreatedDate")
-    , @NamedQuery(name = "EmFeedbackRequest.findByFeedbackUpdatedDate", query = "SELECT e FROM EmFeedbackRequest e WHERE e.feedbackUpdatedDate = :feedbackUpdatedDate")})
 public class EmFeedbackRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,25 +38,55 @@ public class EmFeedbackRequest implements Serializable {
     @Basic(optional = false)
     @Column(name = "feedback_request_id")
     private Integer feedbackRequestId;
+    /**
+	 * @param feedbackRequestId
+	 * @param feedbackForId
+	 * @param feedbackFromId
+	 * @param feedbackRequesterId
+	 * @param feedbackStatus
+	 * @param projectId
+	 * @param feedbackReply
+	 * @param feedbackCreatedDate
+	 * @param feedbackUpdatedDate
+	 */
+	public EmFeedbackRequest(Integer feedbackRequestId, Integer feedbackForId, Integer feedbackFromId,
+			Integer feedbackRequesterId, String feedbackStatus, Integer projectId, String feedbackReply,
+			Date feedbackCreatedDate, Date feedbackUpdatedDate) {
+		super();
+		this.feedbackRequestId = feedbackRequestId;
+		this.feedbackForId = feedbackForId;
+		this.feedbackFromId = feedbackFromId;
+		this.feedbackRequesterId = feedbackRequesterId;
+		this.feedbackStatus = feedbackStatus;
+		this.projectId = projectId;
+		this.feedbackReply = feedbackReply;
+		this.feedbackCreatedDate = feedbackCreatedDate;
+		this.feedbackUpdatedDate = feedbackUpdatedDate;
+	}
+
+	@Basic(optional = false)
+    @NotNull
+    @Column(name = "feedback_for_id")
+    private Integer feedbackForId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "feedback_from_id")
-    private int feedbackFromId;
+    private Integer feedbackFromId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "feedback_requester_id")
-    private int feedbackRequesterId;
+    private Integer feedbackRequesterId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "feedback_status")
     private String feedbackStatus;
-    @Lob
-    @Size(max = 2147483647)
-    @Column(name = "feedback_description")
-    private String feedbackDescription;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
+    @Size(min = 1, max = 255)
+    @Column(name = "project_id")
+    private Integer projectId;
+    @Basic(optional = true)
+   
     @Size(min = 1, max = 255)
     @Column(name = "feedback_reply")
     private String feedbackReply;
@@ -75,109 +96,160 @@ public class EmFeedbackRequest implements Serializable {
     @Column(name = "feedback_updated_date")
     @Temporal(TemporalType.DATE)
     private Date feedbackUpdatedDate;
+    @Basic(optional = false)
+    @Size(min = 1, max = 5)
+    @Column(name = "activate_flag")
+    private Integer activateFlag;
 
-    public EmFeedbackRequest() {
+    /**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
+
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
+
+
+
+	public EmFeedbackRequest() {
     }
 
-    public EmFeedbackRequest(Integer feedbackRequestId) {
-        this.feedbackRequestId = feedbackRequestId;
-    }
+	/**
+	 * @return the feedbackRequestId
+	 */
+	public Integer getFeedbackRequestId() {
+		return feedbackRequestId;
+	}
 
-    public EmFeedbackRequest(Integer feedbackRequestId, int feedbackFromId, int feedbackRequesterId, String feedbackStatus, String feedbackReply) {
-        this.feedbackRequestId = feedbackRequestId;
-        this.feedbackFromId = feedbackFromId;
-        this.feedbackRequesterId = feedbackRequesterId;
-        this.feedbackStatus = feedbackStatus;
-        this.feedbackReply = feedbackReply;
-    }
+	/**
+	 * @param feedbackRequestId the feedbackRequestId to set
+	 */
+	public void setFeedbackRequestId(Integer feedbackRequestId) {
+		this.feedbackRequestId = feedbackRequestId;
+	}
 
-    public Integer getFeedbackRequestId() {
-        return feedbackRequestId;
-    }
+	/**
+	 * @return the feedbackForId
+	 */
+	public Integer getfeedbackForId() {
+		return feedbackForId;
+	}
 
-    public void setFeedbackRequestId(Integer feedbackRequestId) {
-        this.feedbackRequestId = feedbackRequestId;
-    }
+	/**
+	 * @param feedbackForId the feedbackForId to set
+	 */
+	public void setfeedbackForId(Integer feedbackForId) {
+		this.feedbackForId = feedbackForId;
+	}
 
-    public int getFeedbackFromId() {
-        return feedbackFromId;
-    }
+	/**
+	 * @return the feedbackFromId
+	 */
+	public Integer getFeedbackFromId() {
+		return feedbackFromId;
+	}
 
-    public void setFeedbackFromId(int feedbackFromId) {
-        this.feedbackFromId = feedbackFromId;
-    }
+	/**
+	 * @param feedbackFromId the feedbackFromId to set
+	 */
+	public void setFeedbackFromId(Integer feedbackFromId) {
+		this.feedbackFromId = feedbackFromId;
+	}
 
-    public int getFeedbackRequesterId() {
-        return feedbackRequesterId;
-    }
+	/**
+	 * @return the feedbackRequesterId
+	 */
+	public Integer getFeedbackRequesterId() {
+		return feedbackRequesterId;
+	}
 
-    public void setFeedbackRequesterId(int feedbackRequesterId) {
-        this.feedbackRequesterId = feedbackRequesterId;
-    }
+	/**
+	 * @param feedbackRequesterId the feedbackRequesterId to set
+	 */
+	public void setFeedbackRequesterId(Integer feedbackRequesterId) {
+		this.feedbackRequesterId = feedbackRequesterId;
+	}
 
-    public String getFeedbackStatus() {
-        return feedbackStatus;
-    }
+	/**
+	 * @return the feedbackStatus
+	 */
+	public String getFeedbackStatus() {
+		return feedbackStatus;
+	}
 
-    public void setFeedbackStatus(String feedbackStatus) {
-        this.feedbackStatus = feedbackStatus;
-    }
+	/**
+	 * @param feedbackStatus the feedbackStatus to set
+	 */
+	public void setFeedbackStatus(String feedbackStatus) {
+		this.feedbackStatus = feedbackStatus;
+	}
 
-    public String getFeedbackDescription() {
-        return feedbackDescription;
-    }
+	/**
+	 * @return the projectId
+	 */
+	public Integer getProjectId() {
+		return projectId;
+	}
 
-    public void setFeedbackDescription(String feedbackDescription) {
-        this.feedbackDescription = feedbackDescription;
-    }
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
 
-    public String getFeedbackReply() {
-        return feedbackReply;
-    }
+	/**
+	 * @return the feedbackReply
+	 */
+	public String getFeedbackReply() {
+		return feedbackReply;
+	}
 
-    public void setFeedbackReply(String feedbackReply) {
-        this.feedbackReply = feedbackReply;
-    }
+	/**
+	 * @param feedbackReply the feedbackReply to set
+	 */
+	public void setFeedbackReply(String feedbackReply) {
+		this.feedbackReply = feedbackReply;
+	}
 
-    public Date getFeedbackCreatedDate() {
-        return feedbackCreatedDate;
-    }
+	/**
+	 * @return the feedbackCreatedDate
+	 */
+	public Date getFeedbackCreatedDate() {
+		return feedbackCreatedDate;
+	}
 
-    public void setFeedbackCreatedDate(Date feedbackCreatedDate) {
-        this.feedbackCreatedDate = feedbackCreatedDate;
-    }
+	/**
+	 * @param feedbackCreatedDate the feedbackCreatedDate to set
+	 */
+	public void setFeedbackCreatedDate(Date feedbackCreatedDate) {
+		this.feedbackCreatedDate = feedbackCreatedDate;
+	}
 
-    public Date getFeedbackUpdatedDate() {
-        return feedbackUpdatedDate;
-    }
+	/**
+	 * @return the feedbackUpdatedDate
+	 */
+	public Date getFeedbackUpdatedDate() {
+		return feedbackUpdatedDate;
+	}
 
-    public void setFeedbackUpdatedDate(Date feedbackUpdatedDate) {
-        this.feedbackUpdatedDate = feedbackUpdatedDate;
-    }
+	/**
+	 * @param feedbackUpdatedDate the feedbackUpdatedDate to set
+	 */
+	public void setFeedbackUpdatedDate(Date feedbackUpdatedDate) {
+		this.feedbackUpdatedDate = feedbackUpdatedDate;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (feedbackRequestId != null ? feedbackRequestId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmFeedbackRequest)) {
-            return false;
-        }
-        EmFeedbackRequest other = (EmFeedbackRequest) object;
-        if ((this.feedbackRequestId == null && other.feedbackRequestId != null) || (this.feedbackRequestId != null && !this.feedbackRequestId.equals(other.feedbackRequestId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.gomap.performance.organisation.EmFeedbackRequest[ feedbackRequestId=" + feedbackRequestId + " ]";
-    }
-    
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
