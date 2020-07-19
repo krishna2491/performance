@@ -19,4 +19,6 @@ public interface AdminEmployeeDao {
 	public List<EmployeeMaster> getAdminEmployee(EmployeeMaster employeeMaster) throws Exception;
 	public UserMaster storeUserData(UserMaster userMaster) throws Exception;
 	public UserMaster getUserData(String email,String password,Integer userId) throws Exception;
+	public UserMaster getUserDataByTokenId(String tokenId) throws Exception;
+	public UserMaster updateUser(UserMaster userMaster) throws Exception;
 }

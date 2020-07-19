@@ -21,6 +21,7 @@ import com.gomap.performance.organisastion.dto.EmEmployeeDto;
 import com.gomap.performance.organisastion.dto.EmployeeDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
+import com.gomap.performance.organisastion.exception.PerformanceException;
 import com.gomap.performance.organisastion.service.EmployeeService;
 import com.gomap.performance.organisastion.util.ResponseWriter;
 
@@ -87,6 +88,28 @@ public class EmployeeController {
 			
 			
 		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_EMPLOYEE_ELEMETNS}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getEmployeeWithElements(@RequestParam Integer employeeId) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				responseDTO=new ResponseDTO();
+				
+				responseDTO=employeeService.getEmployeeWithElements(employeeId);
+				
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+		} catch (PerformanceException ex) {
+			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
+			logger.error("error",ex);
+		} 
+		catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
 			logger.error("error",e);
 		} 

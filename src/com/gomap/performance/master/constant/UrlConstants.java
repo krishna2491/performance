@@ -68,6 +68,9 @@ public final class UrlConstants {
 	public static final String API_DESIGNATION_ELEMETNS = "emf/getDesignationElements";
 	public static final String API_ADD_PARAMETER = "emf/addParameter";
 	public static final String API_GET_PARAMETER = "emf/getParameter";
+	public static final String API_EMAIL_VERIFICATION = "emf/emailVerification";
+	public static final String API_GET_USER = "emf/getUserInfo";
+	public static final String API_EMPLOYEE_ELEMETNS = "emf/getEmployeeElements";
 	
 //	Lead
 	

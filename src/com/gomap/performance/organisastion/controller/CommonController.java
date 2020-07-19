@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gomap.performance.master.aop.logging.EmailTest;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.organisastion.dto.DepartmentDto;
@@ -43,7 +44,8 @@ public class CommonController {
 	public @ResponseBody ResponseDTO getElementList() {
 		ResponseDTO  responseDTO = null;
 		try {  
-			
+			EmailTest emailTest=new EmailTest();
+			emailTest.sendEmail();
 				responseDTO=cmnService.getElements();
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			

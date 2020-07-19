@@ -179,6 +179,28 @@ this.sessionFactory.getCurrentSession().save(roleElementOperationMpg);
 	}
 
 	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#updateDesignationElement(com.gomap.performance.organisastion.model.DesignationElementMaping)
+	 */
+	@Override
+	public DesignationElementMaping updateDesignationElement(DesignationElementMaping designationElementMaping)
+			throws Exception {
+this.sessionFactory.getCurrentSession().update(designationElementMaping);
+		
+		return designationElementMaping;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#updateOperation(com.gomap.performance.organisastion.model.RoleElementOperationMpg)
+	 */
+	@Override
+	public RoleElementOperationMpg updateOperation(RoleElementOperationMpg roleElementOperationMpg) throws Exception {
+		// TODO Auto-generated method stub
+this.sessionFactory.getCurrentSession().update(roleElementOperationMpg);
+		
+		return roleElementOperationMpg;
+	}
+
+	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#getDesignationElementOperation(com.gomap.performance.organisastion.model.RoleElementOperationMpg)
 	 */
 	

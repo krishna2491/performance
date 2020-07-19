@@ -19,4 +19,8 @@ public interface AdminEmployeeService {
 	public ResponseDTO employeeDepratmentMapping(EmployeeMasterDto employeeDto);
 	public ResponseDTO getAdminEmployeeDetails(EmployeeMasterDto employeeDto);
 	public ResponseDTO addUser(UserDto userDto);
+	public ResponseDTO emailVerification(String tokenId);
+	public ResponseDTO getUserById(Integer userId);
+	public ResponseDTO getUserByTokenId(String tokenId);
+	
 }

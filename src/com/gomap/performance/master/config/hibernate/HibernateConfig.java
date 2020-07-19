@@ -11,6 +11,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,8 @@ public class HibernateConfig {
 
 	@Autowired
 	private Environment environment;
-
+	@Autowired
+	private ApplicationContext applicationContext; 
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -86,6 +88,8 @@ public class HibernateConfig {
 		
 		try {
 			Properties p = new Properties();
+			
+			System.out.println(applicationContext.getApplicationName());
 			p.setProperty("driverClassName", environment.getRequiredProperty(JDBC_DRIVER_CLASS_NAME));
 			p.setProperty("url", environment.getRequiredProperty(JDBC_URL));
 			p.setProperty("password", environment.getRequiredProperty(JDBC_PASSWORD));

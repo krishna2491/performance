@@ -13,9 +13,13 @@ import org.springframework.stereotype.Repository;
 
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.EmployeeDao;
+import com.gomap.performance.organisastion.model.DesignationElementMaping;
 import com.gomap.performance.organisastion.model.EmDepartment;
 import com.gomap.performance.organisastion.model.EmDesignation;
 import com.gomap.performance.organisastion.model.EmEmployee;
+import com.gomap.performance.organisastion.model.EmployeeElementMpg;
+import com.gomap.performance.organisastion.model.EmployeeElementOperationMpg;
+import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
 
 /**
  * @author krishnakant.bairagi
@@ -86,8 +90,79 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	}
 
 	/* (non-Javadoc)
-	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#getEmployeeList(com.gomap.performance.organisastion.model.EmEmployee)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#mapEmployeeElement(com.gomap.performance.organisastion.model.EmployeeElementMpg)
 	 */
+	@Override
+	public EmployeeElementMpg mapEmployeeElement(EmployeeElementMpg employeeElementMpg) throws Exception {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().save(employeeElementMpg);
+		return employeeElementMpg;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#mapOperation(com.gomap.performance.organisastion.model.EmployeeElementOperationMpg)
+	 */
+	@Override
+	public EmployeeElementOperationMpg mapOperation(EmployeeElementOperationMpg employeeElementOperationMpg)
+			throws Exception {
+		this.sessionFactory.getCurrentSession().save(employeeElementOperationMpg);
+		return employeeElementOperationMpg;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#getEmployeeElement(java.lang.Integer)
+	 */
+	@Override
+	public List<EmployeeElementMpg> getEmployeeElement(Integer employeeId) throws Exception {
+		// TODO Auto-generated method stub
+
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(EmployeeElementMpg.class);
+		if(employeeId!=null)
+		{
+			criteria.add(Restrictions.eq("employeeId", employeeId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return criteria.list();
+	
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#getEmployeeElementOperation(java.lang.Integer)
+	 */
+	@Override
+	public List<EmployeeElementOperationMpg> getEmployeeElementOperation(Integer employeeElementMpgId)
+			throws Exception {
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(EmployeeElementOperationMpg.class);
+		if(employeeElementMpgId!=null)
+		{
+			criteria.add(Restrictions.eq("employeeElementMpgId", employeeElementMpgId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#updateEmployeeElement(com.gomap.performance.organisastion.model.EmployeeElementMpg)
+	 */
+	@Override
+	public EmployeeElementMpg updateEmployeeElement(EmployeeElementMpg employeeElementMpg) throws Exception {
+		this.sessionFactory.getCurrentSession().update(employeeElementMpg);
+		return employeeElementMpg;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#updateOperation(com.gomap.performance.organisastion.model.EmployeeElementOperationMpg)
+	 */
+	@Override
+	public EmployeeElementOperationMpg updateOperation(EmployeeElementOperationMpg employeeElementOperationMpg)
+			throws Exception {
+		this.sessionFactory.getCurrentSession().update(employeeElementOperationMpg);
+		return employeeElementOperationMpg;
+	}
+
+	
 	
 
 }

@@ -36,6 +36,11 @@ public class RoleElementOperationMpgDto implements Serializable {
     private Integer designationElementMpgId;
    private Integer roleElementOperationId;
    private Integer operationId;
+   private Date createdDate;
+   
+   private Date updatedDate;
+ 
+   private Integer activateFlag;
     /**
  * @return the operationId
  */
@@ -52,11 +57,7 @@ public void setOperationId(Integer operationId) {
 }
 
 
-	private Date createdDate;
-   
-    private Date updatedDate;
-  
-    private Integer activateFlag;
+	
     
 
     public RoleElementOperationMpgDto() {

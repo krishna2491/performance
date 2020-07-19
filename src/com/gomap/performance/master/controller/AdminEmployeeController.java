@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -114,5 +115,40 @@ public class AdminEmployeeController {
 		} 
 		return responseDTO;
 	}
-
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_EMAIL_VERIFICATION}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO mailVerification(@RequestParam String tokenId) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				responseDTO=new ResponseDTO();
+			
+				
+				responseDTO = adminEmployeeSrvc.emailVerification(tokenId);
+				logger.info("here addUser");
+			
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_USER}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getUserById(@RequestParam Integer userId) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				responseDTO=new ResponseDTO();
+			
+				
+				responseDTO = adminEmployeeSrvc.getUserById(userId);
+				logger.info("here get getUserById");
+			
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 }

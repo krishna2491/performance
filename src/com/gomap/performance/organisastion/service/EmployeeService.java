@@ -23,5 +23,6 @@ public interface EmployeeService {
 	public ResponseDTO getEmployeeList(Integer employeeId) throws Exception;
 	public ResponseDTO updateEmployee(EmEmployeeDto employeeDto) throws Exception;
 	public ResponseDTO getAllEmployee() throws Exception;
+	public ResponseDTO getEmployeeWithElements(Integer employeeId) throws Exception;
 
 }

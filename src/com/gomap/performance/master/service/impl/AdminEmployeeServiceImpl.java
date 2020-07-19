@@ -20,6 +20,7 @@ import com.gomap.performance.master.dto.UserDto;
 import com.gomap.performance.master.model.EmployeeMaster;
 import com.gomap.performance.master.model.UserMaster;
 import com.gomap.performance.master.service.AdminEmployeeService;
+import com.gomap.performance.master.service.EmailService;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 
 /**
@@ -33,6 +34,8 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 	
 	@Autowired
 	private AdminEmployeeDao adminEmployeeDao;
+	@Autowired
+	private EmailService emailService;
 	
 	/* (non-Javadoc)
 	 * @see com.gomap.performance.master.service.AdminEmployeeService#addEmployee(com.gomap.performance.master.dto.EmployeeMasterDto)
@@ -257,6 +260,15 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 			UserMaster userMaster=new UserMaster();
 			if(userDto.getEmail()!=null)
 			{
+				userMaster=adminEmployeeDao.getUserData(userDto.getEmail(), null, null);
+				if(userMaster!=null)
+				{
+					responseDTO.setDataObj(userDto);
+					responseDTO.setErrorMsg("User is already available in system, please login");
+					responseDTO.setErrorCode(411);
+					return responseDTO;
+				}
+				userMaster=new UserMaster();
 				userMaster.setEmail(userDto.getEmail());	
 			}
 		
@@ -271,9 +283,10 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 			
 			userMaster.setCreatedDate(new Date());
 			userMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
-			
+			userMaster.setEmailVerification(0);
+			userMaster.setEmailToken("emf"+System.currentTimeMillis());
 			adminEmployeeDao.storeUserData(userMaster);
-			
+			emailService.sendEmail(userMaster.getEmailToken(), userMaster.getEmail());
 			responseDTO.setDataObj(userMaster);
 			responseDTO.setSuccessMsg("User  Added");
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -285,6 +298,100 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 			// TODO: handle exception
 		}
 		return responseDTO;
+	
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.AdminEmployeeService#emailVerification(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO emailVerification(String tokenId) {
+		// TODO Auto-generated method stub
+		logger.info("emailVerification.....");
+		ResponseDTO responseDTO=new ResponseDTO();
+		try {
+			if(tokenId!=null && !("").equals(tokenId))
+					{
+				UserMaster userMaster=new UserMaster();
+				userMaster=adminEmployeeDao.getUserDataByTokenId(tokenId);
+				if(userMaster!=null)
+				{
+					userMaster.setEmailVerification(1);
+					//adminEmployeeDao.getUserData();
+					adminEmployeeDao.updateUser(userMaster);
+					userMaster.setPassword(null);
+					responseDTO.setDataObj(userMaster);
+					responseDTO.setSuccessMsg("Email verification completed");
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
+				}
+				else {
+					responseDTO.setDataObj(userMaster);
+					responseDTO.setErrorMsg("This link is not valid");
+					responseDTO.setErrorCode(411);
+				}
+				
+				
+						}else {
+						
+						responseDTO.setDataObj(null);
+						responseDTO.setSuccessMsg("Please check your link with supprot admin");
+						responseDTO.setErrorCode(411);
+					}
+			
+				} catch (Exception e) {
+					logger.error("Errro whhile adding User");
+					responseDTO.setDataObj(e);
+					responseDTO.setErrorMsg(e.getMessage());
+					responseDTO.setErrorCode(411);
+			// TODO: handle exception
+		}
+		return responseDTO;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.AdminEmployeeService#getUserById(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO getUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		ResponseDTO responseDTO=new ResponseDTO();
+		
+		try {
+			UserMaster userMaster=adminEmployeeDao.getUserData(null, null, userId);
+			if(userMaster!=null)
+			{
+				userMaster.setPassword(null);
+				responseDTO.setDataObj(userMaster);
+				responseDTO.setSuccessMsg("User info is available here");
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}else
+			{
+				responseDTO.setDataObj(null);
+				responseDTO.setSuccessMsg("User info is not available here");
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("getUserById-----",e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.AdminEmployeeService#getUserByTokenId(java.lang.String)
+	 */
+	@Override
+	public ResponseDTO getUserByTokenId(String tokenId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
+

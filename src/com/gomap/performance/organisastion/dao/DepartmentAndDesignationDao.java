@@ -33,6 +33,9 @@ public interface DepartmentAndDesignationDao {
 	public DesignationElementMaping mapDesignationElement(DesignationElementMaping designationElementMaping) throws Exception;
 	public RoleElementOperationMpg mapOperation(RoleElementOperationMpg  roleElementOperationMpg) throws Exception;
 	
+	public DesignationElementMaping updateDesignationElement(DesignationElementMaping designationElementMaping) throws Exception;
+	public RoleElementOperationMpg updateOperation(RoleElementOperationMpg  roleElementOperationMpg) throws Exception;
+	
 	public List<DesignationElementMaping> getDesignationElement(Integer designationId ) throws Exception;
 	public List<RoleElementOperationMpg> getDesignationElementOperation(Integer  designationElementMpgId) throws Exception;
 	

@@ -5,6 +5,7 @@ package com.gomap.performance.organisastion.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.gomap.performance.organisastion.model.EmDesignation;
 
@@ -26,8 +27,10 @@ public class EmEmployeeDto implements Serializable {
     private Date employeeUpdatedDate;
     private EmDesignation designation;
     private String gender;
+    private String employeeCode;
 
     private Integer activateFlag;
+    private List<EmployeeElementMpgDto> employeeElementMappingList;
 
 	/**
 	 * @return the employeeId
@@ -216,5 +219,33 @@ public class EmEmployeeDto implements Serializable {
 	 */
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	/**
+	 * @return the employeeElementMappingList
+	 */
+	public List<EmployeeElementMpgDto> getEmployeeElementMappingList() {
+		return employeeElementMappingList;
+	}
+
+	/**
+	 * @param employeeElementMappingList the employeeElementMappingList to set
+	 */
+	public void setEmployeeElementMappingList(List<EmployeeElementMpgDto> employeeElementMappingList) {
+		this.employeeElementMappingList = employeeElementMappingList;
+	}
+
+	/**
+	 * @return the employeeCode
+	 */
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
+
+	/**
+	 * @param employeeCode the employeeCode to set
+	 */
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
 	}
 }

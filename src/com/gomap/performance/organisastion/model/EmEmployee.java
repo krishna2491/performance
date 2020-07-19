@@ -110,7 +110,25 @@ public class EmEmployee implements Serializable {
     @Size(min = 1, max = 6)
     @Column(name = "gender")
     private String gender;
+    
+      @Size(min = 1, max = 255)
+    @Column(name = "employee_code")
+    private String employeeCode;
     /**
+	 * @return the employeeCode
+	 */
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
+
+	/**
+	 * @param employeeCode the employeeCode to set
+	 */
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
+	}
+
+	/**
 	 * @return the designation
 	 */
     

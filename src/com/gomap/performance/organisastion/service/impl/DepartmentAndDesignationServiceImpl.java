@@ -305,15 +305,17 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 												// insert new  operation
 											}else
 											{
-												if(roleElementOperationMpgDto.getActivateFlag().equals(AppConstants.IN_ACTIVE_FLAG))
+												if(roleElementOperationMpgDto.getRoleElementOperationId()!=null && 
+														roleElementOperationMpgDto.getActivateFlag().equals(AppConstants.IN_ACTIVE_FLAG))
 												{
 													//inactive operation here
 													RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();
+													roleElementOperationMpg.setRoleElementOperationId(roleElementOperationMpgDto.getRoleElementOperationId());
 													roleElementOperationMpg.setOperationId(roleElementOperationMpgDto.getOperationId());
 													roleElementOperationMpg.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
 													roleElementOperationMpg.setDesignationElementMpgId(designationElementMaping.getDesignationElementMpgId());
 													roleElementOperationMpg.setUpdatedDate(new Date());
-													departmentAndDesignationDao.mapOperation(roleElementOperationMpg);
+													departmentAndDesignationDao.updateOperation(roleElementOperationMpg);
 													
 												}
 											}
@@ -485,13 +487,16 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 		try {
 			
 			List<DesignationElementMaping> designationElementMapings=departmentAndDesignationDao.getDesignationElement(designationId);
-			DesignationElementMapingDto designationElementMapingDto=new DesignationElementMapingDto();
+		//	DesignationElementMapingDto designationElementMapingDto=new DesignationElementMapingDto();
 			List<RoleElementOperationMpgDto> operationMasterDtos=new ArrayList<RoleElementOperationMpgDto>();
 			List<DesignationElementMapingDto> designationElementMapingDtos=new ArrayList<DesignationElementMapingDto>();
 			DesignationElementMapingDto designationElementMapingDto2=new DesignationElementMapingDto();
 			RoleElementOperationMpgDto elementOperationMpgDto=new RoleElementOperationMpgDto();
 			DesignationDto designationDto=new DesignationDto();
-			designationDto.setDesignationId(designationId);
+			List<EmDesignation> desigList=departmentAndDesignationDao.getDesignation(designationId, null);
+			designationDto.setDesignationId(desigList.get(0).getDesignationId());
+			designationDto.setDesignationName(desigList.get(0).getDesignationName());
+			designationDto.setDepartmentId(desigList.get(0).getDepartmentId());
 			for(DesignationElementMaping designationElementMaping:designationElementMapings)
 			{
 				operationMasterDtos = new ArrayList<RoleElementOperationMpgDto>();

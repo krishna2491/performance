@@ -4,6 +4,7 @@
 package com.gomap.performance.master.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -61,6 +62,30 @@ public class UserMaster implements Serializable {
 	@Size(min = 1, max = 5)
 	@Column(name = "activate_flag")
 	private Integer activateFlag;
+	@NotNull
+	@Size(min = 1, max = 5)
+	@Column(name = "email_verification")
+	private Integer emailVerification;
+	
+	@NotNull
+	@Size(min = 1, max = 250)
+	@Column(name = "email_token")
+	private String emailToken;
+	@Column(name = "token_time")
+	@Temporal(TemporalType.DATE)
+	private Date  tokenTime;
+	/**
+	 * @return the emailToken
+	 */
+	public String getEmailToken() {
+		return emailToken;
+	}
+	/**
+	 * @param emailToken the emailToken to set
+	 */
+	public void setEmailToken(String emailToken) {
+		this.emailToken = emailToken;
+	}
 	/**
 	 * @return the activateFlag
 	 */
@@ -144,6 +169,30 @@ public class UserMaster implements Serializable {
 	 */
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	/**
+	 * @return the emailVerification
+	 */
+	public Integer getEmailVerification() {
+		return emailVerification;
+	}
+	/**
+	 * @param emailVerification the emailVerification to set
+	 */
+	public void setEmailVerification(Integer emailVerification) {
+		this.emailVerification = emailVerification;
+	}
+	/**
+	 * @return the tokenTime
+	 */
+	public Date getTokenTime() {
+		return tokenTime;
+	}
+	/**
+	 * @param tokenTime the tokenTime to set
+	 */
+	public void setTokenTime(Date tokenTime) {
+		this.tokenTime = tokenTime;
 	}
 	
 }

@@ -165,7 +165,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO=departmentAndDesignationService.getDesignation(designationDto.getDesignationId(),designationDto.getDepartmentId());
 				DesignationDto dd=new DesignationDto();
 				
-				responseDTO.setDataObj(dd);
+				//responseDTO.setDataObj(dd);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (PerformanceException ex) {

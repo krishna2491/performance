@@ -138,4 +138,39 @@ public class AdminEmployeeDaoImpl implements AdminEmployeeDao {
 		return (UserMaster) criteria.uniqueResult();
 	}
 
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.AdminEmployeeDao#getUserDataByTokenId(java.lang.String)
+	 */
+	@Override
+	public UserMaster getUserDataByTokenId(String tokenId) throws Exception {
+		// TODO Auto-generated method stub
+
+		// TODO Auto-generated method stub
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(UserMaster.class);
+		
+		if(tokenId!=null)
+		{
+			criteria.add(Restrictions.eq("emailToken", tokenId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return (UserMaster) criteria.uniqueResult();
+	
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.AdminEmployeeDao#updateUser(com.gomap.performance.master.model.UserMaster)
+	 */
+	@Override
+	public UserMaster updateUser(UserMaster userMaster) throws Exception {
+		// TODO Auto-generated method stub
+
+		Session session=sessionFactory.getCurrentSession();
+		 session.update(userMaster);
+		return userMaster;
+	
+	}
+
 }
