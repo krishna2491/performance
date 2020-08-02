@@ -17,6 +17,7 @@ import com.gomap.performance.organisastion.model.EmTeam;
  */
 public interface TeamManagmentService {
 	public ResponseDTO createTeam(EmTeamDto emTeamDto) throws Exception;
+	public ResponseDTO deleteTeam(EmTeamDto emTeamDto) throws Exception;
 	public ResponseDTO updateTeam(EmTeamDto emTeamDto) throws Exception;
 	public ResponseDTO getTeam(EmTeamDto emTeamDto) throws Exception;
 	public ResponseDTO addTeamMember(List<EmTeamMemberDto> emTeamMemberDtoList) throws Exception;

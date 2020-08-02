@@ -64,8 +64,8 @@ public class GoalController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=goalService.createGoal(emGoalDto);
-				responseDTO.setDataObj(emGoalDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setDataObj(emGoalDto);
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -84,6 +84,26 @@ public class GoalController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=goalService.updateGoal(emGoalDto);
+				responseDTO.setDataObj(emGoalDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_DELETE_GOAL}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO deleteGoal(@RequestBody EmGoalDto emGoalDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=goalService.deleteGoal(emGoalDto.getGoalId(), emGoalDto.getEmployeeId(),null);
 				responseDTO.setDataObj(emGoalDto);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}

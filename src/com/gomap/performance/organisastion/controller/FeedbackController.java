@@ -123,5 +123,26 @@ public class FeedbackController {
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_DELETE_FEEDBACK}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO deleteFeedback(@RequestBody EmFeedbackRequestDto emFeedbackRequestDto, BindingResult result) {
+		ResponseDTO  responseDTO=new ResponseDTO();
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				;
+			//	responseDTO.setDataObj(employeeDto);
+				responseDTO=feedbackSrvc.deleteFeedback(emFeedbackRequestDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 
 }

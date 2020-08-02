@@ -20,6 +20,8 @@ public class UserDto implements Serializable {
 	private String name;
 	private String email;
 	private String password;
+	private Integer emailVerification;
+	private String emailToken;
 	/**
 	 * @return the userId
 	 */
@@ -74,6 +76,30 @@ public class UserDto implements Serializable {
 	@Override
 	public String toString() {
 		return "UserDto [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+	}
+	/**
+	 * @return the emailVerification
+	 */
+	public Integer getEmailVerification() {
+		return emailVerification;
+	}
+	/**
+	 * @param emailVerification the emailVerification to set
+	 */
+	public void setEmailVerification(Integer emailVerification) {
+		this.emailVerification = emailVerification;
+	}
+	/**
+	 * @return the emailToken
+	 */
+	public String getEmailToken() {
+		return emailToken;
+	}
+	/**
+	 * @param emailToken the emailToken to set
+	 */
+	public void setEmailToken(String emailToken) {
+		this.emailToken = emailToken;
 	}
 
 

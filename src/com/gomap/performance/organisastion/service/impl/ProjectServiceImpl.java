@@ -4,24 +4,30 @@
 package com.gomap.performance.organisastion.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.ProjectDao;
 import com.gomap.performance.organisastion.dto.ProjectDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
+import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.model.EmProject;
+import com.gomap.performance.organisastion.model.EmSkill;
 import com.gomap.performance.organisastion.service.ProjectService;
 
 /**
  * @author krishnakant.bairagi
- *
+ *	
  */
 @Service
 public class ProjectServiceImpl implements ProjectService {
+	private static final Logger logger = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
 	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.service.ProjectService#addProject(com.gomap.performance.organisastion.dto.ProjectDto)
@@ -45,15 +51,18 @@ public class ProjectServiceImpl implements ProjectService {
 					project.setProjectCreatedDate(new Date());
 					project.setProjectCreatedBy(projectDto.getProjectCreatedBy());
 					project.setProjectPriority(projectDto.getProjectPriority());
+					project.setActivateFlag(AppConstants.ACTIVE_FLAG);
 					projectDao.addProject(project);
 				
-					dto.setSuccessMsg("yess");
+					dto.setSuccessMsg("project created");
 					dto.setDataObj(project);
+					dto.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 				
 					
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
+					logger.error("addProject,",e);
 				}
 			return dto;
 	}
@@ -76,15 +85,17 @@ public class ProjectServiceImpl implements ProjectService {
 					project.setProjectCreatedDate(projectDto.getProjectStartDate());
 					project.setProjectCreatedBy(projectDto.getProjectCreatedBy());
 					project.setProjectPriority(projectDto.getProjectPriority());
+					project.setActivateFlag(AppConstants.ACTIVE_FLAG);
 					projectDao.updateProject(project);
 				
-					dto.setSuccessMsg("yess");
+					dto.setSuccessMsg("project created");
 					dto.setDataObj(project);
-				
+					dto.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 					
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
+					logger.error("update proj,",e);
 				}
 			return dto;
 	}
@@ -106,7 +117,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public ResponseDTO getProjectList(Integer projId) throws Exception {
 		// TODO Auto-generated method stub
 		ResponseDTO resSto=new ResponseDTO();
-		resSto.setDataObj(projectDao.getProjectList());
+		resSto.setDataObj(projectDao.getProjectList(projId));
 		
 		
 		return resSto;
@@ -119,6 +130,53 @@ public class ProjectServiceImpl implements ProjectService {
 	public ResponseDTO projectTeamMapping(Integer projId) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.ProjectService#deleteProject(com.gomap.performance.organisastion.dto.ProjectDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO deleteProject(ProjectDto projectDto) throws Exception {
+		logger.debug("start  deleteProject for projectId=" + projectDto.getProjectId());
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			EmProject emProject = new EmProject();
+			if (projectDto == null && projectDto.getProjectId() == null) {
+				responseDTO.setErrorCode(411);
+				responseDTO.setErrorMsg("Project parameter can not be null");
+			} else {
+				
+				List<EmProject> projList = projectDao.getProjectList(projectDto.getProjectId());
+						
+				if (projList.isEmpty()) {
+					responseDTO.setErrorCode(412);
+					responseDTO.setErrorMsg(" data is not availabe in system");
+				} else {
+					 emProject = projList.get(0);
+				
+					 emProject.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+					 emProject.setProjectUpdatedDate(new Date());
+					 projectDao.updateProject(emProject);
+						responseDTO.setDataObj(emProject);
+						responseDTO.setSuccessMsg("Data deleted..");
+						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+					
+
+				}
+
+			}
+
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error(" Error while deleting deleteTeam");
+		}
+		// TODO Auto-generated method stub
+		return responseDTO;
+
 	}
 
 }

@@ -78,7 +78,7 @@ public class EmailServiceImpl implements EmailService{
             message.setSubject("Congratulations!! you have registered on E performance");
 
             // Now set the actual message
-            message.setText("http://3.133.244.20:4200/emailverfication?tokenId="+tokenId);
+            message.setText("http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId);
 
             System.out.println("sending...");
             // Send message

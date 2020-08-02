@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -61,6 +62,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			criteria.add(Restrictions.eq("employeeId", employeeId));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("employeeCreatedDate"));
 		return criteria.list();
 	}
 

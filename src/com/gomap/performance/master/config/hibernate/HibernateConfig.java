@@ -3,6 +3,8 @@
  */
 package com.gomap.performance.master.config.hibernate;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -30,6 +32,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScan({ "com.gomap.performance.master.config.hibernate" })
 @PropertySource(value = { "classpath:db-hibernate.properties" })
+//@PropertySource(value = { "C:\\Users\\Fujitsu\\Desktop\\performanceWar\\db-hibernate.properties" })
 public class HibernateConfig {
 
 	private static final String JDBC_DRIVER_CLASS_NAME = "jdbc.driverClassName";
@@ -62,6 +65,17 @@ public class HibernateConfig {
 
 	@Bean
 	public DataSource dataSource() {
+		FileReader reader;
+		try {
+//			System.out.println("hibernateProperties.......");
+//			reader = new FileReader("C:\\\\Users\\\\Fujitsu\\\\Desktop\\\\performanceWar\\\\db-hibernate.properties");
+//			 Properties p=new Properties();  
+//			 
+//			    p.load(reader);  
+//			    System.out.println("ufytdyt"+p.getProperty("user")); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
 		
 		/*DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(environment
@@ -90,7 +104,10 @@ public class HibernateConfig {
 			Properties p = new Properties();
 			
 			System.out.println(applicationContext.getApplicationName());
+			String appName=applicationContext.getApplicationName().replaceFirst("/", "");
+			System.out.println(environment.getRequiredProperty(JDBC_URL));
 			p.setProperty("driverClassName", environment.getRequiredProperty(JDBC_DRIVER_CLASS_NAME));
+			//p.setProperty("url", environment.getRequiredProperty(JDBC_URL)+"_"+appName);
 			p.setProperty("url", environment.getRequiredProperty(JDBC_URL));
 			p.setProperty("password", environment.getRequiredProperty(JDBC_PASSWORD));
 			p.setProperty("username", environment.getRequiredProperty(JDBC_USERNAME));
@@ -113,13 +130,20 @@ public class HibernateConfig {
 	}
 
 	private Properties hibernateProperties() {
+		
+	
+	      
+	   
+		String appName=applicationContext.getApplicationName().replaceFirst("/", "");
+	    
+		
 		Properties properties = new Properties();
 		properties.put(HIBERNATE_BATCH_SIZE,environment.getRequiredProperty(HIBERNATE_BATCH_SIZE));
 		properties.put(HIBERNATE_DIALECT,environment.getRequiredProperty(HIBERNATE_DIALECT));
 		properties.put(HIBERNATE_SHOW_SQL,environment.getRequiredProperty(HIBERNATE_SHOW_SQL));
 		properties.put(HIBERNATE_FORMAT_SQL,environment.getRequiredProperty(HIBERNATE_FORMAT_SQL));
+		//properties.put(HIBERNATE_DEFAULT_SCHEMA, environment.getRequiredProperty(HIBERNATE_DEFAULT_SCHEMA)+"_"+appName);
 		properties.put(HIBERNATE_DEFAULT_SCHEMA, environment.getRequiredProperty(HIBERNATE_DEFAULT_SCHEMA));
-		
 		//properties.put("hibernate.default_catalog", "emf_test");
 		
 		properties.put(HIBERNATE_ORDER_INSERTS, environment.getRequiredProperty(HIBERNATE_ORDER_INSERTS));

@@ -14,8 +14,11 @@ import com.gomap.performance.master.model.CompanyMaster;
  */
 public interface CompanyService {
 	public ResponseDTO addCompany(CompanyMasterDto companyMasterDto);
+	public ResponseDTO deleteCompany(CompanyMasterDto companyMasterDto);
 	public ResponseDTO updateCompany(CompanyMasterDto companyMasterDto);
 	public ResponseDTO getCompanyDetails(CompanyMasterDto companyMasterDto);
+	public ResponseDTO searchForPortalName(String companyName);
+	public boolean generateApiByPortalName(String portalName);
+	public ResponseDTO getIndustry(Integer industryId);
 	
-
 }

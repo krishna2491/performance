@@ -15,5 +15,6 @@ public interface TaskService {
 	public ResponseDTO createTask(EmTaskDto emTaskDto) throws Exception;
 	public ResponseDTO updateTask(EmTaskDto emTaskDto) throws Exception;
 	public ResponseDTO getTask(EmTaskDto emTaskDto) throws Exception;
+	public ResponseDTO deleteTask(EmTaskDto emTaskDto) throws Exception;
 	
 }

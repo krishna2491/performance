@@ -89,6 +89,12 @@ public class EmProject implements Serializable {
     @Column(name = "project_updated_date")
     @Temporal(TemporalType.DATE)
     private Date projectUpdatedDate;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 5)
+    @Column(name = "activate_flag")
+    private Integer activateFlag;
 
     public EmProject() {
     }
@@ -218,5 +224,19 @@ public class EmProject implements Serializable {
     public String toString() {
         return "com.gomap.performance.organisation.EmProject[ projectId=" + projectId + " ]";
     }
+
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
+
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
     
 }

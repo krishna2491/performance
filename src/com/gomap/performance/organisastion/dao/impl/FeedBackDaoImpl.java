@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -66,7 +67,7 @@ public class FeedBackDaoImpl implements FeedbackDao{
 			criteria.add(Restrictions.eq("feedbackStatus", AppConstants.CREATED));
 		}
 			criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
-		
+			criteria.addOrder(Order.desc("feedbackCreatedDate"));
 		return criteria.list();
 	}
 
@@ -82,6 +83,7 @@ public class FeedBackDaoImpl implements FeedbackDao{
 			criteria.add(Restrictions.eq("feedbackRequestId",feedbackRequestId));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("createdDate"));
 		return criteria.list();
 	}
 

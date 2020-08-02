@@ -3,6 +3,10 @@
  */
 package com.gomap.performance.master.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +81,8 @@ public class CompanyMasterServiceImpl implements CompanyService {
 			companyMaster.setCreatedDate(new Date());
 			//companyMaster.setUpdatedDate(new Date());
 			companyDao.storeCompanyData(companyMaster);
+		//	generateApiByPortalName(companyMasterDto.getPortalName());
+			//start from here
 			responseDTO.setDataObj(companyMaster);
 			responseDTO.setSuccessMsg("Company details created");
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -196,6 +202,12 @@ public class CompanyMasterServiceImpl implements CompanyService {
 			if (companyMasterDto.getCompanyName() != null) {
 				companyMaster.setCompanyName(companyMasterDto.getCompanyName());
 			}
+			if (companyMasterDto.getAdminEmail() != null) {
+				companyMaster.setAdminEmail(companyMasterDto.getAdminEmail());
+			}
+			if (companyMasterDto.getContactPerson() != null) {
+				companyMaster.setContactPerson(companyMasterDto.getContactPerson());
+			}
 
 			List<CompanyMaster> compList = companyDao.getCompanyDetails(companyMaster);
 			responseDTO.setDataObj(compList);
@@ -209,4 +221,161 @@ public class CompanyMasterServiceImpl implements CompanyService {
 			logger.error("Error while getting company List", e);
 		}
 		return responseDTO;
-	}}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.CompanyService#searchForPortalName(java.lang.String)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO searchForPortalName(String companyName) {
+		// TODO Auto-generated method stub
+		logger.info("Inside searchForPortalName"+companyName);
+		ResponseDTO responseDTO = new ResponseDTO();
+
+		try {
+			if(companyName!=null && !("").equals(companyName))
+			{
+				List cmpList=companyDao.getCompanyByPortalName(companyName);
+				if(cmpList!=null && !cmpList.isEmpty())
+				{
+					responseDTO.setDataObj(null);
+					responseDTO.setSuccessMsg("This Portal name is already used, Please use some other name");
+					responseDTO.setErrorCode(411);
+				}else
+				{
+					
+					responseDTO.setDataObj(companyName);
+					responseDTO.setSuccessMsg("You can use this Portal Name");
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				}
+			}
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+			logger.error("searchForPortalName", e);
+		}
+		return responseDTO;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.CompanyService#generateApiByPortalName(java.lang.String)
+	 */
+	@Override
+	public boolean generateApiByPortalName(String portalName) {
+
+		
+		boolean isDeploymentDone=false;
+	    FileInputStream instream = null;
+		FileOutputStream outstream = null;
+	 
+	    	try{
+	    	    File infile =new File(AppConstants.SAMPLE_FILE);
+	    	    File outfile =new File(AppConstants.GENERATED_FILE+portalName+".war");
+	 
+	    	    instream = new FileInputStream(infile);
+	    	    outstream = new FileOutputStream(outfile);
+	 
+	    	    byte[] buffer = new byte[1024];
+	 
+	    	    int length;
+	    	      while ((length = instream.read(buffer)) > 0){
+	    	    	outstream.write(buffer, 0, length);
+	    	    	isDeploymentDone=true;
+	    	    }
+
+	    	    //Closing the input/output file streams
+	    	    instream.close();
+	    	    outstream.close();
+
+	    	    System.out.println("File copied successfully!!");
+	 
+	    	}catch(IOException ioe){
+	    		isDeploymentDone=false;
+	    		ioe.printStackTrace();
+	    	 }
+return isDeploymentDone;
+		}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.CompanyService#getIndustry(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO getIndustry(Integer industryId) {
+		// TODO Auto-generated method stub
+		logger.info("Inside getIndustry" + industryId);
+		ResponseDTO responseDTO = new ResponseDTO();
+
+		try {
+			List indusList = null;
+			if (industryId != null && industryId != -1) {
+				indusList = companyDao.getIndustryMaster(industryId);
+			} else {
+				indusList = companyDao.getIndustryMaster(null);
+			}
+
+			responseDTO.setDataObj(indusList);
+			responseDTO.setSuccessMsg("Industry data sent");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+			logger.error("getIndustry", e);
+		}
+		return responseDTO;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.CompanyService#deleteCompany(com.gomap.performance.master.dto.CompanyMasterDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO deleteCompany(CompanyMasterDto companyMasterDto) {
+		logger.info("Inside deleteCompany" + companyMasterDto.getCompanyId());
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			CompanyMaster companyMaster=new CompanyMaster();
+			if(companyMasterDto.getCompanyId()!=null && companyMasterDto.getCompanyId()!=0)
+			{
+				companyMaster.setCompanyId(companyMasterDto.getCompanyId());
+				
+				List<CompanyMaster> companyList=companyDao.getCompanyDetails(companyMaster);
+				if(!companyList.isEmpty())
+				{
+					companyMaster=companyList.get(0);
+					companyMaster.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+					companyMaster.setUpdatedDate(new Date());
+					companyDao.updateCompany(companyMaster);
+					responseDTO.setDataObj(companyMaster);
+					responseDTO.setSuccessMsg("Data deleted..");
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				}
+				else
+				{
+					responseDTO.setErrorCode(412);
+					responseDTO.setErrorMsg("Company data is not availabe in system");
+				}
+			}else
+			{
+				responseDTO.setErrorCode(412);
+				responseDTO.setErrorMsg("Please provide company id");
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+			logger.error("deleteCompany", e);
+		}
+		return responseDTO;
+	}
+
+}

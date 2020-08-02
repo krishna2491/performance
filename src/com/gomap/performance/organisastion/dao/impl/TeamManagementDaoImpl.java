@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -50,7 +51,7 @@ public class TeamManagementDaoImpl implements  TeamManagmentDao {
 	@Override
 	public void deleteTeam(EmTeam emTeam) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().update(emTeam);
 	}
 
 	/* (non-Javadoc)
@@ -90,6 +91,7 @@ public class TeamManagementDaoImpl implements  TeamManagmentDao {
 		}
 		
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("teamCreatedDate"));
 		
 		return criteria.list();
 	}

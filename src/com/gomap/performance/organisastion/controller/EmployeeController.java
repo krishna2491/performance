@@ -115,5 +115,25 @@ public class EmployeeController {
 		} 
 		return responseDTO;
 	}
-
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_DELETE_EMPLOYEE}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO deleteEmployee(@RequestBody EmEmployeeDto employeeDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+			//	responseDTO.setDataObj(employeeDto);
+				responseDTO=(ResponseDTO) employeeService.deleteEmployee(employeeDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 }

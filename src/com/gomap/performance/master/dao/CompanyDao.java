@@ -6,6 +6,7 @@ package com.gomap.performance.master.dao;
 import java.util.List;
 
 import com.gomap.performance.master.model.CompanyMaster;
+import com.gomap.performance.master.model.IndustryMaster;
 
 /**
  * @author krishnakant.bairagi
@@ -16,5 +17,7 @@ public interface CompanyDao {
 	public CompanyMaster storeCompanyData(CompanyMaster companyMaster) throws Exception;
 	
 	public CompanyMaster updateCompany(CompanyMaster companyMaster) throws Exception;
+	public List<CompanyMaster> getCompanyByPortalName(String portalName) throws Exception;
+	public List<IndustryMaster> getIndustryMaster(Integer industryId) throws Exception;
 
 }

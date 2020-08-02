@@ -7,11 +7,13 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.hql.internal.ast.tree.RestrictableStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.TaskDao;
 import com.gomap.performance.organisastion.model.EmTask;
 
@@ -82,6 +84,8 @@ public class TaskDaoImpl implements TaskDao {
 		{
 			criteria.add(Restrictions.eq("taskDueDate", emTask.getTaskDueDate()));
 		}
+		criteria.add(Restrictions.eq("activateFlag",AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("taskCreatedDate"));
 		return criteria.list();
 	}
 	

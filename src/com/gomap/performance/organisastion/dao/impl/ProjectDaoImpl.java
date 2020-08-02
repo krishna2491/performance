@@ -7,9 +7,12 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.ProjectDao;
 import com.gomap.performance.organisastion.model.EmProject;
 
@@ -48,11 +51,16 @@ public EmProject updateProject(EmProject emProject) throws Exception {
 	 * @see com.gomap.performance.organisastion.dao.ProjectDao#getProjectList()
 	 */
 	@Override
-	public List<EmProject> getProjectList() throws Exception {
+	public List<EmProject> getProjectList(Integer projId) throws Exception {
 		// TODO Auto-generated method stub
 		Criteria crt=this.sessionFactory.getCurrentSession().createCriteria(EmProject.class);
+		if(projId!=null)
+		{
+			crt.add(Restrictions.eq("projectId", projId));
+		}
 		
-		
+		crt.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		crt.addOrder(Order.desc("projectCreatedDate"));
 		return crt.list();
 	}
 

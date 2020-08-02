@@ -14,6 +14,7 @@ import com.gomap.performance.organisastion.dto.ResponseDTO;
  */
 public interface ProjectService {
 	public ResponseDTO addProject(ProjectDto projectDto) throws Exception;
+	public ResponseDTO deleteProject(ProjectDto projectDto) throws Exception;
 	public ResponseDTO updateProject(ProjectDto projectDto) throws Exception;
 	public ResponseDTO getProjectWiseMember(Integer projId) throws Exception;
 	public ResponseDTO getProjectList(Integer projId) throws Exception;

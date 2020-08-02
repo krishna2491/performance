@@ -92,6 +92,25 @@ public class TaskController {
 		return responseDTO;
 	}
 	
-	
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_DELETE_TASK}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO deleteTask(@RequestBody EmTaskDto emTaskDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+				responseDTO=taskService.deleteTask(emTaskDto);
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 
 }

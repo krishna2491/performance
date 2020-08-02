@@ -87,5 +87,24 @@ public class ProjectController {
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_DELETE_PROJECT}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO deleteProject(@RequestBody ProjectDto projectDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=projectSrvc.deleteProject(projectDto);
+				//responseDTO.setErrorCode(200);
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 
 }

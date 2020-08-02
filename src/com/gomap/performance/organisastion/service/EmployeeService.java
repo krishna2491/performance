@@ -16,6 +16,7 @@ import com.gomap.performance.organisastion.dto.ResponseDTO;
 public interface EmployeeService {
 	public Object addEmployee(EmEmployeeDto employeeDto) throws Exception;
 	public ResponseDTO employeeRoleMapping(EmEmployeeDto employeeDto) throws Exception;
+	public ResponseDTO deleteEmployee(EmEmployeeDto employeeDto) throws Exception;
 	public ResponseDTO employeeDepratmentMapping(EmEmployeeDto employeeDto) throws Exception;
 	public ResponseDTO getMySkill() throws Exception;
 	public ResponseDTO getMyTask() throws Exception;

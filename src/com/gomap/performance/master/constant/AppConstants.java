@@ -16,5 +16,8 @@ public final class AppConstants {
 	public static final Integer  CREATED=1;
 	public static final Integer  SUBMITTED=2;
 	public static final Integer  COMPLETED=3;
+	public static final String SAMPLE_FILE="C:\\Users\\Administrator\\Desktop\\SampleLocation\\sample.war";
+	public static final String GENERATED_FILE="C:\\xampp\\tomcat\\webapps\\";
+	
 	
 }

@@ -132,9 +132,45 @@ public class SkillServiceImpl implements SkillService {
 	@Override
 	@Transactional
 	public ResponseDTO deleteSkill(EmSkillDto emSkillDto) throws Exception {
+		logger.debug("start  deleteSkill for skillId=" + emSkillDto.getSkillId());
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			EmSkill emSkill = new EmSkill();
+			if (emSkillDto == null && emSkillDto.getSkillId() == null) {
+				responseDTO.setErrorCode(411);
+				responseDTO.setErrorMsg("Team parameter can not be null");
+			} else {
+				emSkill.setSkillId(emSkillDto.getSkillId());
+				List<EmSkill> skillList = skillDao.getSkill(emSkill);
+						
+				if (skillList.isEmpty()) {
+					responseDTO.setErrorCode(412);
+					responseDTO.setErrorMsg(" data is not availabe in system");
+				} else {
+					 emSkill = skillList.get(0);
+				
+					 emSkill.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+					 emSkill.setSkillUpdatedDate(new Date());
+					 skillDao.deleteSkill(emSkill);
+						responseDTO.setDataObj(emSkill);
+						responseDTO.setSuccessMsg("Data deleted..");
+						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+					
+
+				}
+
+			}
+
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error(" Error while deleting deleteTeam");
+		}
 		// TODO Auto-generated method stub
-		
-		return null;
+		return responseDTO;
+
 	}
 
 	/* (non-Javadoc)

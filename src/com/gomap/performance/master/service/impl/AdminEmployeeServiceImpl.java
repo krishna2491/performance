@@ -310,6 +310,8 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 		// TODO Auto-generated method stub
 		logger.info("emailVerification.....");
 		ResponseDTO responseDTO=new ResponseDTO();
+		UserDto userDto=new UserDto();
+		
 		try {
 			if(tokenId!=null && !("").equals(tokenId))
 					{
@@ -319,9 +321,14 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 				{
 					userMaster.setEmailVerification(1);
 					//adminEmployeeDao.getUserData();
-					adminEmployeeDao.updateUser(userMaster);
-					userMaster.setPassword(null);
-					responseDTO.setDataObj(userMaster);
+					userMaster=adminEmployeeDao.updateUser(userMaster);
+					userDto.setEmail(userMaster.getEmail());
+					userDto.setUserId(userMaster.getUserId());
+					userDto.setPassword(null);
+					userDto.setName(userMaster.getName());
+					userDto.setEmailVerification(userMaster.getEmailVerification());
+					userDto.setEmailToken(userMaster.getEmailToken());
+					responseDTO.setDataObj(userDto);
 					responseDTO.setSuccessMsg("Email verification completed");
 					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 				

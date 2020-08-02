@@ -3,6 +3,7 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import com.gomap.performance.organisastion.dto.EmTeamDto;
 import com.gomap.performance.organisastion.dto.EmTeamMemberDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
+import com.gomap.performance.organisastion.model.EmDepartment;
 import com.gomap.performance.organisastion.model.EmEmployee;
 import com.gomap.performance.organisastion.model.EmTeam;
 import com.gomap.performance.organisastion.model.EmTeamMember;
@@ -160,6 +162,9 @@ public class TeamManagmentServiceImpl implements TeamManagmentService {
 			if (emTeamDto.getTeamCreatedBy() != null) {
 				emTeam.setTeamCreatedBy(emTeamDto.getTeamCreatedBy());
 			}
+			if (emTeamDto.getTeamId() != null) {
+				emTeam.setTeamId(emTeamDto.getTeamId());
+			}
 			
 			responseDTO.setDataObj(teamManagmentDao.getTeam(emTeam));
 			responseDTO.setSuccessMsg("Team List is available here");
@@ -187,6 +192,7 @@ public class TeamManagmentServiceImpl implements TeamManagmentService {
 		logger.info("addTeamMember...... ");
 		try {
 			EmTeamMember emTeamMember=null;//new EmTeamMember();
+			List<EmTeamMember> teamList=new ArrayList<EmTeamMember>();
 			for(EmTeamMemberDto dto:emTeamMemberDtoList)
 			{
 				emTeamMember=new EmTeamMember();
@@ -229,12 +235,13 @@ public class TeamManagmentServiceImpl implements TeamManagmentService {
 					teamManagmentDao.addTeamMember(emTeamMember);
 					
 				}
-				responseDTO.setDataObj(null);
-				responseDTO.setSuccessMsg("All mapping completed");
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
-				logger.info("addTeamMember...... successfully completed ");
+				teamList.add(emTeamMember);
 						
 			}
+			responseDTO.setDataObj(teamList);
+			responseDTO.setSuccessMsg("All mapping completed");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			logger.info("addTeamMember...... successfully completed ");
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -293,6 +300,53 @@ public class TeamManagmentServiceImpl implements TeamManagmentService {
 		}
 		// TODO Auto-generated method stub
 		return responseDTO;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.TeamManagmentService#deleteTeam(com.gomap.performance.organisastion.dto.EmTeamDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO deleteTeam(EmTeamDto emTeamDto) throws Exception {
+		logger.debug("start  deleteTeam for teamId=" + emTeamDto.getTeamId());
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			EmTeam emTeam = new EmTeam();
+			if (emTeamDto == null && emTeamDto.getTeamId() == null) {
+				responseDTO.setErrorCode(411);
+				responseDTO.setErrorMsg("Team parameter can not be null");
+			} else {
+				emTeam.setTeamId(emTeamDto.getTeamId());
+				List<EmTeam> teamList = teamManagmentDao.getTeam(emTeam);
+						
+				if (teamList.isEmpty()) {
+					responseDTO.setErrorCode(412);
+					responseDTO.setErrorMsg("Team data is not availabe in system");
+				} else {
+					 emTeam = teamList.get(0);
+				
+					 emTeam.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+					 emTeam.setTeamUpdatedDate(new Date());
+						teamManagmentDao.deleteTeam(emTeam);
+						responseDTO.setDataObj(emTeam);
+						responseDTO.setSuccessMsg("Data deleted..");
+						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+					
+
+				}
+
+			}
+
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error(" Error while deleting deleteTeam");
+		}
+		// TODO Auto-generated method stub
+		return responseDTO;
+
 	}
 
 }

@@ -249,8 +249,10 @@ public class TaskServiceImpl implements TaskService {
 				{
 					emTask.setTaskStatus(emTaskDto.getTaskStatus());
 				}
-				
-				
+				if(emTaskDto.getTaskId()!=null)
+				{
+					emTask.setTaskId(emTaskDto.getTaskId());
+				}
 				List<EmTask> taskList=taskDao.getTask(emTask);
 				responseDTO.setDataObj(taskList);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -267,6 +269,53 @@ public class TaskServiceImpl implements TaskService {
 			return responseDTO;
 		
 			
+		}
+
+		/* (non-Javadoc)
+		 * @see com.gomap.performance.organisastion.service.TaskService#deleteTask(com.gomap.performance.organisastion.dto.EmTaskDto)
+		 */
+		@Override
+		@Transactional
+		public ResponseDTO deleteTask(EmTaskDto emTaskDto) throws Exception {
+			logger.debug("start  deleteTask for =" + emTaskDto.getTaskId());
+			ResponseDTO responseDTO = new ResponseDTO();
+			try {
+				EmTask emTask = new EmTask();
+				if (emTaskDto == null && emTaskDto.getTaskId() == null) {
+					responseDTO.setErrorCode(411);
+					responseDTO.setErrorMsg("Task parameter can not be null");
+				} else {
+					emTask.setTaskId(emTaskDto.getTaskId());
+					List<EmTask> taskList = taskDao.getTask(emTask);
+							
+					if (taskList.isEmpty()) {
+						responseDTO.setErrorCode(412);
+						responseDTO.setErrorMsg("Task data is not availabe in system");
+					} else {
+						 emTask = taskList.get(0);
+					
+						 emTask.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+						 emTask.setTaskUpdatedDate(new Date());
+							taskDao.deleteTask(emTask);
+							responseDTO.setDataObj(emTask);
+							responseDTO.setSuccessMsg("Data deleted..");
+							responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+						
+
+					}
+
+				}
+
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				responseDTO.setErrorCode(411);
+				responseDTO.setErrorMsg(e.getMessage());
+				logger.error(" Error while deleting deleteTeam");
+			}
+			// TODO Auto-generated method stub
+			return responseDTO;
+
 		}
 
 }

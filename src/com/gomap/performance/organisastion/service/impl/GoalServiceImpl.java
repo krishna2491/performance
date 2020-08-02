@@ -275,10 +275,47 @@ public class GoalServiceImpl implements GoalService {
 	 * @see com.gomap.performance.organisastion.service.GoalService#deleteGoal(java.lang.Integer, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
+	@Transactional
 	public ResponseDTO deleteGoal(Integer goalId, Integer empId, Integer projetId) throws Exception {
+		logger.debug("start  deleteGoal for goalId=" + goalId);
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			EmGoal emGoal = new EmGoal();
+			if (goalId==null || goalId==0) {
+				responseDTO.setErrorCode(411);
+				responseDTO.setErrorMsg("Team parameter can not be null");
+			} else {
+				emGoal.setGoalId(goalId);
+				List<EmGoal> goalList = goalDao.getGoal(emGoal);
+						
+				if (goalList.isEmpty()) {
+					responseDTO.setErrorCode(412);
+					responseDTO.setErrorMsg("Team data is not availabe in system");
+				} else {
+					emGoal = goalList.get(0);
+				
+					emGoal.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+					emGoal.setGoalUpdatedDate(new Date());
+						goalDao.updateGoal(emGoal);
+						responseDTO.setDataObj(emGoal);
+						responseDTO.setSuccessMsg("Data deleted..");
+						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+					
+
+				}
+
+			}
+
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error(" Error while deleting deleteGoal");
+		}
 		// TODO Auto-generated method stub
-		
-		return null;
+		return responseDTO;
+
 	}
 
 }

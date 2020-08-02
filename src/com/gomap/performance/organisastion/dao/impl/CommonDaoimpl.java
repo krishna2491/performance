@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,6 +36,7 @@ public class CommonDaoimpl implements CommonDao{
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(ElementMaster.class);
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("createdDate"));
 		return criteria.list();
 	
 	}
@@ -47,6 +49,7 @@ public class CommonDaoimpl implements CommonDao{
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(OperationMaster.class);
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("createdDate"));
 		return criteria.list();
 		
 	}
@@ -83,6 +86,7 @@ public class CommonDaoimpl implements CommonDao{
 			criteria.add(Restrictions.eq("paramType", type));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.asc("paramName"));
 		return criteria.list();
 	
 	

@@ -14,6 +14,6 @@ import com.gomap.performance.organisastion.model.EmProject;
 public interface ProjectDao {
 	public EmProject addProject(EmProject emProject) throws Exception;
 	public EmProject updateProject(EmProject emProject) throws Exception;
-	public List<EmProject> getProjectList() throws Exception;
+	public List<EmProject> getProjectList(Integer projectId) throws Exception;
 
 }

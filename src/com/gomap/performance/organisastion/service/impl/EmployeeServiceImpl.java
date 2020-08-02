@@ -455,5 +455,51 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return responseDTO;
 	}
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.EmployeeService#deleteEmployee(com.gomap.performance.organisastion.dto.EmEmployeeDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO deleteEmployee(EmEmployeeDto employeeDto) throws Exception {
+		logger.debug("start  deleteEmployee for empId=" + employeeDto.getEmployeeId());
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			EmEmployee emEmployee = new EmEmployee();
+			if (employeeDto == null && employeeDto.getEmployeeId() == null) {
+				responseDTO.setErrorCode(411);
+				responseDTO.setErrorMsg("Employee parameter can not be null");
+			} else {
+			
+				List<EmEmployee> emplList = empDao.getEmployeeList(employeeDto.getEmployeeId());
+						
+				if (emplList.isEmpty()) {
+					responseDTO.setErrorCode(412);
+					responseDTO.setErrorMsg("Employee data is not availabe in system");
+				} else {
+					 emEmployee = emplList.get(0);
+				
+					 emEmployee.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
+					 emEmployee.setEmployeeUpdatedDate(new Date());
+					 empDao.updateEmployee(emEmployee);
+						responseDTO.setDataObj(employeeDto);
+						responseDTO.setSuccessMsg("Data deleted..");
+						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+					
+
+				}
+
+			}
+
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error(" Error while deleting deleteTeam");
+		}
+		// TODO Auto-generated method stub
+		return responseDTO;
+
+	}
 	
 		}

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,6 +105,7 @@ public class DepartmentAndDesignationDaoImpl implements DepartmentAndDesignation
 			criteria.add(Restrictions.eq("departmentId", departmentId));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("departmentCreatedDate"));
 		return criteria.list();
 	}
 
@@ -123,6 +125,7 @@ public class DepartmentAndDesignationDaoImpl implements DepartmentAndDesignation
 			criteria.add(Restrictions.eq("departmentId", departmentId));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("designationCreatedDate"));
 		return criteria.list();
 	}
 
@@ -160,6 +163,7 @@ this.sessionFactory.getCurrentSession().save(roleElementOperationMpg);
 			criteria.add(Restrictions.eq("designationId", designationId));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		
 		return criteria.list();
 	}
 

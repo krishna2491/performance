@@ -9,14 +9,14 @@ package com.gomap.performance.master.constant;
  */
 
 public final class UrlConstants {
-	
+
 //	Authentication
-	public static final String  API_LOGIN_AUTHENTICATE = "emf/login";
-	public static final String  API_LOGOUT = "emf/logout";
-	public static final String  API_VALIDATE_SESSION = "emf/validateSession";
-	public static final String  API_ADD_EMPLOYEE = "emf/addEmployee";
-	public static final String  API_ADD_PROJECT = "emf/addProject";
-	public static final String  API_UPADTE_PROJECT = "emf/updateProject";
+	public static final String API_LOGIN_AUTHENTICATE = "emf/login";
+	public static final String API_LOGOUT = "emf/logout";
+	public static final String API_VALIDATE_SESSION = "emf/validateSession";
+	public static final String API_ADD_EMPLOYEE = "emf/addEmployee";
+	public static final String API_ADD_PROJECT = "emf/addProject";
+	public static final String API_UPADTE_PROJECT = "emf/updateProject";
 	public static final String API_GET_PROJECT_LIST = "emf/getProjectList";
 	public static final String API_ADD_DEPARTMENT = "emf/addDepartment";
 	public static final String API_ADD_DESIGNATION = "emf/addDesignation";
@@ -24,8 +24,7 @@ public final class UrlConstants {
 	public static final String API_GET_DESIGNATION = "emf/getDesignation";
 	public static final String API_UPDATE_DESIGNATION = "emf/updateDesignation";
 	public static final String API_UPDATE_DEPARTMENT = "emf/updateDepartment";
-	public static final String API_DELETE_DEPARTMENT = "emf/deleteDepartment";
-	public static final String API_DELETE_DESIGNATION = "emf/deleteDesignation";
+
 	public static final String API_EMPLOYEE_DEPARTMENT_MPG = "emf/employeeDepartmentMpg";
 	public static final String API_ADD_SKILL = "emf/addSkill";
 	public static final String API_ADD_GOAL = "emf/addGoal";
@@ -46,14 +45,13 @@ public final class UrlConstants {
 	public static final String API_GET_EMPLOYEE_LIST = "emf/getEmployeeList";
 	public static final String API_GET_TASK = "emf/getTask";
 	public static final String API_UPDATE_TASK = "emf/updateTask";
-	public static final String API_DELETE_TASK = "emf/deleteTask";
+
 	public static final String API_UPDATE_GOAL = "emf/updateGoal";
-	public static final String API_DELETE_GOAL = "emf/deleteGoal";
-	public static final String API_DELETE_SKILL = "emf/deleteSkill";
+
 	public static final String API_UPDATE_SKILL = "emf/updateSkill";
 	public static final String API_MAP_EMPLOYEE_SKILL = "emf/mapEmployeeSkill";
 	public static final String API_UPDATE_EMPLOYEE_SKILL = "emf/updateEmployeeSkill";
-	public static final String API_DELETE_EMPLOYEE_SKILL = "emf/deleteEmployeeSkill";
+
 	public static final String API_GET_EMPLOYEE_SKILL = "emf/getEmployeeSkill";
 	public static final String API_ADD_COMPANY = "emf/addCompany";
 	public static final String API_GET_COMPANY = "emf/getCompany";
@@ -71,8 +69,22 @@ public final class UrlConstants {
 	public static final String API_EMAIL_VERIFICATION = "emf/emailVerification";
 	public static final String API_GET_USER = "emf/getUserInfo";
 	public static final String API_EMPLOYEE_ELEMETNS = "emf/getEmployeeElements";
-	
+	public static final String API_CHECK_PORTALNAME = "emf/checkPortalName";
+	public static final String API_GET_INDUSTRY = "emf/getIndustry";
+
+	public static final String API_DELETE_EMPLOYEE_SKILL = "emf/deleteEmployeeSkill";
+	public static final String API_DELETE_TASK = "emf/deleteTask";
+	public static final String API_DELETE_DEPARTMENT = "emf/deleteDepartment";
+	public static final String API_DELETE_DESIGNATION = "emf/deleteDesignation";
+	public static final String API_DELETE_PROJECT = "emf/deleteProject";
+	public static final String API_DELETE_SKILL = "emf/deleteSkill";
+	public static final String API_DELETE_EMPLOYEE = "emf/deleteEmployee";
+	public static final String API_DELETE_GOAL = "emf/deleteGoal";
+	public static final String API_DELETE_SKILL1 = "emf/deleteDesignation";
+	public static final String API_DELETE_COMPANY = "emf/deleteCompany";
+	public static final String API_DELETE_FEEDBACK = "emf/deleteFeedback";
+	public static final String API_DELETE_TEAM = "emf/deleteTeam";
+
 //	Lead
-	
 
 }

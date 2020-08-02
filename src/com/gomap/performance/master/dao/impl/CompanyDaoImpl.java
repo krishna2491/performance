@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.dao.CompanyDao;
 import com.gomap.performance.master.model.CompanyMaster;
+import com.gomap.performance.master.model.IndustryMaster;
 
 /**
  * @author krishnakant.bairagi
@@ -56,6 +58,12 @@ public class CompanyDaoImpl implements CompanyDao {
 		if (companyMaster.getCompanyName() != null) {
 			criteria.add(Restrictions.like("companyName", companyMaster.getCompanyName()));
 		}
+		if (companyMaster.getAdminEmail() != null) {
+			criteria.add(Restrictions.eq("adminEmail", companyMaster.getAdminEmail()));
+		}
+		if (companyMaster.getContactPerson() != null) {
+			criteria.add(Restrictions.eq("contactPerson", companyMaster.getContactPerson()));
+		}
 //			if(companyMaster.getCompanyName()!=null)
 //			{
 //				criteria.add(Restrictions.eq("companyName", companyMaster.getCompanyId()));
@@ -65,6 +73,7 @@ public class CompanyDaoImpl implements CompanyDao {
 //				criteria.add(Restrictions.eq("companyName", companyMaster.getCompanyId()));
 //			}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("createdDate"));
 		return criteria.list();
 
 	}
@@ -81,7 +90,45 @@ public class CompanyDaoImpl implements CompanyDao {
 
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().save(companyMaster);
+		//String s="CREATE DATABASE IF NOT EXISTS emf_test_"+companyMaster.getPortalName();
+		//sessionFactory.getCurrentSession().createSQLQuery(s).executeUpdate();
 		return companyMaster;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.CompanyDao#getCompanyByPortalName(com.gomap.performance.master.model.CompanyMaster)
+	 */
+	@Override
+	public List<CompanyMaster> getCompanyByPortalName(String portalName) throws Exception {
+		// TODO Auto-generated method stub
+
+		// TODO Auto-generated method stub
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(CompanyMaster.class);
+		if (portalName!= null) {
+			criteria.add(Restrictions.eq("portalName", portalName.trim()));
+		}
+		
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		
+		return criteria.list();
+
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.dao.CompanyDao#getIndustryMaster(java.lang.Integer)
+	 */
+	@Override
+	public List<IndustryMaster> getIndustryMaster(Integer industryId) throws Exception {
+		// TODO Auto-generated method stub
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(IndustryMaster.class);
+		if (industryId!= null) {
+			criteria.add(Restrictions.eq("industryId",industryId));
+		}
+		
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		
+		return criteria.list();
+	
 	}
 
 }
