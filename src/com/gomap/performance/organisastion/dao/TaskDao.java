@@ -6,6 +6,7 @@ package com.gomap.performance.organisastion.dao;
 import java.util.List;
 
 import com.gomap.performance.organisastion.model.EmTask;
+import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
 
 /**
  * @author krishnakant.bairagi
@@ -16,5 +17,8 @@ public interface TaskDao {
 	public void updateTask(EmTask emTask)  throws Exception;
 	public void deleteTask(EmTask emTask) throws Exception;
 	public List<EmTask> getTask(EmTask emTask) throws Exception;
+	public void mapEMployeeTask(EmployeeTaskMpg employeeTaskMpg) throws Exception;
+	public void updateEmplyeeTaskMpg(EmployeeTaskMpg employeeTaskMpg) throws Exception;
+	public List<EmployeeTaskMpg> getEmployeeTask(Integer employeeId,Integer taskId) throws Exception;
 
 }

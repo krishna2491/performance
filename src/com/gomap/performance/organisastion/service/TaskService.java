@@ -4,8 +4,12 @@
 package com.gomap.performance.organisastion.service;
 
 
+import java.util.List;
+
 import com.gomap.performance.organisastion.dto.EmTaskDto;
+import com.gomap.performance.organisastion.dto.EmployeeTaskMpgDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
+import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
 
 /**
  * @author krishnakant.bairagi
@@ -16,5 +20,19 @@ public interface TaskService {
 	public ResponseDTO updateTask(EmTaskDto emTaskDto) throws Exception;
 	public ResponseDTO getTask(EmTaskDto emTaskDto) throws Exception;
 	public ResponseDTO deleteTask(EmTaskDto emTaskDto) throws Exception;
+	
+	/**
+	 * @param employeeTaskMpgDtoList
+	 * @return
+	 * @throws Exception
+	 */
+	public ResponseDTO mapEmployeeTask(List<EmployeeTaskMpgDto> employeeTaskMpgDtoList) throws Exception;
+	/**
+	 * @param taskId
+	 * @param employeeId
+	 * @return
+	 * @throws Exception
+	 */
+	ResponseDTO getEmployeeTaskList(Integer taskId, Integer employeeId) throws Exception;
 	
 }

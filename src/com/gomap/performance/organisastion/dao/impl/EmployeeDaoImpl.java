@@ -85,7 +85,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	
 	String empQuery="select new com.gomap.performance.organisastion.dto.EmployeeList(emp,des,dept) from EmEmployee as emp"+
 				 ",EmDesignation des" +
-		 ",EmDepartment dept where dept.departmentId=des.departmentId and des.designationId=emp.designationId";
+		 ",EmDepartment dept where dept.departmentId=des.departmentId and des.designationId=emp.designationId and emp.activateFlag=1 and des.activateFlag=1 and dept.activateFlag=1";
 	
 	List<Object> objList=this.sessionFactory.getCurrentSession().createQuery(empQuery).list();
 		return objList;

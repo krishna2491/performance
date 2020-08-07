@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.TaskDao;
 import com.gomap.performance.organisastion.model.EmTask;
+import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
 
 /**
  * @author krishnakant.bairagi
@@ -87,6 +88,47 @@ public class TaskDaoImpl implements TaskDao {
 		criteria.add(Restrictions.eq("activateFlag",AppConstants.ACTIVE_FLAG));
 		criteria.addOrder(Order.desc("taskCreatedDate"));
 		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.TaskDao#mapEMployeeTask(com.gomap.performance.organisastion.model.EmployeeTaskMpg)
+	 */
+	@Override
+	public void mapEMployeeTask(EmployeeTaskMpg employeeTaskMpg) throws Exception {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(employeeTaskMpg);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.TaskDao#updateEmplyeeTaskMpg(com.gomap.performance.organisastion.model.EmployeeTaskMpg)
+	 */
+	@Override
+	public void updateEmplyeeTaskMpg(EmployeeTaskMpg employeeTaskMpg) throws Exception {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(employeeTaskMpg);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.TaskDao#getEmployeeTask(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public List<EmployeeTaskMpg> getEmployeeTask(Integer employeeId, Integer taskId) throws Exception {
+		// TODO Auto-generated method stub
+
+		// TODO Auto-generated method stub
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(EmployeeTaskMpg.class);
+		if(employeeId!=null)
+		{
+			criteria.add(Restrictions.eq("employeeId",employeeId));
+		}
+		if(taskId!=null)
+		{
+			criteria.add(Restrictions.eq("taskId", taskId));
+		}
+		criteria.add(Restrictions.eq("activateFlag",AppConstants.ACTIVE_FLAG));
+		criteria.addOrder(Order.desc("createdDate"));
+		return criteria.list();
+	
 	}
 	
 	}

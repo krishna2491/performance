@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,11 +75,14 @@ public class ProjectController {
 
 	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_PROJECT_LIST}, method = RequestMethod.GET)
-	public @ResponseBody ResponseDTO getProjectList() {
+	public @ResponseBody ResponseDTO getProjectList(@RequestParam Integer projectId) {
 		ResponseDTO  responseDTO = null;
 		try {  
-			
-				responseDTO=projectSrvc.getProjectList(null);
+			if(projectId.equals(-1))
+			{
+				projectId=null;
+			}
+				responseDTO=projectSrvc.getProjectList(projectId);
 				//responseDTO.setErrorCode(200);
 			
 		} catch (Exception e) {

@@ -3,6 +3,7 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.TaskDao;
 import com.gomap.performance.organisastion.dto.EmTaskDto;
+import com.gomap.performance.organisastion.dto.EmTeamMemberDto;
+import com.gomap.performance.organisastion.dto.EmployeeTaskMpgDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.model.EmTask;
+import com.gomap.performance.organisastion.model.EmTeamMember;
+import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
 import com.gomap.performance.organisastion.service.TaskService;
 
 /**
@@ -316,6 +321,114 @@ public class TaskServiceImpl implements TaskService {
 			// TODO Auto-generated method stub
 			return responseDTO;
 
+		}
+
+		/* (non-Javadoc)
+		 * @see com.gomap.performance.organisastion.service.TaskService#mapEmployeeTask(com.gomap.performance.organisastion.dto.EmployeeTaskMpgDto)
+		 */
+		@Override
+		@Transactional
+		public ResponseDTO mapEmployeeTask(List<EmployeeTaskMpgDto> employeeTaskMpgDtoList) throws Exception {
+			// TODO Auto-generated method stub
+			ResponseDTO responseDTO =new ResponseDTO();
+			logger.info("mapEmployeeTask...... ");
+			try {
+				EmployeeTaskMpg employeeTaskMpg=null;//new EmTeamMember();
+				List<EmployeeTaskMpg> employeeTaskList=new ArrayList<EmployeeTaskMpg>();
+				for(EmployeeTaskMpgDto dtEmployeeTaskMpgDto:employeeTaskMpgDtoList)
+				{
+					employeeTaskMpg=new EmployeeTaskMpg();
+					if(dtEmployeeTaskMpgDto.getEmployeeTaskId()==null)
+					{
+						// create mapping
+						employeeTaskMpg.setCreatedDate(new Date());
+						employeeTaskMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
+						if(dtEmployeeTaskMpgDto.getEmployeeId()!=null)
+						{
+							employeeTaskMpg.setEmployeeId(dtEmployeeTaskMpgDto.getEmployeeId());
+						}
+						if(dtEmployeeTaskMpgDto.getTaskId()!=null)
+						{
+							employeeTaskMpg.setTaskId(dtEmployeeTaskMpgDto.getTaskId());
+						}
+						//teamManagmentDao.addTeamMember(emTeamMember);
+						taskDao.mapEMployeeTask(employeeTaskMpg);
+					}else
+					{
+						// update mapping
+						employeeTaskMpg.setEmployeeTaskId(dtEmployeeTaskMpgDto.getEmployeeTaskId());
+						
+						employeeTaskMpg.setUpdatedDate(new Date());
+						if(dtEmployeeTaskMpgDto.getEmployeeId()!=null)
+						{
+							employeeTaskMpg.setEmployeeId(dtEmployeeTaskMpgDto.getEmployeeId());
+						}
+						if(dtEmployeeTaskMpgDto.getTaskId()!=null)
+						{
+							employeeTaskMpg.setTaskId(dtEmployeeTaskMpgDto.getTaskId());
+						}
+						if(dtEmployeeTaskMpgDto.getActivateFlag()!=null)
+						{
+							employeeTaskMpg.setActivateFlag(dtEmployeeTaskMpgDto.getActivateFlag());	
+						}
+						if(dtEmployeeTaskMpgDto.getCreatedDate()!=null)
+						{
+							employeeTaskMpg.setCreatedDate(dtEmployeeTaskMpgDto.getCreatedDate());	
+						}
+					
+						taskDao.updateEmplyeeTaskMpg(employeeTaskMpg);
+						
+					}
+					employeeTaskList.add(employeeTaskMpg);
+							
+				}
+				responseDTO.setDataObj(employeeTaskList);
+				responseDTO.setSuccessMsg("All mapping completed");
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				logger.info("add Task Member...... successfully completed ");
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				responseDTO.setDataObj(e);
+				responseDTO.setErrorMsg("problem while adding employee and task");
+				responseDTO.setErrorCode(411);
+				
+				logger.error("Error in mapEmployeeTask...... ",e);
+				
+			}
+			return responseDTO;
+		}
+
+	
+
+		/* (non-Javadoc)
+		 * @see com.gomap.performance.organisastion.service.TaskService#getEmployeeTaskList(java.util.List)
+		 */
+		@Override
+		@Transactional
+		public ResponseDTO getEmployeeTaskList(Integer taskId,Integer employeeId) throws Exception {
+			// TODO Auto-generated method stub
+			ResponseDTO responseDTO =new ResponseDTO();
+			logger.info("mapEmployeeTask...... ");
+			try {
+			
+				List<EmployeeTaskMpg> employeeTaskList=new ArrayList<EmployeeTaskMpg>();
+				employeeTaskList=taskDao.getEmployeeTask(employeeId, taskId);
+				responseDTO.setDataObj(employeeTaskList);
+				responseDTO.setSuccessMsg("Employee with task details sent");
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				logger.info("getEmployeeTaskList...... successfully completed ");
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				responseDTO.setDataObj(e);
+				responseDTO.setErrorMsg("problem while getEmployeeTaskList");
+				responseDTO.setErrorCode(411);
+				
+				logger.error("Error in getEmployeeTaskList...... ",e);
+				
+			}
+			return responseDTO;
 		}
 
 }

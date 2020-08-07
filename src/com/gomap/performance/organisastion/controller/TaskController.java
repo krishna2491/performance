@@ -3,6 +3,8 @@
  */
 package com.gomap.performance.organisastion.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.organisastion.dto.EmTaskDto;
+import com.gomap.performance.organisastion.dto.EmployeeTaskMpgDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.service.TaskService;
@@ -112,5 +115,44 @@ public class TaskController {
 		} 
 		return responseDTO;
 	}
-
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_MAP_TASK_EMPLOYEE}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO mapEmployeeTask(@RequestBody List<EmployeeTaskMpgDto> emTaskMpgDtoList, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+				responseDTO=taskService.mapEmployeeTask(emTaskMpgDtoList);
+				
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_TASK_EMPLOYEE}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO getEmployeeTask(@RequestBody EmployeeTaskMpgDto emTaskMpgDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+				responseDTO=taskService.getEmployeeTaskList(emTaskMpgDto.getTaskId(), emTaskMpgDto.getEmployeeId());
+				
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 }
