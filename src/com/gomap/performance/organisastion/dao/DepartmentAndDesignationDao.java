@@ -27,8 +27,8 @@ public interface DepartmentAndDesignationDao {
 	public void deleteDepartment(EmDepartment emDepartment) throws Exception;
 	public void deleteDesignation(EmDesignation  emDesignation) throws Exception;
 	
-	public List<EmDepartment> getDepartment(Integer departmentId) throws Exception;
-	public List<EmDesignation> getDesignation(Integer designationId,Integer departmentId) throws Exception;
+//	public List<EmDepartment> getDepartment(Integer departmentId) throws Exception;
+	public List<EmDesignation> getDesignation(Integer designationId,Integer departmentId,String designationName) throws Exception;
 	
 	public DesignationElementMaping mapDesignationElement(DesignationElementMaping designationElementMaping) throws Exception;
 	public RoleElementOperationMpg mapOperation(RoleElementOperationMpg  roleElementOperationMpg) throws Exception;
@@ -38,6 +38,13 @@ public interface DepartmentAndDesignationDao {
 	
 	public List<DesignationElementMaping> getDesignationElement(Integer designationId ) throws Exception;
 	public List<RoleElementOperationMpg> getDesignationElementOperation(Integer  designationElementMpgId) throws Exception;
+	/**
+	 * @param departmentId
+	 * @param departmentName
+	 * @return
+	 * @throws Exception
+	 */
+	List<EmDepartment> getDepartment(Integer departmentId, String departmentName) throws Exception;
 	
 	
 	

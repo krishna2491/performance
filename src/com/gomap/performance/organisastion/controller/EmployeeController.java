@@ -60,6 +60,27 @@ public class EmployeeController {
 		return responseDTO;
 	}
 	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_UPDATE_EMPLOYEE}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO updateEmployee(@RequestBody EmEmployeeDto employeeDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+			//	responseDTO.setDataObj(employeeDto);
+				responseDTO=(ResponseDTO) employeeService.updateEmployee(employeeDto);
+				
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_EMPLOYEE}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getEmployee(@RequestBody EmEmployeeDto emEmployeeDto,BindingResult result) {
 		ResponseDTO  responseDTO = null;

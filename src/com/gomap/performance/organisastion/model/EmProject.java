@@ -53,8 +53,10 @@ public class EmProject implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "department_id")
-    private int departmentId;
-    @Basic(optional = false)
+    private Integer departmentId;
+   
+
+	@Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "project_name")
@@ -120,11 +122,11 @@ public class EmProject implements Serializable {
         this.projectId = projectId;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 

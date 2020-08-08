@@ -82,6 +82,10 @@ public class GoalDaoImpl implements GoalDao {
 		{
 			criteria.add(Restrictions.eq("goalEndDate", emGoal.getGoalEndDate()));
 		}
+		if(emGoal.getEmployeeId()!=null)
+		{
+			criteria.add(Restrictions.eq("employeeId", emGoal.getEmployeeId()));
+		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		criteria.addOrder(Order.desc("goalCreatedDate"));
 		return criteria.list();
