@@ -23,7 +23,7 @@
 	
 	<appender name="fileImport" class="org.apache.log4j.DailyRollingFileAppender">
 	    <param name="DatePattern" value="'.'yyyy-MM-dd" />
-	    <param name="file" value="${catalina.home}/logs/eperformance.log" />
+	    <param name="file" value="${catalina.home}/logs/ef/eperformance.log" />
 	    
 	    <layout class="org.apache.log4j.PatternLayout">
 		<param name="ConversionPattern" 

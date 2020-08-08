@@ -45,47 +45,67 @@ public class CompanyMasterServiceImpl implements CompanyService {
 		logger.info("inside CompanyMasterServiceImpl addCompany");
 		try {
 			CompanyMaster companyMaster=new CompanyMaster();
-			if(companyMasterDto.getAdminEmail()!=null)
-			{
-				companyMaster.setAdminEmail(companyMasterDto.getAdminEmail());
-			}
-			if(companyMasterDto.getAdminMobile()!=null)
-			{
-				companyMaster.setAdminMobile(Long.parseLong(companyMasterDto.getAdminMobile()));
-			}
-			if(companyMasterDto.getApiURLPrefix()!=null)
-			{
-				companyMaster.setApiURLPrefix(companyMasterDto.getApiURLPrefix());
-			}
-			if(companyMasterDto.getCompanyDomain()!=null)
-			{
-				companyMaster.setCompanyDomain(companyMasterDto.getCompanyDomain());
-			}
-			if(companyMasterDto.getCompanyName()!=null)
+			if(companyMasterDto.getCompanyName()!=null && companyMasterDto.getPortalName()!=null)
 			{
 				companyMaster.setCompanyName(companyMasterDto.getCompanyName());
-			}
-			if(companyMasterDto.getContactPerson()!=null)
-			{
-				companyMaster.setContactPerson(companyMasterDto.getContactPerson());
-			}
-			if(companyMasterDto.getIndustryType()!=null)
-			{
-				companyMaster.setIndustryType(companyMasterDto.getIndustryType());
-			}
-			if(companyMasterDto.getPortalName()!=null)
-			{
 				companyMaster.setPortalName(companyMasterDto.getPortalName());
+				List<CompanyMaster> cmpList=companyDao.getCompanyDetails(companyMaster);
+				if(cmpList.isEmpty())
+				{
+					if(companyMasterDto.getAdminEmail()!=null)
+					{
+						companyMaster.setAdminEmail(companyMasterDto.getAdminEmail());
+					}
+					if(companyMasterDto.getAdminMobile()!=null)
+					{
+						companyMaster.setAdminMobile(Long.parseLong(companyMasterDto.getAdminMobile()));
+					}
+					if(companyMasterDto.getApiURLPrefix()!=null)
+					{
+						companyMaster.setApiURLPrefix(companyMasterDto.getApiURLPrefix());
+					}
+					if(companyMasterDto.getCompanyDomain()!=null)
+					{
+						companyMaster.setCompanyDomain(companyMasterDto.getCompanyDomain());
+					}
+					if(companyMasterDto.getCompanyName()!=null)
+					{
+						companyMaster.setCompanyName(companyMasterDto.getCompanyName());
+					}
+					if(companyMasterDto.getContactPerson()!=null)
+					{
+						companyMaster.setContactPerson(companyMasterDto.getContactPerson());
+					}
+					if(companyMasterDto.getIndustryType()!=null)
+					{
+						companyMaster.setIndustryType(companyMasterDto.getIndustryType());
+					}
+					if(companyMasterDto.getPortalName()!=null)
+					{
+						companyMaster.setPortalName(companyMasterDto.getPortalName());
+					}
+					companyMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
+					companyMaster.setCreatedDate(new Date());
+					//companyMaster.setUpdatedDate(new Date());
+					companyDao.storeCompanyData(companyMaster);
+					generateApiByPortalName(companyMasterDto.getPortalName());
+					//start from here
+					responseDTO.setDataObj(companyMaster);
+					responseDTO.setSuccessMsg("Company details created");
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				}else {
+					responseDTO.setDataObj(cmpList);
+					responseDTO.setErrorMsg("Company already registered");
+					responseDTO.setErrorCode(411);
+				}
+			}else {
+				responseDTO.setDataObj(null);
+				responseDTO.setErrorMsg("Company name and portal name is mandatory");
+				responseDTO.setErrorCode(411);
+				
 			}
-			companyMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
-			companyMaster.setCreatedDate(new Date());
-			//companyMaster.setUpdatedDate(new Date());
-			companyDao.storeCompanyData(companyMaster);
-		//	generateApiByPortalName(companyMasterDto.getPortalName());
-			//start from here
-			responseDTO.setDataObj(companyMaster);
-			responseDTO.setSuccessMsg("Company details created");
-			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+			
 	
 		} catch (Exception e) {
 			// TODO: handle exception

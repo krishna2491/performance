@@ -56,13 +56,16 @@ public class CompanyDaoImpl implements CompanyDao {
 			criteria.add(Restrictions.eq("companyId", companyMaster.getCompanyId()));
 		}
 		if (companyMaster.getCompanyName() != null) {
-			criteria.add(Restrictions.like("companyName", companyMaster.getCompanyName()));
+			criteria.add(Restrictions.eq("companyName", companyMaster.getCompanyName()));
 		}
 		if (companyMaster.getAdminEmail() != null) {
 			criteria.add(Restrictions.eq("adminEmail", companyMaster.getAdminEmail()));
 		}
 		if (companyMaster.getContactPerson() != null) {
 			criteria.add(Restrictions.eq("contactPerson", companyMaster.getContactPerson()));
+		}
+		if (companyMaster.getPortalName()!= null) {
+			criteria.add(Restrictions.eq("portalName", companyMaster.getPortalName()));
 		}
 //			if(companyMaster.getCompanyName()!=null)
 //			{
@@ -90,8 +93,8 @@ public class CompanyDaoImpl implements CompanyDao {
 
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().save(companyMaster);
-		//String s="CREATE DATABASE IF NOT EXISTS emf_test_"+companyMaster.getPortalName();
-		//sessionFactory.getCurrentSession().createSQLQuery(s).executeUpdate();
+		String sql="CREATE DATABASE IF NOT EXISTS emf_test_"+companyMaster.getPortalName();
+		sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
 		return companyMaster;
 	}
 

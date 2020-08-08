@@ -87,6 +87,7 @@ public final class UrlConstants {
 	public static final String API_DELETE_TEAM = "emf/deleteTeam";
 	public static final String API_MAP_TASK_EMPLOYEE = "emf/manageEmployeeTask";
 	public static final String API_GET_TASK_EMPLOYEE = "emf/getEmployeeTask";
+	public static final String API_UPDATE_FEEDBACK = "emf/updateFeedbackRequest";
 
 //	Lead
 

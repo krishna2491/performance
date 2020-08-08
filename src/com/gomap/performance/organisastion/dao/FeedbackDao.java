@@ -17,5 +17,10 @@ public interface FeedbackDao {
 	public FeedbackRequestParaMpg mapFeedbackPara(FeedbackRequestParaMpg feedbackRequestParaMpg);
 	public List<EmFeedbackRequest> getFeedbackList(EmFeedbackRequest emFeedbackRequest);
 	public List<FeedbackRequestParaMpg> getFeedbackParam(Integer feedbackRequestId);
+	/**
+	 * @param emFeedbackRequest
+	 * @return
+	 */
+	public EmFeedbackRequest updateFeedbackRequest(EmFeedbackRequest emFeedbackRequest);
 
 }

@@ -33,7 +33,7 @@ public class FeedbackRequestParaMpgDto implements Serializable {
     private static final long serialVersionUID = 1L;
    
     private Integer feedbackRequestMpgId;
-   
+    private Integer feedbackRequestId;
 	
     private Integer paramId;
    
@@ -149,11 +149,15 @@ public class FeedbackRequestParaMpgDto implements Serializable {
 		this.activateFlag = activateFlag;
 	}
 
+	public Integer getFeedbackRequestId() {
+		return feedbackRequestId;
+	}
+
 	/**
-	 * @return the serialversionuid
+	 * @param feedbackRequestId the feedbackRequestId to set
 	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setFeedbackRequestId(Integer feedbackRequestId) {
+		this.feedbackRequestId = feedbackRequestId;
 	}
 
 	}

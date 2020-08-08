@@ -42,7 +42,7 @@ public class FeedBackDaoImpl implements FeedbackDao{
 	 */
 	@Override
 	public FeedbackRequestParaMpg mapFeedbackPara(FeedbackRequestParaMpg feedbackRequestParaMpg) {
-		sessionFactory.getCurrentSession().save(feedbackRequestParaMpg);
+		sessionFactory.getCurrentSession().saveOrUpdate(feedbackRequestParaMpg);
 		return feedbackRequestParaMpg;
 	}
 
@@ -56,7 +56,12 @@ public class FeedBackDaoImpl implements FeedbackDao{
 		if(emFeedbackRequest.getFeedbackRequesterId()!=null)
 		{
 			criteria.add(Restrictions.eq("feedbackRequesterId", emFeedbackRequest.getFeedbackRequesterId()));
-		}if(emFeedbackRequest.getfeedbackForId()!=null)
+		}
+		if(emFeedbackRequest.getFeedbackRequestId()!=null)
+		{
+			criteria.add(Restrictions.eq("feedbackRequestId", emFeedbackRequest.getFeedbackRequestId()));
+		}
+		if(emFeedbackRequest.getfeedbackForId()!=null)
 		{
 			criteria.add(Restrictions.eq("feedbackForId", emFeedbackRequest.getfeedbackForId()));
 			criteria.add(Restrictions.eq("feedbackStatus", AppConstants.SUBMITTED));
@@ -86,5 +91,11 @@ public class FeedBackDaoImpl implements FeedbackDao{
 		criteria.addOrder(Order.desc("createdDate"));
 		return criteria.list();
 	}
-
+	@Override
+	public EmFeedbackRequest updateFeedbackRequest(EmFeedbackRequest emFeedbackRequest) {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(emFeedbackRequest);
+		return emFeedbackRequest;
+	}
+	
 }

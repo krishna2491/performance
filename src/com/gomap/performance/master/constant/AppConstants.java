@@ -13,11 +13,16 @@ public final class AppConstants {
 	public static final String USR_SESSION="";
 	public static final String USR_MESSAGE_PROPERTY_FILE_NAME="user-messages";
 	public static final String CORS="*";
-	public static final Integer  CREATED=1;
-	public static final Integer  SUBMITTED=2;
-	public static final Integer  COMPLETED=3;
-	public static final String SAMPLE_FILE="C:\\Users\\Administrator\\Desktop\\SampleLocation\\sample.war";
-	public static final String GENERATED_FILE="C:\\xampp\\tomcat\\webapps\\";
+	public static final String  CREATED="1";
+	public static final String  SUBMITTED="2";
+	public static final String  COMPLETED="3";
+//	public static final String SAMPLE_FILE="C:\\Users\\Administrator\\Desktop\\SampleLocation\\sample.war";
+//	public static final String GENERATED_FILE="C:\\xampp\\tomcat\\webapps\\";
+
+	
+	public static final String SAMPLE_FILE="C:\\\\Program Files\\\\SampleFile\\sample.war";
+	public static final String GENERATED_FILE="C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\";
+
 	
 	
 }

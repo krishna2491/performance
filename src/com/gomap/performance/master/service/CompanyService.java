@@ -20,5 +20,6 @@ public interface CompanyService {
 	public ResponseDTO searchForPortalName(String companyName);
 	public boolean generateApiByPortalName(String portalName);
 	public ResponseDTO getIndustry(Integer industryId);
+	//public ResponseDTO getUserPortalName(String emailId);
 	
 }
