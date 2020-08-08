@@ -51,15 +51,34 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 		ResponseDTO responseDTO=new ResponseDTO();
 		try {
 			logger.debug("creating department");
-			EmDepartment emDepartment=new EmDepartment();
-			
-			emDepartment.setActivateFlag(1);
-			emDepartment.setDepartmentCreatedDate(new Date());
-			emDepartment.setDepartmentName(departmentDto.getDepartmentName());
-			
-			departmentAndDesignationDao.createDepartment(emDepartment);
-			responseDTO.setDataObj(emDepartment);
-			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			if(departmentDto.getDepartmentName()!=null && !("").equals(departmentDto.getDepartmentName().trim()))
+					{
+				List<EmDepartment> deptList=departmentAndDesignationDao.getDepartment(null, departmentDto.getDepartmentName());
+				if(deptList.isEmpty())
+				{
+					EmDepartment emDepartment=new EmDepartment();
+					
+					emDepartment.setActivateFlag(1);
+					emDepartment.setDepartmentCreatedDate(new Date());
+					emDepartment.setDepartmentName(departmentDto.getDepartmentName());
+					
+					departmentAndDesignationDao.createDepartment(emDepartment);
+					responseDTO.setDataObj(emDepartment);
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+					responseDTO.setSuccessMsg("Department created successfuly");
+				}else {
+					responseDTO.setDataObj(deptList);
+					responseDTO.setErrorCode(411);
+					responseDTO.setSuccessMsg("Department is already available in system");
+					
+				}
+				
+					}else {
+						responseDTO.setDataObj(null);
+						responseDTO.setErrorCode(411);
+						responseDTO.setErrorMsg("Department name can not be null");
+					}
+		
 		} catch (Exception e) {
 			// TODO: handle exception
 			responseDTO.setErrorCode(411);
@@ -78,70 +97,90 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 		ResponseDTO responseDTO=new ResponseDTO();
 		try {
 			logger.debug("createDesignation");
-			EmDesignation emDesignation=new EmDesignation();
 			
-			emDesignation.setDesignationCreatedDate(new Date());
-			
-			
-			if(designationDto.getDesignationLevelNo()!=null)
+			if(designationDto.getDesignationName()!=null && !("").equals(designationDto.getDesignationName().trim()))
 			{
-				emDesignation.setDesignationLevelNo(designationDto.getDesignationLevelNo());
-			}
-			
-			if(designationDto.getDesignationName()!=null)
-			{
-				emDesignation.setDesignationName(designationDto.getDesignationName());
-			}
-			if(designationDto.getParentDesignationId()!=null)
-			{
-				emDesignation.setParentDesignationId(designationDto.getParentDesignationId());
-			}
-			if(designationDto.getDepartmentId()!=null)
-			{
-				emDesignation.setDepartmentId(designationDto.getDepartmentId());
-					
-			}else {
-				responseDTO.setErrorMsg("Department id can not be blank");
-				
-			}
-			
-			emDesignation.setActivateFlag(AppConstants.ACTIVE_FLAG);	
-			departmentAndDesignationDao.createDesignation(emDesignation);
-			
-			if(designationDto.getDesignationElementMappingList()!=null)
-			{
-				DesignationElementMaping designationElementMaping=null;
-				for(DesignationElementMapingDto designationElementMapingDto:designationDto.getDesignationElementMappingList())
+				List<EmDesignation> designalationList = departmentAndDesignationDao
+						.getDesignation(null, designationDto.getDepartmentId(), designationDto.getDesignationName());
+				if(designalationList.isEmpty())
 				{
-					designationElementMaping=new DesignationElementMaping();
+					EmDesignation emDesignation=new EmDesignation();
 					
-					designationElementMaping.setDesignationId(emDesignation.getDesignationId());
-					designationElementMaping.setElementId(designationElementMapingDto.getElementId());
-					designationElementMaping.setActivateFlag(AppConstants.ACTIVE_FLAG);
-					designationElementMaping.setCreatedDate(new Date());
-					departmentAndDesignationDao.mapDesignationElement(designationElementMaping);
+					emDesignation.setDesignationCreatedDate(new Date());
 					
-					if(designationElementMapingDto.getRoleElementOprationList()!=null)
+					
+					if(designationDto.getDesignationLevelNo()!=null)
 					{
-						//for(OperationMaster)
-						for(RoleElementOperationMpgDto roleElementOperationMpgDto:designationElementMapingDto.getRoleElementOprationList())
-						{
-							RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();
-							roleElementOperationMpg.setOperationId(roleElementOperationMpgDto.getOperationId());
-							roleElementOperationMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
-							roleElementOperationMpg.setDesignationElementMpgId(designationElementMaping.getDesignationElementMpgId());
-							roleElementOperationMpg.setCreatedDate(new Date());
-							departmentAndDesignationDao.mapOperation(roleElementOperationMpg);
+						emDesignation.setDesignationLevelNo(designationDto.getDesignationLevelNo());
+					}
+					
+					if(designationDto.getDesignationName()!=null)
+					{
+						emDesignation.setDesignationName(designationDto.getDesignationName());
+					}
+					if(designationDto.getParentDesignationId()!=null)
+					{
+						emDesignation.setParentDesignationId(designationDto.getParentDesignationId());
+					}
+					if(designationDto.getDepartmentId()!=null)
+					{
+						emDesignation.setDepartmentId(designationDto.getDepartmentId());
 							
-						}
+					}else {
+						responseDTO.setErrorMsg("Department id can not be blank");
 						
 					}
+					
+					emDesignation.setActivateFlag(AppConstants.ACTIVE_FLAG);	
+					departmentAndDesignationDao.createDesignation(emDesignation);
+					
+					if(designationDto.getDesignationElementMappingList()!=null)
+					{
+						DesignationElementMaping designationElementMaping=null;
+						for(DesignationElementMapingDto designationElementMapingDto:designationDto.getDesignationElementMappingList())
+						{
+							designationElementMaping=new DesignationElementMaping();
+							
+							designationElementMaping.setDesignationId(emDesignation.getDesignationId());
+							designationElementMaping.setElementId(designationElementMapingDto.getElementId());
+							designationElementMaping.setActivateFlag(AppConstants.ACTIVE_FLAG);
+							designationElementMaping.setCreatedDate(new Date());
+							departmentAndDesignationDao.mapDesignationElement(designationElementMaping);
+							
+							if(designationElementMapingDto.getRoleElementOprationList()!=null)
+							{
+								//for(OperationMaster)
+								for(RoleElementOperationMpgDto roleElementOperationMpgDto:designationElementMapingDto.getRoleElementOprationList())
+								{
+									RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();
+									roleElementOperationMpg.setOperationId(roleElementOperationMpgDto.getOperationId());
+									roleElementOperationMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
+									roleElementOperationMpg.setDesignationElementMpgId(designationElementMaping.getDesignationElementMpgId());
+									roleElementOperationMpg.setCreatedDate(new Date());
+									departmentAndDesignationDao.mapOperation(roleElementOperationMpg);
+									
+								}
+								
+							}
+						}
+					}
+					
+					
+					responseDTO.setDataObj(emDesignation);
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				}else
+				{
+					responseDTO.setDataObj(designalationList);
+					responseDTO.setErrorCode(411);
+					responseDTO.setErrorMsg("Designation is already available");
 				}
 			}
+			else {
+				responseDTO.setDataObj(null);
+				responseDTO.setErrorCode(411);
+				responseDTO.setErrorMsg("Designation name is mandatory");
+			}
 			
-			
-			responseDTO.setDataObj(emDesignation);
-			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		} catch (Exception e) {
 			// TODO: handle exception
 			responseDTO.setErrorCode(411);
@@ -168,7 +207,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				responseDTO.setErrorMsg("Department parameter can not be null");
 			}else
 			{
-				List<EmDepartment> deptList=departmentAndDesignationDao.getDepartment(departmentDto.getDepartmentId());
+				List<EmDepartment> deptList=departmentAndDesignationDao.getDepartment(departmentDto.getDepartmentId(),null);
 				if(deptList.isEmpty())
 				{
 					responseDTO.setErrorCode(412);
@@ -218,7 +257,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				responseDTO.setErrorMsg("Designation parameter can not be null");
 			} else {
 				List<EmDesignation> designalationList = departmentAndDesignationDao
-						.getDesignation(designationDto.getDesignationId(),null);
+						.getDesignation(designationDto.getDesignationId(),null,null);
 				
 				
 				if (designalationList.isEmpty()) {
@@ -326,6 +365,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 							}
 						}
 						responseDTO.setDataObj(emDesignation);
+						responseDTO.setSuccessMsg("Designation updated");
 						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 					}
 
@@ -358,7 +398,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				responseDTO.setErrorMsg("Department parameter can not be null");
 			} else {
 				List<EmDepartment> deptList = departmentAndDesignationDao
-						.getDepartment(departmentDto.getDepartmentId());
+						.getDepartment(departmentDto.getDepartmentId(),null);
 				if (deptList.isEmpty()) {
 					responseDTO.setErrorCode(412);
 					responseDTO.setErrorMsg("Department data is not availabe in system");
@@ -369,6 +409,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 						department.setDepartmentUpdatedDate(new Date());
 						departmentAndDesignationDao.updateDepartment(department);
 						responseDTO.setDataObj(department);
+						responseDTO.setSuccessMsg("Date deleted");
 						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 					
 
@@ -376,7 +417,6 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 
 			}
 
-			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		} catch (Exception e) {
 			// TODO: handle exception
 			responseDTO.setErrorCode(411);
@@ -401,7 +441,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				responseDTO.setErrorMsg("Designation parameter can not be null");
 			} else {
 				List<EmDesignation> designalationList = departmentAndDesignationDao
-						.getDesignation(designationDto.getDesignationId(),null);
+						.getDesignation(designationDto.getDesignationId(),null,null);
 				if (designalationList.isEmpty()) {
 					responseDTO.setErrorCode(412);
 					responseDTO.setErrorMsg("Designation data is not availabe in system");
@@ -440,7 +480,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 		ResponseDTO responseDTO=new ResponseDTO();
 		try {
 			logger.debug("getting department departmentId="+departmentId);
-			List<EmDepartment> departmetList=departmentAndDesignationDao.getDepartment(departmentId);
+			List<EmDepartment> departmetList=departmentAndDesignationDao.getDepartment(departmentId,null);
 			responseDTO.setDataObj(departmetList);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		} catch (Exception e) {
@@ -463,7 +503,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 		ResponseDTO responseDTO=new ResponseDTO();
 		try {
 			logger.debug("getting Designation designationId="+designationId);
-			List<EmDesignation> designationList=departmentAndDesignationDao.getDesignation(designationId, departmentId);
+			List<EmDesignation> designationList=departmentAndDesignationDao.getDesignation(designationId, departmentId,null);
 			responseDTO.setDataObj(designationList);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		} catch (Exception e) {
@@ -494,7 +534,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 			DesignationElementMapingDto designationElementMapingDto2=new DesignationElementMapingDto();
 			RoleElementOperationMpgDto elementOperationMpgDto=new RoleElementOperationMpgDto();
 			DesignationDto designationDto=new DesignationDto();
-			List<EmDesignation> desigList=departmentAndDesignationDao.getDesignation(designationId, null);
+			List<EmDesignation> desigList=departmentAndDesignationDao.getDesignation(designationId, null,null);
 			designationDto.setDesignationId(desigList.get(0).getDesignationId());
 			designationDto.setDesignationName(desigList.get(0).getDesignationName());
 			designationDto.setDepartmentId(desigList.get(0).getDepartmentId());

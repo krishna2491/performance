@@ -301,7 +301,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 												EmployeeElementOperationMpg employeeElementOperationMpg=new EmployeeElementOperationMpg();
 												employeeElementOperationMpg.setOperationId(employeeElementOperationDto.getOperationId());
 												employeeElementOperationMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
-												employeeElementOperationMpg.setEmployeeElementMpgId(employeeElementMpgDto.getEmployeeElementMpgId());
+												employeeElementOperationMpg.setEmployeeElementMpgId(employeeElementMpg.getEmployeeElementMpgId());
 												employeeElementOperationMpg.setCreatedDate(new Date());
 												empDao.mapOperation(employeeElementOperationMpg);
 												
@@ -320,7 +320,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 												EmployeeElementOperationMpg employeeElementOperationMpg=new EmployeeElementOperationMpg();
 												employeeElementOperationMpg.setOperationId(emploElementOperationDto.getOperationId());
 												employeeElementOperationMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
-												employeeElementOperationMpg.setEmployeeElementMpgId(emploElementOperationDto.getEmployeeElementMpgId());
+												employeeElementOperationMpg.setEmployeeElementMpgId(employeeElementMpgDto.getEmployeeElementMpgId());
 												employeeElementOperationMpg.setCreatedDate(new Date());
 												empDao.mapOperation(employeeElementOperationMpg);
 												
@@ -334,7 +334,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 													employeeElementOperationMpg.setEmployeeElementOperationId(emploElementOperationDto.getEmployeeElementOperationId());
 													employeeElementOperationMpg.setOperationId(emploElementOperationDto.getOperationId());
 													employeeElementOperationMpg.setActivateFlag(AppConstants.IN_ACTIVE_FLAG);
-													employeeElementOperationMpg.setEmployeeElementMpgId(emploElementOperationDto.getEmployeeElementMpgId());
+													employeeElementOperationMpg.setEmployeeElementMpgId(employeeElementMpgDto.getEmployeeElementMpgId());
 													employeeElementOperationMpg.setUpdatedDate(new Date());
 													empDao.updateOperation(employeeElementOperationMpg);
 													

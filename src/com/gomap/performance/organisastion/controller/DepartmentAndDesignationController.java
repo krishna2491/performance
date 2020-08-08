@@ -47,7 +47,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=departmentAndDesignationService.createDepartment(departmentDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -70,7 +70,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				departmentId=null;
 			}
 				responseDTO=departmentAndDesignationService.getDepartment(departmentId);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -94,7 +94,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 			} else {
 			//
 				responseDTO=departmentAndDesignationService.updateDepartment(departmentDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -117,7 +117,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=departmentAndDesignationService.deleteDepartment(departmentDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -142,7 +142,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO = new ResponseDTO();
 				responseDTO.setDataObj(designationDto);
 				responseDTO=departmentAndDesignationService.createDesignation(designationDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -165,8 +165,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO=departmentAndDesignationService.getDesignation(designationDto.getDesignationId(),designationDto.getDepartmentId());
 				DesignationDto dd=new DesignationDto();
 				
-				//responseDTO.setDataObj(dd);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
 			}
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -188,7 +187,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				
 				responseDTO=departmentAndDesignationService.getDesignationWithElements(designationId);
 				
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
 			
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -211,7 +210,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=departmentAndDesignationService.deleteDesignation(designationDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -236,7 +235,7 @@ private static final Logger logger = LoggerFactory.getLogger(DepartmentAndDesign
 				responseDTO = new ResponseDTO();
 				responseDTO.setDataObj(designationDto);
 				responseDTO=departmentAndDesignationService.updateDesignation(designationDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);

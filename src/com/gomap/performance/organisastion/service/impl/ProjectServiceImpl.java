@@ -42,7 +42,13 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		ResponseDTO dto=new ResponseDTO();
 		EmProject project=new EmProject();
-				try {
+		try {
+
+			if (projectDto.getProjectName() != null && !("").equals(projectDto.getProjectName().trim())) {
+				List<EmProject> projectList = projectDao.getProjectList(null, projectDto.getProjectName(),projectDto.getDepartmentId());
+				
+				if(projectList.isEmpty())
+				{
 					project.setProjectName(projectDto.getProjectName());
 					project.setProjectDescription(projectDto.getProjectDescription());
 					project.setDepartmentId(10);
@@ -53,13 +59,26 @@ public class ProjectServiceImpl implements ProjectService {
 					project.setProjectPriority(projectDto.getProjectPriority());
 					project.setActivateFlag(AppConstants.ACTIVE_FLAG);
 					projectDao.addProject(project);
-				
+
 					dto.setSuccessMsg("project created");
 					dto.setDataObj(project);
 					dto.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
-				
-					
-				} catch (Exception e) {
+				}else
+				{
+					dto.setErrorMsg("project is already availabe");
+					dto.setDataObj(projectList);
+					dto.setErrorCode(411);
+				}
+			}else
+			{
+				dto.setErrorMsg("project name is mandatory");
+				dto.setDataObj(null);
+				dto.setErrorCode(411);
+			}
+
+			
+
+		} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
 					logger.error("addProject,",e);
@@ -80,15 +99,16 @@ public class ProjectServiceImpl implements ProjectService {
 					project.setProjectId(projectDto.getProjectId());
 					project.setProjectName(projectDto.getProjectName());
 					project.setProjectDescription(projectDto.getProjectDescription());
-					project.setDepartmentId(10);
+					project.setDepartmentId(projectDto.getDepartmentId());
 					project.setProjectAttachment(projectDto.getProjectAttachment());
 					project.setProjectCreatedDate(projectDto.getProjectStartDate());
 					project.setProjectCreatedBy(projectDto.getProjectCreatedBy());
 					project.setProjectPriority(projectDto.getProjectPriority());
 					project.setActivateFlag(AppConstants.ACTIVE_FLAG);
+					project.setProjectUpdatedDate(new Date());
 					projectDao.updateProject(project);
 				
-					dto.setSuccessMsg("project created");
+					dto.setSuccessMsg("project updated");
 					dto.setDataObj(project);
 					dto.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 					
@@ -117,8 +137,9 @@ public class ProjectServiceImpl implements ProjectService {
 	public ResponseDTO getProjectList(Integer projId) throws Exception {
 		// TODO Auto-generated method stub
 		ResponseDTO resSto=new ResponseDTO();
-		resSto.setDataObj(projectDao.getProjectList(projId));
-		
+		resSto.setDataObj(projectDao.getProjectList(projId,null,null));
+		resSto.setSuccessMsg("project list sent..");
+		resSto.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		
 		return resSto;
 	}
@@ -147,7 +168,7 @@ public class ProjectServiceImpl implements ProjectService {
 				responseDTO.setErrorMsg("Project parameter can not be null");
 			} else {
 				
-				List<EmProject> projList = projectDao.getProjectList(projectDto.getProjectId());
+				List<EmProject> projList = projectDao.getProjectList(projectDto.getProjectId(),null,null);
 						
 				if (projList.isEmpty()) {
 					responseDTO.setErrorCode(412);

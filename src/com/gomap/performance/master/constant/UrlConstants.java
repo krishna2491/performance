@@ -15,6 +15,7 @@ public final class UrlConstants {
 	public static final String API_LOGOUT = "emf/logout";
 	public static final String API_VALIDATE_SESSION = "emf/validateSession";
 	public static final String API_ADD_EMPLOYEE = "emf/addEmployee";
+	public static final String API_UPDATE_EMPLOYEE = "emf/updateEmployee";
 	public static final String API_ADD_PROJECT = "emf/addProject";
 	public static final String API_UPADTE_PROJECT = "emf/updateProject";
 	public static final String API_GET_PROJECT_LIST = "emf/getProjectList";

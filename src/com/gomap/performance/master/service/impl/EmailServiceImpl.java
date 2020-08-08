@@ -75,11 +75,12 @@ public class EmailServiceImpl implements EmailService{
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("Congratulations!! you have registered on E performance");
+            message.setSubject("Welcome to Emformance!!");
 
             // Now set the actual message
-            message.setText("http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId);
-
+           // message.setText("Thank you for signing up to Emformance.To finish signing up just neeed to click on below link-http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId );
+         String link="http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId;
+        message.setContent(getContent(link), "text/html");
             System.out.println("sending...");
             // Send message
             Transport.send(message);
@@ -89,5 +90,949 @@ public class EmailServiceImpl implements EmailService{
         }
 
 	}
-
+public String getContent(String link)
+{
+	String s="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n" + 
+			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\r\n" + 
+			"\r\n" + 
+			"<head>\r\n" + 
+			"    <meta charset=\"UTF-8\">\r\n" + 
+			"    <meta content=\"width=device-width, initial-scale=1\" name=\"viewport\">\r\n" + 
+			"    <meta name=\"x-apple-disable-message-reformatting\">\r\n" + 
+			"    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n" + 
+			"    <meta content=\"telephone=no\" name=\"format-detection\">\r\n" + 
+			"    <title></title>\r\n" + 
+			"     <link href=\"https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i\" rel=\"stylesheet\">\r\n" + 
+			"	\r\n" + 
+			"	 <style>\r\n" + 
+			"	 /* CONFIG STYLES Please do not delete and edit CSS styles below */\r\n" + 
+			"/* IMPORTANT THIS STYLES MUST BE ON FINAL EMAIL */\r\n" + 
+			"#outlook a {\r\n" + 
+			"    padding: 0;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".ExternalClass {\r\n" + 
+			"    width: 100%;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".ExternalClass,\r\n" + 
+			".ExternalClass p,\r\n" + 
+			".ExternalClass span,\r\n" + 
+			".ExternalClass font,\r\n" + 
+			".ExternalClass td,\r\n" + 
+			".ExternalClass div {\r\n" + 
+			"    line-height: 100%;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-button {\r\n" + 
+			"    mso-style-priority: 100 !important;\r\n" + 
+			"    text-decoration: none !important;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"a[x-apple-data-detectors] {\r\n" + 
+			"    color: inherit !important;\r\n" + 
+			"    text-decoration: none !important;\r\n" + 
+			"    font-size: inherit !important;\r\n" + 
+			"    font-family: inherit !important;\r\n" + 
+			"    font-weight: inherit !important;\r\n" + 
+			"    line-height: inherit !important;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-desk-hidden {\r\n" + 
+			"    display: none;\r\n" + 
+			"    float: left;\r\n" + 
+			"    overflow: hidden;\r\n" + 
+			"    width: 0;\r\n" + 
+			"    max-height: 0;\r\n" + 
+			"    line-height: 0;\r\n" + 
+			"    mso-hide: all;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"/*\r\n" + 
+			"END OF IMPORTANT\r\n" + 
+			"*/\r\n" + 
+			"s {\r\n" + 
+			"    text-decoration: line-through;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"html,\r\n" + 
+			"body {\r\n" + 
+			"    width: 100%;\r\n" + 
+			"    font-family: lato, 'helvetica neue', helvetica, arial, sans-serif;\r\n" + 
+			"    -webkit-text-size-adjust: 100%;\r\n" + 
+			"    -ms-text-size-adjust: 100%;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"table {\r\n" + 
+			"    mso-table-lspace: 0pt;\r\n" + 
+			"    mso-table-rspace: 0pt;\r\n" + 
+			"    border-collapse: collapse;\r\n" + 
+			"    border-spacing: 0px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"table td,\r\n" + 
+			"html,\r\n" + 
+			"body,\r\n" + 
+			".es-wrapper {\r\n" + 
+			"    padding: 0;\r\n" + 
+			"    Margin: 0;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-content,\r\n" + 
+			".es-header,\r\n" + 
+			".es-footer {\r\n" + 
+			"    table-layout: fixed !important;\r\n" + 
+			"    width: 100%;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"img {\r\n" + 
+			"    display: block;\r\n" + 
+			"    border: 0;\r\n" + 
+			"    outline: none;\r\n" + 
+			"    text-decoration: none;\r\n" + 
+			"    -ms-interpolation-mode: bicubic;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"table tr {\r\n" + 
+			"    border-collapse: collapse;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"p,\r\n" + 
+			"hr {\r\n" + 
+			"    Margin: 0;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"h1,\r\n" + 
+			"h2,\r\n" + 
+			"h3,\r\n" + 
+			"h4,\r\n" + 
+			"h5 {\r\n" + 
+			"    Margin: 0;\r\n" + 
+			"    line-height: 120%;\r\n" + 
+			"    mso-line-height-rule: exactly;\r\n" + 
+			"    font-family: lato, 'helvetica neue', helvetica, arial, sans-serif;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"p,\r\n" + 
+			"ul li,\r\n" + 
+			"ol li,\r\n" + 
+			"a {\r\n" + 
+			"    -webkit-text-size-adjust: none;\r\n" + 
+			"    -ms-text-size-adjust: none;\r\n" + 
+			"    mso-line-height-rule: exactly;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-left {\r\n" + 
+			"    float: left;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-right {\r\n" + 
+			"    float: right;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p5 {\r\n" + 
+			"    padding: 5px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p5t {\r\n" + 
+			"    padding-top: 5px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p5b {\r\n" + 
+			"    padding-bottom: 5px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p5l {\r\n" + 
+			"    padding-left: 5px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p5r {\r\n" + 
+			"    padding-right: 5px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p10 {\r\n" + 
+			"    padding: 10px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p10t {\r\n" + 
+			"    padding-top: 10px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p10b {\r\n" + 
+			"    padding-bottom: 10px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p10l {\r\n" + 
+			"    padding-left: 10px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p10r {\r\n" + 
+			"    padding-right: 10px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p15 {\r\n" + 
+			"    padding: 15px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p15t {\r\n" + 
+			"    padding-top: 15px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p15b {\r\n" + 
+			"    padding-bottom: 15px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p15l {\r\n" + 
+			"    padding-left: 15px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p15r {\r\n" + 
+			"    padding-right: 15px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p20 {\r\n" + 
+			"    padding: 20px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p20t {\r\n" + 
+			"    padding-top: 20px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p20b {\r\n" + 
+			"    padding-bottom: 20px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p20l {\r\n" + 
+			"    padding-left: 20px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p20r {\r\n" + 
+			"    padding-right: 20px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p25 {\r\n" + 
+			"    padding: 25px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p25t {\r\n" + 
+			"    padding-top: 25px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p25b {\r\n" + 
+			"    padding-bottom: 25px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p25l {\r\n" + 
+			"    padding-left: 25px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p25r {\r\n" + 
+			"    padding-right: 25px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p30 {\r\n" + 
+			"    padding: 30px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p30t {\r\n" + 
+			"    padding-top: 30px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p30b {\r\n" + 
+			"    padding-bottom: 30px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p30l {\r\n" + 
+			"    padding-left: 30px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p30r {\r\n" + 
+			"    padding-right: 30px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p35 {\r\n" + 
+			"    padding: 35px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p35t {\r\n" + 
+			"    padding-top: 35px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p35b {\r\n" + 
+			"    padding-bottom: 35px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p35l {\r\n" + 
+			"    padding-left: 35px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p35r {\r\n" + 
+			"    padding-right: 35px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p40 {\r\n" + 
+			"    padding: 40px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p40t {\r\n" + 
+			"    padding-top: 40px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p40b {\r\n" + 
+			"    padding-bottom: 40px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p40l {\r\n" + 
+			"    padding-left: 40px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p40r {\r\n" + 
+			"    padding-right: 40px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-menu td {\r\n" + 
+			"    border: 0;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-menu td a img {\r\n" + 
+			"    display: inline-block !important;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"/* END CONFIG STYLES */\r\n" + 
+			"a {\r\n" + 
+			"    font-family: lato, 'helvetica neue', helvetica, arial, sans-serif;\r\n" + 
+			"    font-size: 18px;\r\n" + 
+			"    text-decoration: underline;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"h1 {\r\n" + 
+			"    font-size: 48px;\r\n" + 
+			"    font-style: normal;\r\n" + 
+			"    font-weight: normal;\r\n" + 
+			"    color: #111111;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"h1 a {\r\n" + 
+			"    font-size: 48px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"h2 {\r\n" + 
+			"    font-size: 24px;\r\n" + 
+			"    font-style: normal;\r\n" + 
+			"    font-weight: normal;\r\n" + 
+			"    color: #111111;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"h2 a {\r\n" + 
+			"    font-size: 24px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"h3 {\r\n" + 
+			"    font-size: 20px;\r\n" + 
+			"    font-style: normal;\r\n" + 
+			"    font-weight: normal;\r\n" + 
+			"    color: #111111;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"h3 a {\r\n" + 
+			"    font-size: 20px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"p,\r\n" + 
+			"ul li,\r\n" + 
+			"ol li {\r\n" + 
+			"    font-size: 18px;\r\n" + 
+			"    font-family: lato, 'helvetica neue', helvetica, arial, sans-serif;\r\n" + 
+			"    line-height: 150%;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"ul li,\r\n" + 
+			"ol li {\r\n" + 
+			"    Margin-bottom: 15px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-menu td a {\r\n" + 
+			"    text-decoration: none;\r\n" + 
+			"    display: block;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-wrapper {\r\n" + 
+			"    width: 100%;\r\n" + 
+			"    height: 100%;\r\n" + 
+			"    background-image: ;\r\n" + 
+			"    background-repeat: repeat;\r\n" + 
+			"    background-position: center top;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-wrapper-color {\r\n" + 
+			"    background-color: #f4f4f4;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-content-body {\r\n" + 
+			"    background-color: #ffffff;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-content-body p,\r\n" + 
+			".es-content-body ul li,\r\n" + 
+			".es-content-body ol li {\r\n" + 
+			"    color: #666666;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-content-body a {\r\n" + 
+			"    color: #ffa73b;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-header {\r\n" + 
+			"    background-color: #ffa73b;\r\n" + 
+			"    background-image: ;\r\n" + 
+			"    background-repeat: repeat;\r\n" + 
+			"    background-position: center top;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-header-body {\r\n" + 
+			"    background-color: transparent;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-header-body p,\r\n" + 
+			".es-header-body ul li,\r\n" + 
+			".es-header-body ol li {\r\n" + 
+			"    color: #666666;\r\n" + 
+			"    font-size: 14px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-header-body a {\r\n" + 
+			"    color: #111111;\r\n" + 
+			"    font-size: 14px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-footer {\r\n" + 
+			"    background-color: transparent;\r\n" + 
+			"    background-image: ;\r\n" + 
+			"    background-repeat: repeat;\r\n" + 
+			"    background-position: center top;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-footer-body {\r\n" + 
+			"    background-color: transparent;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-footer-body p,\r\n" + 
+			".es-footer-body ul li,\r\n" + 
+			".es-footer-body ol li {\r\n" + 
+			"    color: #666666;\r\n" + 
+			"    font-size: 14px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-footer-body a {\r\n" + 
+			"    color: #111111;\r\n" + 
+			"    font-size: 14px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-infoblock,\r\n" + 
+			".es-infoblock p,\r\n" + 
+			".es-infoblock ul li,\r\n" + 
+			".es-infoblock ol li {\r\n" + 
+			"    line-height: 120%;\r\n" + 
+			"    font-size: 12px;\r\n" + 
+			"    color: #cccccc;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-infoblock a {\r\n" + 
+			"    font-size: 12px;\r\n" + 
+			"    color: #cccccc;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"a.es-button {\r\n" + 
+			"    border-style: solid;\r\n" + 
+			"    border-color: #ffa73b;\r\n" + 
+			"    border-width: 15px 25px 15px 25px;\r\n" + 
+			"    display: inline-block;\r\n" + 
+			"    background: #ffa73b;\r\n" + 
+			"    border-radius: 2px;\r\n" + 
+			"    font-size: 20px;\r\n" + 
+			"    font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif;\r\n" + 
+			"    font-weight: normal;\r\n" + 
+			"    font-style: normal;\r\n" + 
+			"    line-height: 120%;\r\n" + 
+			"    color: #ffffff;\r\n" + 
+			"    text-decoration: none;\r\n" + 
+			"    width: auto;\r\n" + 
+			"    text-align: center;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-button-border {\r\n" + 
+			"    border-style: solid solid solid solid;\r\n" + 
+			"    border-color: #ffa73b #ffa73b #ffa73b #ffa73b;\r\n" + 
+			"    background: 1px;\r\n" + 
+			"    border-width: 1px 1px 1px 1px;\r\n" + 
+			"    display: inline-block;\r\n" + 
+			"    border-radius: 2px;\r\n" + 
+			"    width: auto;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"/* RESPONSIVE STYLES Please do not delete and edit CSS styles below. If you don't need responsive layout, please delete this section. */\r\n" + 
+			"@media only screen and (max-width: 600px) {\r\n" + 
+			"\r\n" + 
+			"    p,\r\n" + 
+			"    ul li,\r\n" + 
+			"    ol li,\r\n" + 
+			"    a {\r\n" + 
+			"        font-size: 16px !important;\r\n" + 
+			"        line-height: 150% !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    h1 {\r\n" + 
+			"        font-size: 30px !important;\r\n" + 
+			"        text-align: center;\r\n" + 
+			"        line-height: 120% !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    h2 {\r\n" + 
+			"        font-size: 26px !important;\r\n" + 
+			"        text-align: center;\r\n" + 
+			"        line-height: 120% !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    h3 {\r\n" + 
+			"        font-size: 20px !important;\r\n" + 
+			"        text-align: center;\r\n" + 
+			"        line-height: 120% !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    h1 a {\r\n" + 
+			"        font-size: 30px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    h2 a {\r\n" + 
+			"        font-size: 26px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    h3 a {\r\n" + 
+			"        font-size: 20px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-menu td a {\r\n" + 
+			"        font-size: 16px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-header-body p,\r\n" + 
+			"    .es-header-body ul li,\r\n" + 
+			"    .es-header-body ol li,\r\n" + 
+			"    .es-header-body a {\r\n" + 
+			"        font-size: 16px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-footer-body p,\r\n" + 
+			"    .es-footer-body ul li,\r\n" + 
+			"    .es-footer-body ol li,\r\n" + 
+			"    .es-footer-body a {\r\n" + 
+			"        font-size: 16px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-infoblock p,\r\n" + 
+			"    .es-infoblock ul li,\r\n" + 
+			"    .es-infoblock ol li,\r\n" + 
+			"    .es-infoblock a {\r\n" + 
+			"        font-size: 12px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    *[class=\"gmail-fix\"] {\r\n" + 
+			"        display: none !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-txt-c,\r\n" + 
+			"    .es-m-txt-c h1,\r\n" + 
+			"    .es-m-txt-c h2,\r\n" + 
+			"    .es-m-txt-c h3 {\r\n" + 
+			"        text-align: center !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-txt-r,\r\n" + 
+			"    .es-m-txt-r h1,\r\n" + 
+			"    .es-m-txt-r h2,\r\n" + 
+			"    .es-m-txt-r h3 {\r\n" + 
+			"        text-align: right !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-txt-l,\r\n" + 
+			"    .es-m-txt-l h1,\r\n" + 
+			"    .es-m-txt-l h2,\r\n" + 
+			"    .es-m-txt-l h3 {\r\n" + 
+			"        text-align: left !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-txt-r img,\r\n" + 
+			"    .es-m-txt-c img,\r\n" + 
+			"    .es-m-txt-l img {\r\n" + 
+			"        display: inline !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-button-border {\r\n" + 
+			"        display: block !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    a.es-button {\r\n" + 
+			"        font-size: 20px !important;\r\n" + 
+			"        display: block !important;\r\n" + 
+			"        border-width: 15px 25px 15px 25px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-btn-fw {\r\n" + 
+			"        border-width: 10px 0px !important;\r\n" + 
+			"        text-align: center !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-adaptive table,\r\n" + 
+			"    .es-btn-fw,\r\n" + 
+			"    .es-btn-fw-brdr,\r\n" + 
+			"    .es-left,\r\n" + 
+			"    .es-right {\r\n" + 
+			"        width: 100% !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-content table,\r\n" + 
+			"    .es-header table,\r\n" + 
+			"    .es-footer table,\r\n" + 
+			"    .es-content,\r\n" + 
+			"    .es-footer,\r\n" + 
+			"    .es-header {\r\n" + 
+			"        width: 100% !important;\r\n" + 
+			"        max-width: 600px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-adapt-td {\r\n" + 
+			"        display: block !important;\r\n" + 
+			"        width: 100% !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .adapt-img {\r\n" + 
+			"        width: 100% !important;\r\n" + 
+			"        height: auto !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-p0 {\r\n" + 
+			"        padding: 0px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-p0r {\r\n" + 
+			"        padding-right: 0px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-p0l {\r\n" + 
+			"        padding-left: 0px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-p0t {\r\n" + 
+			"        padding-top: 0px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-p0b {\r\n" + 
+			"        padding-bottom: 0 !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-m-p20b {\r\n" + 
+			"        padding-bottom: 20px !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-mobile-hidden,\r\n" + 
+			"    .es-hidden {\r\n" + 
+			"        display: none !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    tr.es-desk-hidden,\r\n" + 
+			"    td.es-desk-hidden,\r\n" + 
+			"    table.es-desk-hidden {\r\n" + 
+			"        display: table-row !important;\r\n" + 
+			"        width: auto !important;\r\n" + 
+			"        overflow: visible !important;\r\n" + 
+			"        float: none !important;\r\n" + 
+			"        max-height: inherit !important;\r\n" + 
+			"        line-height: inherit !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    .es-desk-menu-hidden {\r\n" + 
+			"        display: table-cell !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    table.es-table-not-adapt,\r\n" + 
+			"    .esd-block-html table {\r\n" + 
+			"        width: auto !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    table.es-social {\r\n" + 
+			"        display: inline-block !important;\r\n" + 
+			"    }\r\n" + 
+			"\r\n" + 
+			"    table.es-social td {\r\n" + 
+			"        display: inline-block !important;\r\n" + 
+			"    }\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"/* END RESPONSIVE STYLES */\r\n" + 
+			".es-p-default {\r\n" + 
+			"    padding-top: 20px;\r\n" + 
+			"    padding-right: 30px;\r\n" + 
+			"    padding-bottom: 0px;\r\n" + 
+			"    padding-left: 30px;\r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			".es-p-all-default {\r\n" + 
+			"    padding: 0px;\r\n" + 
+			"}\r\n" + 
+			"	 </style>\r\n" + 
+			"</head>\r\n" + 
+			"\r\n" + 
+			"<body>\r\n" + 
+			"    <div class=\"es-wrapper-color\">\r\n" + 
+			"      \r\n" + 
+			"        <table class=\"es-wrapper\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"            <tbody>\r\n" + 
+			"                <tr class=\"gmail-fix\" height=\"0\">\r\n" + 
+			"                    <td>\r\n" + 
+			"                        <table width=\"600\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\">\r\n" + 
+			"                            <tbody>\r\n" + 
+			"                                <tr>\r\n" + 
+			"                                    <td cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"line-height: 1px; min-width: 600px;\" height=\"0\"><img src=\"https://esputnik.com/repository/applications/images/blank.gif\" style=\"display: block; max-height: 0px; min-height: 0px; min-width: 600px; width: 600px;\" alt width=\"600\" height=\"1\"></td>\r\n" + 
+			"                                </tr>\r\n" + 
+			"                            </tbody>\r\n" + 
+			"                        </table>\r\n" + 
+			"                    </td>\r\n" + 
+			"                </tr>\r\n" + 
+			"                <tr>\r\n" + 
+			"                    <td class=\"esd-email-paddings\" valign=\"top\">\r\n" + 
+			"                        \r\n" + 
+			"                        <table class=\"es-content\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                            <tbody>\r\n" + 
+			"                                <tr>\r\n" + 
+			"                                    <td class=\"esd-stripe\" style=\"background-color: #007775;\" esd-custom-block-id=\"6340\" bgcolor=\"#007775\" align=\"center\">\r\n" + 
+			"                                        <table class=\"es-content-body\" style=\"background-color: transparent;\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                                            <tbody>\r\n" + 
+			"                                                <tr>\r\n" + 
+			"                                                    <td class=\"esd-structure\" align=\"left\">\r\n" + 
+			"                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                            <tbody>\r\n" + 
+			"                                                                <tr>\r\n" + 
+			"                                                                    <td class=\"esd-container-frame\" width=\"600\" valign=\"top\" align=\"center\">\r\n" + 
+			"                                                                        <table style=\"background-color: #ffffff; border-radius: 4px; border-collapse: separate;\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\">\r\n" + 
+			"                                                                            <tbody>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-text es-p35t es-p5b es-p30r es-p30l\" align=\"center\">\r\n" + 
+			"                                                                                        <h1>Welcome!</h1>\r\n" + 
+			"                                                                                    </td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-spacer es-p5t es-p5b es-p20r es-p20l\" bgcolor=\"#ffffff\" align=\"center\" style=\"font-size:0\">\r\n" + 
+			"                                                                                        <table width=\"100%\" height=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\r\n" + 
+			"                                                                                            <tbody>\r\n" + 
+			"                                                                                                <tr>\r\n" + 
+			"                                                                                                    <td style=\"border-bottom: 1px solid #ffffff; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; height: 1px; width: 100%; margin: 0px;\"></td>\r\n" + 
+			"                                                                                                </tr>\r\n" + 
+			"                                                                                            </tbody>\r\n" + 
+			"                                                                                        </table>\r\n" + 
+			"                                                                                    </td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                            </tbody>\r\n" + 
+			"                                                                        </table>\r\n" + 
+			"                                                                    </td>\r\n" + 
+			"                                                                </tr>\r\n" + 
+			"                                                            </tbody>\r\n" + 
+			"                                                        </table>\r\n" + 
+			"                                                    </td>\r\n" + 
+			"                                                </tr>\r\n" + 
+			"                                            </tbody>\r\n" + 
+			"                                        </table>\r\n" + 
+			"                                    </td>\r\n" + 
+			"                                </tr>\r\n" + 
+			"                            </tbody>\r\n" + 
+			"                        </table>\r\n" + 
+			"                        <table class=\"es-content\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                            <tbody>\r\n" + 
+			"                                <tr>\r\n" + 
+			"                                    <td class=\"esd-stripe\" align=\"center\">\r\n" + 
+			"                                        <table class=\"es-content-body\" style=\"background-color: transparent;\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                                            <tbody>\r\n" + 
+			"                                                <tr>\r\n" + 
+			"                                                    <td class=\"esd-structure\" align=\"left\">\r\n" + 
+			"                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                            <tbody>\r\n" + 
+			"                                                                <tr>\r\n" + 
+			"                                                                    <td class=\"esd-container-frame\" width=\"600\" valign=\"top\" align=\"center\">\r\n" + 
+			"                                                                        <table style=\"border-radius: 4px; border-collapse: separate; background-color: #ffffff;\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\">\r\n" + 
+			"                                                                            <tbody>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-text es-p20t es-p20b es-p30r es-p30l es-m-txt-l\" bgcolor=\"#ffffff\" align=\"left\">\r\n" + 
+			"                                                                                        <p>We're excited to have you get started. First, you need to confirm your email account. Just press the button below.</p>\r\n" + 
+			"                                                                                    </td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+		
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-text es-p20t es-p30r es-p30l es-m-txt-l\" align=\"left\" esd-links-color=\"#007775\"><a target=\"_blank\" href=\""+link+"\" style=\"color: #007775;\">"+link+"</a></td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-text es-p20t es-p30r es-p30l es-m-txt-l\" align=\"left\">\r\n" + 
+			"                                                                                        <p>If you have any questions, just reply to this email—we're always happy to help out.</p>\r\n" + 
+			"                                                                                    </td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-text es-p20t es-p40b es-p30r es-p30l es-m-txt-l\" align=\"left\">\r\n" + 
+			"                                                                                        <p>Cheers,</p>\r\n" + 
+			"                                                                                        <p>Emformance Team</p>\r\n" + 
+			"                                                                                    </td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                            </tbody>\r\n" + 
+			"                                                                        </table>\r\n" + 
+			"                                                                    </td>\r\n" + 
+			"                                                                </tr>\r\n" + 
+			"                                                            </tbody>\r\n" + 
+			"                                                        </table>\r\n" + 
+			"                                                    </td>\r\n" + 
+			"                                                </tr>\r\n" + 
+			"                                            </tbody>\r\n" + 
+			"                                        </table>\r\n" + 
+			"                                    </td>\r\n" + 
+			"                                </tr>\r\n" + 
+			"                            </tbody>\r\n" + 
+			"                        </table>\r\n" + 
+			"                        <table class=\"es-content\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                            <tbody>\r\n" + 
+			"                                <tr>\r\n" + 
+			"                                    <td class=\"esd-stripe\" align=\"center\">\r\n" + 
+			"                                        <table class=\"es-content-body\" style=\"background-color: transparent;\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                                            <tbody>\r\n" + 
+			"                                                <tr>\r\n" + 
+			"                                                    <td class=\"esd-structure\" align=\"left\">\r\n" + 
+			"                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                            <tbody>\r\n" + 
+			"                                                                <tr>\r\n" + 
+			"                                                                    <td class=\"esd-container-frame\" width=\"600\" valign=\"top\" align=\"center\">\r\n" + 
+			"                                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                                            <tbody>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-spacer es-p10t es-p20b es-p20r es-p20l\" align=\"center\" style=\"font-size:0\">\r\n" + 
+			"                                                                                        <table width=\"100%\" height=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\r\n" + 
+			"                                                                                            <tbody>\r\n" + 
+			"                                                                                                <tr>\r\n" + 
+			"                                                                                                    <td style=\"border-bottom: 1px solid #f4f4f4; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; height: 1px; width: 100%; margin: 0px;\"></td>\r\n" + 
+			"                                                                                                </tr>\r\n" + 
+			"                                                                                            </tbody>\r\n" + 
+			"                                                                                        </table>\r\n" + 
+			"                                                                                    </td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                            </tbody>\r\n" + 
+			"                                                                        </table>\r\n" + 
+			"                                                                    </td>\r\n" + 
+			"                                                                </tr>\r\n" + 
+			"                                                            </tbody>\r\n" + 
+			"                                                        </table>\r\n" + 
+			"                                                    </td>\r\n" + 
+			"                                                </tr>\r\n" + 
+			"                                            </tbody>\r\n" + 
+			"                                        </table>\r\n" + 
+			"                                    </td>\r\n" + 
+			"                                </tr>\r\n" + 
+			"                            </tbody>\r\n" + 
+			"                        </table>\r\n" + 
+			"                        <table class=\"es-content\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                            <tbody>\r\n" + 
+			"                                <tr>\r\n" + 
+			"                                    <td class=\"esd-stripe\" esd-custom-block-id=\"6341\" align=\"center\">\r\n" + 
+			"                                        <table class=\"es-content-body\" style=\"background-color: transparent;\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                                            <tbody>\r\n" + 
+			"                                                <tr>\r\n" + 
+			"                                                    <td class=\"esd-structure\" align=\"left\">\r\n" + 
+			"                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                            <tbody>\r\n" + 
+			"                                                                <tr>\r\n" + 
+			"                                                                    <td class=\"esd-container-frame\" width=\"600\" valign=\"top\" align=\"center\">\r\n" + 
+			"                                                                        <table style=\"background-color: #ffecd1; border-radius: 4px; border-collapse: separate;\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#ffecd1\">\r\n" + 
+			"                                                                            <tbody>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td align=\"center\" class=\"esd-empty-container\" style=\"display: none;\"></td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                            </tbody>\r\n" + 
+			"                                                                        </table>\r\n" + 
+			"                                                                    </td>\r\n" + 
+			"                                                                </tr>\r\n" + 
+			"                                                            </tbody>\r\n" + 
+			"                                                        </table>\r\n" + 
+			"                                                    </td>\r\n" + 
+			"                                                </tr>\r\n" + 
+			"                                            </tbody>\r\n" + 
+			"                                        </table>\r\n" + 
+			"                                    </td>\r\n" + 
+			"                                </tr>\r\n" + 
+			"                            </tbody>\r\n" + 
+			"                        </table>\r\n" + 
+			"                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-footer\" align=\"center\">\r\n" + 
+			"                            <tbody>\r\n" + 
+			"                                <tr>\r\n" + 
+			"                                    <td class=\"esd-stripe\" esd-custom-block-id=\"6342\" align=\"center\">\r\n" + 
+			"                                        <table class=\"es-footer-body\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                                            <tbody>\r\n" + 
+			"                                                <tr>\r\n" + 
+			"                                                    <td class=\"esd-structure es-p30t es-p30b es-p30r es-p30l\" align=\"left\">\r\n" + 
+			"                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                            <tbody>\r\n" + 
+			"                                                                <tr>\r\n" + 
+			"                                                                    <td class=\"esd-container-frame\" width=\"540\" valign=\"top\" align=\"center\">\r\n" + 
+			"                                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                                            <tbody>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td align=\"center\" class=\"esd-empty-container\" style=\"display: none;\"></td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                            </tbody>\r\n" + 
+			"                                                                        </table>\r\n" + 
+			"                                                                    </td>\r\n" + 
+			"                                                                </tr>\r\n" + 
+			"                                                            </tbody>\r\n" + 
+			"                                                        </table>\r\n" + 
+			"                                                    </td>\r\n" + 
+			"                                                </tr>\r\n" + 
+			"                                            </tbody>\r\n" + 
+			"                                        </table>\r\n" + 
+			"                                    </td>\r\n" + 
+			"                                </tr>\r\n" + 
+			"                            </tbody>\r\n" + 
+			"                        </table>\r\n" + 
+			"                        <table class=\"esd-footer-popover es-content\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                            <tbody>\r\n" + 
+			"                                <tr>\r\n" + 
+			"                                    <td class=\"esd-stripe\" align=\"center\">\r\n" + 
+			"                                        <table class=\"es-content-body\" style=\"background-color: transparent;\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\r\n" + 
+			"                                            <tbody>\r\n" + 
+			"                                                <tr>\r\n" + 
+			"                                                    <td class=\"esd-structure es-p30t es-p30b es-p20r es-p20l\" align=\"left\">\r\n" + 
+			"                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                            <tbody>\r\n" + 
+			"                                                                <tr>\r\n" + 
+			"                                                                    <td class=\"esd-container-frame\" width=\"560\" valign=\"top\" align=\"center\">\r\n" + 
+			"                                                                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n" + 
+			"                                                                            <tbody>\r\n" + 
+			"                                                                                <tr>\r\n" + 
+			"                                                                                    <td class=\"esd-block-image es-infoblock made_with\" align=\"center\" style=\"font-size: 0px;\"><a target=\"_blank\" href=\"https://viewstripo.email/?utm_source=templates&utm_medium=email&utm_campaign=software2&utm_content=trigger_newsletter\"><img src=\"https://hwpflx.stripocdn.email/content/guids/9d74afe0-f912-4000-9097-30b15b819751/images/29921596794702086.png\" alt width=\"125\" style=\"display: block;\"></a></td>\r\n" + 
+			"                                                                                </tr>\r\n" + 
+			"                                                                            </tbody>\r\n" + 
+			"                                                                        </table>\r\n" + 
+			"                                                                    </td>\r\n" + 
+			"                                                                </tr>\r\n" + 
+			"                                                            </tbody>\r\n" + 
+			"                                                        </table>\r\n" + 
+			"                                                    </td>\r\n" + 
+			"                                                </tr>\r\n" + 
+			"                                            </tbody>\r\n" + 
+			"                                        </table>\r\n" + 
+			"                                    </td>\r\n" + 
+			"                                </tr>\r\n" + 
+			"                            </tbody>\r\n" + 
+			"                        </table>\r\n" + 
+			"                    </td>\r\n" + 
+			"                </tr>\r\n" + 
+			"            </tbody>\r\n" + 
+			"        </table>\r\n" + 
+			"    </div>\r\n" + 
+			"</body>\r\n" + 
+			"\r\n" + 
+			"</html>";
+	return s;
+	}
 }

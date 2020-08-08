@@ -97,12 +97,16 @@ public class DepartmentAndDesignationDaoImpl implements DepartmentAndDesignation
 	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#getDepartment(java.lang.Integer)
 	 */
 	@Override
-	public List<EmDepartment> getDepartment(Integer departmentId) throws Exception {
+	public List<EmDepartment> getDepartment(Integer departmentId,String departmentName) throws Exception {
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(EmDepartment.class);
 		if(departmentId!=null)
 		{
 			criteria.add(Restrictions.eq("departmentId", departmentId));
+		}
+		if(departmentName!=null && !("").equals(departmentName))
+		{
+			criteria.add(Restrictions.eq("departmentName", departmentName));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		criteria.addOrder(Order.desc("departmentCreatedDate"));
@@ -114,7 +118,7 @@ public class DepartmentAndDesignationDaoImpl implements DepartmentAndDesignation
 	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#getDesignation(java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public List<EmDesignation> getDesignation(Integer designationId, Integer departmentId) throws Exception {
+	public List<EmDesignation> getDesignation(Integer designationId, Integer departmentId,String designationName) throws Exception {
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(EmDesignation.class);
 		if(designationId!=null)
@@ -123,6 +127,10 @@ public class DepartmentAndDesignationDaoImpl implements DepartmentAndDesignation
 		}if(departmentId!=null)
 		{
 			criteria.add(Restrictions.eq("departmentId", departmentId));
+		}
+		if(designationName!=null)
+		{
+			criteria.add(Restrictions.eq("designationName", designationName));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		criteria.addOrder(Order.desc("designationCreatedDate"));
