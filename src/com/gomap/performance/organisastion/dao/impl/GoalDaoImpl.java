@@ -3,6 +3,7 @@
  */
 package com.gomap.performance.organisastion.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Repository;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.GoalDao;
 import com.gomap.performance.organisastion.model.EmGoal;
+import com.gomap.performance.organisastion.model.EmTeam;
+import com.gomap.performance.organisastion.model.EmTeamMember;
+import com.gomap.performance.organisastion.model.TeamGoals;
 
 /**
  * @author krishnakant.bairagi
@@ -89,6 +93,49 @@ public class GoalDaoImpl implements GoalDao {
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		criteria.addOrder(Order.desc("goalCreatedDate"));
 		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.GoalDao#getTeamGoal(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public List<TeamGoals> getTeamGoal(Integer myTeamId, Integer projectId) throws Exception {
+		
+		
+		StringBuilder bd=new StringBuilder("select new com.gomap.performance.organisastion.model.TeamGoals(egoal) from EmEmployee as emp,");
+		bd.append("EmTeam as team,EmTeamMember as tmember,EmGoal as egoal");
+		bd.append(" where team.activateFlag=1 and tmember.activateFlag=1 and tmember.employeeId=emp.employeeId and tmember.teamId=team.teamId  and emp.activateFlag=1 and egoal.activateFlag=1");
+		bd.append(" and egoal.employeeId=tmember.employeeId");
+		if(myTeamId!=null)
+		{
+			bd.append(" and team.teamCreatedBy= "+myTeamId);
+		}
+		if(projectId!=null)
+		{
+			bd.append(" and team.projectId= "+projectId);
+		}
+	
+	List<TeamGoals> objList=this.sessionFactory.getCurrentSession().createQuery(bd.toString()).list();
+		return objList;
+	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.GoalDao#getTeamGoalOnly(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public List<EmGoal> getTeamGoalOnly(Integer teamId, Integer projectId) throws Exception {
+		// TODO Auto-generated method stub
+		List<TeamGoals> lt=getTeamGoal(teamId, projectId);
+		List<EmGoal> goalList=new ArrayList<EmGoal>();
+		if(lt!=null && !lt.isEmpty())
+		{
+			for(TeamGoals teamGoals:lt)
+			{
+				goalList.add(teamGoals.getGoal())	;
+			}
+		}
+		return goalList;
 	}
 
 }

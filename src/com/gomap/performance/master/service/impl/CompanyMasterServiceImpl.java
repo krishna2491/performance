@@ -84,6 +84,10 @@ public class CompanyMasterServiceImpl implements CompanyService {
 					{
 						companyMaster.setPortalName(companyMasterDto.getPortalName());
 					}
+					if(companyMasterDto.getCompanySize()!=null)
+					{
+						companyMaster.setCompanySize(companyMasterDto.getCompanySize());
+					}
 					companyMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
 					companyMaster.setCreatedDate(new Date());
 					//companyMaster.setUpdatedDate(new Date());
@@ -169,6 +173,10 @@ public class CompanyMasterServiceImpl implements CompanyService {
 					if(companyMasterDto.getPortalName()!=null)
 					{
 						companyMaster.setPortalName(companyMasterDto.getPortalName());
+					}
+					if(companyMasterDto.getCompanySize()!=null)
+					{
+						companyMaster.setCompanySize(companyMasterDto.getCompanySize());
 					}
 					companyMaster.setUpdatedDate(new Date());
 					companyDao.updateCompany(companyMaster);

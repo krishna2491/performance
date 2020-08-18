@@ -99,9 +99,10 @@ public class SkillDaoImpl implements SkillDao {
 	 * performance.organisastion.model.EmEmployeeSkillMpg)
 	 */
 	@Override
-	public void mapEmployeeSkill(EmEmployeeSkillMpg emEmployeeSkillMpg) throws Exception {
+	public EmEmployeeSkillMpg mapEmployeeSkill(EmEmployeeSkillMpg emEmployeeSkillMpg) throws Exception {
 		// TODO Auto-generated method stub
 		sessionfactory.getCurrentSession().saveOrUpdate(emEmployeeSkillMpg);
+		return emEmployeeSkillMpg;
 	}
 
 	/*

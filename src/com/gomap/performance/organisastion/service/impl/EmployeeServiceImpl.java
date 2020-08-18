@@ -190,12 +190,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 */
 	@Override
 	@Transactional
-	public ResponseDTO getEmployeeList(Integer employeeId) throws Exception {
+	public ResponseDTO getEmployeeList(Integer employeeId,String emailId) throws Exception {
 
 		ResponseDTO responseDTO=new ResponseDTO();
 		try {
 			logger.debug("getting getEmployeeList employeeId="+employeeId);
-			List<EmEmployee> employeeList=empDao.getEmployeeList(employeeId);
+			List<EmEmployee> employeeList=empDao.getEmployeeList(employeeId,emailId);
 			responseDTO.setDataObj(employeeList);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		} catch (Exception e) {
@@ -219,8 +219,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			logger.debug("updateEmployee ");
 			if(employeeDto!=null && employeeDto.getEmployeeId()!=null)
 			{
-				List<EmEmployee> employeeList=empDao.getEmployeeList(employeeDto.getEmployeeId());
-				if(employeeList.isEmpty())
+				List<EmEmployee> employeeList=empDao.getEmployeeList(employeeDto.getEmployeeId(),null);
+				if(employeeList==null ||  employeeList.isEmpty())
 				{
 					responseDTO.setDataObj(null);
 					responseDTO.setErrorMsg("Employee data is not available in system");
@@ -412,7 +412,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			//EmployeeElementMpgDto employeeElementMpgDto2=new EmployeeElementMpgDto();
 			EmployeeElementOperationDto elementOperationMpgDto=new EmployeeElementOperationDto();
 			EmEmployeeDto employeeDto=new EmEmployeeDto();
-			List<EmEmployee> employeeList=empDao.getEmployeeList(employeeId);
+			List<EmEmployee> employeeList=empDao.getEmployeeList(employeeId,null);
 			employeeDto.setEmployeeId(employeeId);
 			employeeDto.setEmployeeEmail(employeeList.get(0).getEmployeeEmail());
 			//hhdesignationDto.setDepartmentId(desigList.get(0).getDepartmentId());
@@ -470,7 +470,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				responseDTO.setErrorMsg("Employee parameter can not be null");
 			} else {
 			
-				List<EmEmployee> emplList = empDao.getEmployeeList(employeeDto.getEmployeeId());
+				List<EmEmployee> emplList = empDao.getEmployeeList(employeeDto.getEmployeeId(),null);
 						
 				if (emplList.isEmpty()) {
 					responseDTO.setErrorCode(412);

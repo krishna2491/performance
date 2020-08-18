@@ -110,6 +110,10 @@ public class EmTask implements Serializable {
     @Column(name = "activate_flag")
     @Size(min = 1, max = 5)
     private Integer activateFlag;
+    @Column(name = "comment")
+    private String comment;
+    @Column(name = "reply")
+    private String reply;
 
     public EmTask() {
     }
@@ -265,6 +269,34 @@ public void prePersist() {
     if(activateFlag == null) //We set default value in case if the value is not set yet.
         activateFlag = 1;
     System.out.println("coming here");
+}
+
+/**
+ * @return the comment
+ */
+public String getComment() {
+	return comment;
+}
+
+/**
+ * @param comment the comment to set
+ */
+public void setComment(String comment) {
+	this.comment = comment;
+}
+
+/**
+ * @return the reply
+ */
+public String getReply() {
+	return reply;
+}
+
+/**
+ * @param reply the reply to set
+ */
+public void setReply(String reply) {
+	this.reply = reply;
 }
 
 

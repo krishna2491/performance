@@ -223,27 +223,29 @@ public class SkillServiceImpl implements SkillService {
 		
 		if(emEmployeeSkillMpgDto!=null && emEmployeeSkillMpgDto.getSkillId()!=null && emEmployeeSkillMpgDto.getEmployeeId()!=null)
 		{
-			EmEmployeeSkillMpg emEmployeeSkillMpg=new EmEmployeeSkillMpg();
-			
-			if(emEmployeeSkillMpgDto.getSkillMpgId()!=null)
-			{
+			EmEmployeeSkillMpg emEmployeeSkillMpg = new EmEmployeeSkillMpg();
+
+			if (emEmployeeSkillMpgDto.getSkillMpgId() != null) {
 				emEmployeeSkillMpg.setSkillMpgId(emEmployeeSkillMpgDto.getSkillMpgId());
 				emEmployeeSkillMpg.setCreatedDate(emEmployeeSkillMpgDto.getCreatedDate());
 				emEmployeeSkillMpg.setUpdatedDate(new Date());
-			}else {emEmployeeSkillMpg.setCreatedDate(new Date());}
+				emEmployeeSkillMpg.setSkillProficiency(emEmployeeSkillMpgDto.getSkillProficiency());
+			} else {
+				emEmployeeSkillMpg.setCreatedDate(new Date());
+			}
+			emEmployeeSkillMpg.setSkillProficiency(emEmployeeSkillMpgDto.getSkillProficiency());
 			emEmployeeSkillMpg.setSkillId(emEmployeeSkillMpgDto.getSkillId());
 			emEmployeeSkillMpg.setEmployeeId(emEmployeeSkillMpgDto.getEmployeeId());
-			if(emEmployeeSkillMpgDto.getActivateFlag()!=null) {
+			if (emEmployeeSkillMpgDto.getActivateFlag() != null) {
 				emEmployeeSkillMpg.setActivateFlag(emEmployeeSkillMpgDto.getActivateFlag());
-					
+
 			}
 			skillDao.mapEmployeeSkill(emEmployeeSkillMpg);
 			responseDTO.setDataObj(emEmployeeSkillMpg);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			responseDTO.setSuccessMsg("Skill successfully Maped");
 			logger.info("Skil creation done---");
-			
-			
+
 		}else
 		{
 			responseDTO.setDataObj(null);
@@ -314,13 +316,13 @@ public class SkillServiceImpl implements SkillService {
 			{
 				for(EmEmployeeSkillMpgDto emEmployeeSkillMpgDto:emEmployeeSkillMpgDtoList)
 				{
-					mapEmployeeSkill(emEmployeeSkillMpgDto);
+					responseDTO=mapEmployeeSkill(emEmployeeSkillMpgDto);
 				}
 			}
 			
-			responseDTO.setDataObj(null);
+			//responseDTO.setDataObj(emEmployeeSkillMpgDtoList);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
-			responseDTO.setErrorMsg("Skill Maped with employee successfully");
+			responseDTO.setSuccessMsg("Skill Mapped with employee successfully");
 			
 			
 		} catch (Exception e) {

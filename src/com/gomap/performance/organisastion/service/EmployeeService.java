@@ -21,9 +21,15 @@ public interface EmployeeService {
 	public ResponseDTO getMySkill() throws Exception;
 	public ResponseDTO getMyTask() throws Exception;
 	public ResponseDTO getMyGoal() throws Exception;
-	public ResponseDTO getEmployeeList(Integer employeeId) throws Exception;
+	public ResponseDTO getEmployeeList(Integer employeeId,String emailId) throws Exception;
 	public ResponseDTO updateEmployee(EmEmployeeDto employeeDto) throws Exception;
 	public ResponseDTO getAllEmployee() throws Exception;
 	public ResponseDTO getEmployeeWithElements(Integer employeeId) throws Exception;
+	/**
+	 * @param employeeId
+	 * @param emailId
+	 * @return
+	 * @throws Exception
+	 */
 
 }

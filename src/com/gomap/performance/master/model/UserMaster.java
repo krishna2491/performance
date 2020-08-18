@@ -37,11 +37,11 @@ public class UserMaster implements Serializable {
 	private Integer userId;
 	@Basic(optional = false)
 	@NotNull
-	@Size(min = 1, max = 20)
+	@Size(min = 1, max = 200)
 	@Column(name = "name")
 	private String Name;
 	@NotNull
-	@Size(min = 1, max = 20)
+	@Size(min = 1, max = 200)
 	@Column(name = "email")
 	private String email;
 	@NotNull
@@ -74,6 +74,11 @@ public class UserMaster implements Serializable {
 	@Column(name = "token_time")
 	@Temporal(TemporalType.DATE)
 	private Date  tokenTime;
+	@Size(min = 1, max = 200)
+	@Column(name = "user_role")
+	private String userRole;
+	@Column(name = "company_info")
+	private String companyInfo;
 	/**
 	 * @return the emailToken
 	 */
@@ -193,6 +198,30 @@ public class UserMaster implements Serializable {
 	 */
 	public void setTokenTime(Date tokenTime) {
 		this.tokenTime = tokenTime;
+	}
+	/**
+	 * @return the userRole
+	 */
+	public String getUserRole() {
+		return userRole;
+	}
+	/**
+	 * @param userRole the userRole to set
+	 */
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+	/**
+	 * @return the companyInfo
+	 */
+	public String getCompanyInfo() {
+		return companyInfo;
+	}
+	/**
+	 * @param companyInfo the companyInfo to set
+	 */
+	public void setCompanyInfo(String companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 	
 }

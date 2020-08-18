@@ -16,6 +16,9 @@ public interface GoalService {
 	public ResponseDTO updateGoal(EmGoalDto emGoalDto) throws Exception;
 	public ResponseDTO getGoal(EmGoalDto emGoalDto) throws Exception;
 	public ResponseDTO deleteGoal(Integer goalId,Integer empId,Integer projetId) throws Exception;
+	public ResponseDTO getMyTeamGoals(Integer teamId,Integer projectId) throws Exception;
+	
+	
 	
 
 }

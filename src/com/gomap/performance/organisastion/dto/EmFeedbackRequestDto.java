@@ -63,7 +63,7 @@ public class EmFeedbackRequestDto implements Serializable {
     private String feedbackStatus;
  
     private Integer projectId;
-  
+    private Integer taskId;
     
     private String feedbackReply;
     
@@ -71,7 +71,39 @@ public class EmFeedbackRequestDto implements Serializable {
    
     private Date feedbackUpdatedDate;
     private Integer activateFlag;
-    private List<FeedbackRequestParaMpgDto> feedbackParameteres;
+    private String description;
+    private Boolean blindRequest;
+    private Date feedbackGivenDate;
+    /**
+	 * @return the blindRequest
+	 */
+	public Boolean getBlindRequest() {
+		return blindRequest;
+	}
+
+	/**
+	 * @param blindRequest the blindRequest to set
+	 */
+	public void setBlindRequest(Boolean blindRequest) {
+		this.blindRequest = blindRequest;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	private List<FeedbackRequestParaMpgDto> feedbackParameteres;
 
    
 	/**
@@ -229,6 +261,34 @@ public class EmFeedbackRequestDto implements Serializable {
 	 */
 	public void setFeedbackUpdatedDate(Date feedbackUpdatedDate) {
 		this.feedbackUpdatedDate = feedbackUpdatedDate;
+	}
+
+	/**
+	 * @return the taskId
+	 */
+	public Integer getTaskId() {
+		return taskId;
+	}
+
+	/**
+	 * @return the feedbackGivenDate
+	 */
+	public Date getFeedbackGivenDate() {
+		return feedbackGivenDate;
+	}
+
+	/**
+	 * @param feedbackGivenDate the feedbackGivenDate to set
+	 */
+	public void setFeedbackGivenDate(Date feedbackGivenDate) {
+		this.feedbackGivenDate = feedbackGivenDate;
+	}
+
+	/**
+	 * @param taskId the taskId to set
+	 */
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
 	}
 
 

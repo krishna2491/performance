@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -149,6 +150,22 @@ public class TaskController {
 				responseDTO=taskService.getEmployeeTaskList(emTaskMpgDto.getTaskId(), emTaskMpgDto.getEmployeeId());
 				
 			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_MY_TEAM_TASK}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getEmployeeTask(@RequestParam Integer createdBy,Integer assignToId,Integer asssignById,Integer projectId,Integer teamId) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				responseDTO=new ResponseDTO();
+				responseDTO=taskService.getMyTeamTask(createdBy, assignToId, asssignById, projectId, teamId);
+				
+			
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
 			logger.error("error",e);

@@ -28,6 +28,7 @@ public class CompanyMasterDto implements Serializable{
 	private String contactPerson;
 	private String apiURLPrefix;
 	private Integer activateFlag;
+	private Integer companySize;
 	/**
 	 * @return the companyId
 	 */
@@ -150,6 +151,18 @@ public class CompanyMasterDto implements Serializable{
 	 */
 	public void setActivateFlag(Integer activateFlag) {
 		this.activateFlag = activateFlag;
+	}
+	/**
+	 * @return the companySize
+	 */
+	public Integer getCompanySize() {
+		return companySize;
+	}
+	/**
+	 * @param companySize the companySize to set
+	 */
+	public void setCompanySize(Integer companySize) {
+		this.companySize = companySize;
 	}
 
 }

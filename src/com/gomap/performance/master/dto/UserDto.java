@@ -22,6 +22,8 @@ public class UserDto implements Serializable {
 	private String password;
 	private Integer emailVerification;
 	private String emailToken;
+	private String userRole;
+	private String companyInfo;
 	/**
 	 * @return the userId
 	 */
@@ -100,6 +102,30 @@ public class UserDto implements Serializable {
 	 */
 	public void setEmailToken(String emailToken) {
 		this.emailToken = emailToken;
+	}
+	/**
+	 * @return the companyInfo
+	 */
+	public String getCompanyInfo() {
+		return companyInfo;
+	}
+	/**
+	 * @param companyInfo the companyInfo to set
+	 */
+	public void setCompanyInfo(String companyInfo) {
+		this.companyInfo = companyInfo;
+	}
+	/**
+	 * @return the userRole
+	 */
+	public String getUserRole() {
+		return userRole;
+	}
+	/**
+	 * @param userRole the userRole to set
+	 */
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 
 

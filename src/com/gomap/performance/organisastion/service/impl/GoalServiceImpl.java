@@ -86,6 +86,18 @@ public class GoalServiceImpl implements GoalService {
 			{
 				emGoal.setGoalStatus(emGoalDto.getGoalStatus());
 			}
+			if(emGoalDto.getGoalPercantage()!=null)
+			{
+				emGoal.setGoalPercantage(emGoalDto.getGoalPercantage());
+			}
+			if(emGoalDto.getComment()!=null)
+			{
+				emGoal.setComment(emGoalDto.getComment());
+			}
+			if(emGoalDto.getReply()!=null)
+			{
+				emGoal.setReply(emGoalDto.getReply());
+			}
 			emGoal.setGoalCreatedDate(new Date());
 			
 			goalDao.createGoal(emGoal);
@@ -169,6 +181,18 @@ public class GoalServiceImpl implements GoalService {
 						{
 							emGoal.setGoalStatus(emGoalDto.getGoalStatus());
 						}
+						if(emGoalDto.getGoalPercantage()!=null)
+						{
+							emGoal.setGoalPercantage(emGoalDto.getGoalPercantage());
+						}
+						if(emGoalDto.getComment()!=null)
+						{
+							emGoal.setComment(emGoalDto.getComment());
+						}
+						if(emGoalDto.getReply()!=null)
+						{
+							emGoal.setReply(emGoalDto.getReply());
+						}
 									emGoal.setGoalUpdatedDate(new Date());
 							
 							goalDao.updateGoal(emGoal);
@@ -250,7 +274,14 @@ public class GoalServiceImpl implements GoalService {
 			{
 				emGoal.setGoalStatus(emGoalDto.getGoalStatus());
 			}
-			
+			if(emGoalDto.getComment()!=null)
+			{
+				emGoal.setComment(emGoalDto.getComment());
+			}
+			if(emGoalDto.getReply()!=null)
+			{
+				emGoal.setReply(emGoalDto.getReply());
+			}
 			
 			List<EmGoal> goalList=goalDao.getGoal(emGoal);
 			responseDTO.setDataObj(goalList);
@@ -316,6 +347,37 @@ public class GoalServiceImpl implements GoalService {
 		// TODO Auto-generated method stub
 		return responseDTO;
 
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.GoalService#getMyTeamGoals(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO getMyTeamGoals(Integer createdBy,Integer projectId) throws Exception {
+		logger.debug("start  getMyTeamGoals ");
+		ResponseDTO responseDTO = new ResponseDTO();
+		// TODO Auto-generated method stub
+		try {
+			if(createdBy!=null && createdBy==-1)
+			{
+				createdBy=null;
+			}
+			if(projectId!=null && projectId==-1)
+			{
+				projectId=null;
+			}
+			responseDTO.setDataObj(goalDao.getTeamGoalOnly(createdBy, projectId));
+			responseDTO.setSuccessMsg("Team goals is here..");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setErrorMsg(e.getMessage());
+			logger.error(" Error while getMyTeamGoals");
+		}
+		return responseDTO;
 	}
 
 }

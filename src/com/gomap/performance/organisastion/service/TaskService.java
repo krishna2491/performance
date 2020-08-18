@@ -20,6 +20,7 @@ public interface TaskService {
 	public ResponseDTO updateTask(EmTaskDto emTaskDto) throws Exception;
 	public ResponseDTO getTask(EmTaskDto emTaskDto) throws Exception;
 	public ResponseDTO deleteTask(EmTaskDto emTaskDto) throws Exception;
+	public ResponseDTO getMyTeamTask(Integer createdBy,Integer assignToId,Integer asssignById,Integer projectId,Integer teamId) throws Exception;
 	
 	/**
 	 * @param employeeTaskMpgDtoList

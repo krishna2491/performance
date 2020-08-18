@@ -71,6 +71,7 @@ public class FeedbackController {
 			else
 			{
 				responseDTO.setErrorMsg("Employee Id is mandatory");
+				responseDTO.setErrorCode(411);
 			}
 			
 		} catch (Exception e) {
@@ -93,6 +94,7 @@ public class FeedbackController {
 			else
 			{
 				responseDTO.setErrorMsg("Employee Id is mandatory");
+				responseDTO.setErrorCode(411);
 			}
 			
 		} catch (Exception e) {
@@ -115,6 +117,7 @@ public class FeedbackController {
 			else
 			{
 				responseDTO.setErrorMsg("Employee Id is mandatory");
+				responseDTO.setErrorCode(411);
 			}
 			
 		} catch (Exception e) {
@@ -136,7 +139,7 @@ public class FeedbackController {
 				;
 			//	responseDTO.setDataObj(employeeDto);
 				responseDTO=feedbackSrvc.deleteFeedback(emFeedbackRequestDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -157,6 +160,26 @@ public class FeedbackController {
 				;
 			//	responseDTO.setDataObj(employeeDto);
 				responseDTO=feedbackSrvc.provideFeedback(emFeedbackRequestDto);
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_FEEDBACK}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO getFeedbackByParam(@RequestBody EmFeedbackRequestDto emFeedbackRequestDto, BindingResult result) {
+		ResponseDTO  responseDTO=new ResponseDTO();
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				;
+			//	responseDTO.setDataObj(employeeDto);
+				responseDTO=feedbackSrvc.getFeedback(emFeedbackRequestDto);
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);

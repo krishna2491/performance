@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,6 @@ import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
 import com.gomap.performance.organisastion.dto.EmGoalDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
-import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.service.GoalService;
 import com.gomap.performance.organisastion.util.ResponseWriter;
 
@@ -44,8 +44,7 @@ public class GoalController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=goalService.getGoal(emGoalDto);
-				//responseDTO.setDataObj(emGoalDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -84,8 +83,7 @@ public class GoalController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=goalService.updateGoal(emGoalDto);
-				responseDTO.setDataObj(emGoalDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -104,8 +102,7 @@ public class GoalController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=goalService.deleteGoal(emGoalDto.getGoalId(), emGoalDto.getEmployeeId(),null);
-				responseDTO.setDataObj(emGoalDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -113,5 +110,23 @@ public class GoalController {
 		} 
 		return responseDTO;
 	}
+	
+	
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_MY_TEAM_GOAL}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getMyTeamGoal1(@RequestParam Integer createdBy,Integer projectId) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				responseDTO=goalService.getMyTeamGoals(createdBy,projectId);
+				
+			
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error getMyTeamGoal",e);
+		} 
+		return responseDTO;
+	}
+	
 
 }

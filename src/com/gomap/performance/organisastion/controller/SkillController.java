@@ -47,7 +47,7 @@ public class SkillController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=skillSrvc.createSkill(emSkillDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -67,7 +67,7 @@ public class SkillController {
 			} else {
 				responseDTO=skillSrvc.getSkill(emSkillDto);
 				//responseDTO.setDataObj(emSkillDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -86,7 +86,7 @@ public class SkillController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=skillSrvc.updateSkill(emSkillDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -106,7 +106,7 @@ public class SkillController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=skillSrvc.processSkilList(emSkillDtoList);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -127,7 +127,7 @@ public class SkillController {
 			} else {
 				responseDTO=new ResponseDTO();
 				responseDTO=skillSrvc.getEmployeeSkill(emSkillDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -146,7 +146,7 @@ public class SkillController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=skillSrvc.deleteSkill(emSkillDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);

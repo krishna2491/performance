@@ -34,6 +34,7 @@ public class CompanyMaster {
 	private Integer activateFlag;
 	private Date createdDate;
 	private Date updatedDate;
+	private Integer companySize;
 	/**
 	 * @return the companyId
 	 */
@@ -195,6 +196,19 @@ public class CompanyMaster {
 	 */
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	/**
+	 * @return the companySize
+	 */
+	@Column(name = "company_size", nullable = true)
+	public Integer getCompanySize() {
+		return companySize;
+	}
+	/**
+	 * @param companySize the companySize to set
+	 */
+	public void setCompanySize(Integer companySize) {
+		this.companySize = companySize;
 	}
 
 

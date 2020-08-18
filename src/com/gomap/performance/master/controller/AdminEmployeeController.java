@@ -151,4 +151,27 @@ public class AdminEmployeeController {
 		} 
 		return responseDTO;
 	}
+	
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_UPDATE_USER}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO updateUser(@RequestBody UserDto userDto, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=new ResponseDTO();
+				responseDTO.setDataObj(userDto);
+				
+				responseDTO = adminEmployeeSrvc.updateUser(userDto);
+				logger.info("here update user");
+			}
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 }

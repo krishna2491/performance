@@ -51,13 +51,23 @@ public class ProjectServiceImpl implements ProjectService {
 				{
 					project.setProjectName(projectDto.getProjectName());
 					project.setProjectDescription(projectDto.getProjectDescription());
-					project.setDepartmentId(10);
+					project.setDepartmentId(projectDto.getDepartmentId());
 					project.setProjectAttachment(projectDto.getProjectAttachment());
 					project.setProjectStartDate(projectDto.getProjectStartDate());
+					project.setProjectDueDate(projectDto.getProjectDueDate());
 					project.setProjectCreatedDate(new Date());
 					project.setProjectCreatedBy(projectDto.getProjectCreatedBy());
 					project.setProjectPriority(projectDto.getProjectPriority());
 					project.setActivateFlag(AppConstants.ACTIVE_FLAG);
+					project.setProjectStatus(projectDto.getProjectStatus());
+					if(projectDto.getComment()!=null)
+					{
+						project.setComment(projectDto.getComment());
+					}
+					if(projectDto.getReply()!=null)
+					{
+						project.setReply(projectDto.getReply());
+					}
 					projectDao.addProject(project);
 
 					dto.setSuccessMsg("project created");
@@ -101,11 +111,22 @@ public class ProjectServiceImpl implements ProjectService {
 					project.setProjectDescription(projectDto.getProjectDescription());
 					project.setDepartmentId(projectDto.getDepartmentId());
 					project.setProjectAttachment(projectDto.getProjectAttachment());
-					project.setProjectCreatedDate(projectDto.getProjectStartDate());
+					project.setProjectCreatedDate(projectDto.getProjectCreatedDate());
 					project.setProjectCreatedBy(projectDto.getProjectCreatedBy());
 					project.setProjectPriority(projectDto.getProjectPriority());
 					project.setActivateFlag(AppConstants.ACTIVE_FLAG);
 					project.setProjectUpdatedDate(new Date());
+					project.setProjectDueDate(projectDto.getProjectDueDate());
+					project.setProjectStartDate(projectDto.getProjectStartDate());
+					project.setProjectStatus(projectDto.getProjectStatus());
+					if(projectDto.getComment()!=null)
+					{
+						project.setComment(projectDto.getComment());
+					}
+					if(projectDto.getReply()!=null)
+					{
+						project.setReply(projectDto.getReply());
+					}
 					projectDao.updateProject(project);
 				
 					dto.setSuccessMsg("project updated");
@@ -114,6 +135,9 @@ public class ProjectServiceImpl implements ProjectService {
 					
 				} catch (Exception e) {
 					// TODO: handle exception
+					dto.setErrorMsg("project not updated");
+					dto.setDataObj(e.getMessage());
+					dto.setErrorCode(411);
 					e.printStackTrace();
 					logger.error("update proj,",e);
 				}

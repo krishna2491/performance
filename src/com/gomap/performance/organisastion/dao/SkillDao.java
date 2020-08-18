@@ -19,7 +19,7 @@ public interface SkillDao {
 	public void deleteSkill(EmSkill emSkill) throws Exception;
 	public List<EmSkill> getSkill(EmSkill emSkill) throws Exception;
 
-	public void mapEmployeeSkill(EmEmployeeSkillMpg emEmployeeSkillMpg) throws Exception;
+	public EmEmployeeSkillMpg mapEmployeeSkill(EmEmployeeSkillMpg emEmployeeSkillMpg) throws Exception;
 	public void updateEMployeeSkill(EmEmployeeSkillMpg emEmployeeSkillMpg)  throws Exception;
 	public void deleteEmployeeSkill(EmEmployeeSkillMpg emEmployeeSkillMpg) throws Exception;
 	public List<EmEmployeeSkillMpg> getEMployeeSkill(Integer employeeId,Integer SkillId) throws Exception;

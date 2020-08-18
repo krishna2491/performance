@@ -120,8 +120,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 							mpgDto.setRating(feedbackRequestParaMpg.getRating());
 							mpgDto.setActivateFlag(feedbackRequestParaMpg.getActivateFlag());
 							mpgDto.setCreatedDate(feedbackRequestParaMpg.getCreatedDate());
+							feedbackRequestParaMpgDtos.add(mpgDto);
 						}
-						feedbackRequestParaMpgDtos.add(mpgDto);
+						
 						emFeedbackRequestDto.setFeedbackParameteres(feedbackRequestParaMpgDtos);
 						emFeedbackRequestDto.setProjectId(feedbackRequest.getProjectId());
 						emFeedbackRequestDto.setfeedbackForId(feedbackRequest.getfeedbackForId());
@@ -130,6 +131,11 @@ public class FeedbackServiceImpl implements FeedbackService {
 						emFeedbackRequestDto.setFeedbackReply(feedbackRequest.getFeedbackReply());
 						emFeedbackRequestDto.setFeedbackStatus(feedbackRequest.getFeedbackStatus());
 						emFeedbackRequestDto.setFeedbackRequestId(feedbackRequest.getFeedbackRequestId());
+						emFeedbackRequestDto.setBlindRequest(feedbackRequest.getBlindRequest());
+						emFeedbackRequestDto.setDescription(feedbackRequest.getDescription());
+						emFeedbackRequestDto.setTaskId(feedbackRequest.getTaskId());
+						emFeedbackRequestDto.setFeedbackCreatedDate(feedbackRequest.getFeedbackCreatedDate());
+						emFeedbackRequestDto.setFeedbackUpdatedDate(feedbackRequest.getFeedbackUpdatedDate());
 						emFeedbackRequestList.add(emFeedbackRequestDto);
 					}
 				}
@@ -179,6 +185,18 @@ public class FeedbackServiceImpl implements FeedbackService {
 			if(emFeedbackRequest.getProjectId()!=null)
 			{
 				emRequest.setProjectId(emFeedbackRequest.getProjectId());
+			}
+			if(emFeedbackRequest.getDescription()!=null)
+			{
+				emRequest.setDescription(emFeedbackRequest.getDescription());
+			}
+			if(emFeedbackRequest.getTaskId()!=null)
+			{
+				emRequest.setTaskId(emFeedbackRequest.getTaskId());
+			}
+			if(emFeedbackRequest.getBlindRequest()!=null)
+			{
+				emRequest.setBlindRequest(emFeedbackRequest.getBlindRequest());
 			}
 			emRequest.setActivateFlag(AppConstants.ACTIVE_FLAG);
 			emRequest.setFeedbackCreatedDate(new Date());
@@ -243,9 +261,20 @@ public class FeedbackServiceImpl implements FeedbackService {
 					responseDTO.setErrorCode(411);
 				} else {
 					emRequest = feedBackList.get(0);
-					emRequest.setFeedbackStatus(AppConstants.SUBMITTED);
+					emRequest.setFeedbackStatus(emFeedbackRequest.getFeedbackStatus());
+					if(emFeedbackRequest.getFeedbackStatus()!=null && (AppConstants.SUBMITTED).equals(emFeedbackRequest.getFeedbackStatus()))
+					{
+						emRequest.setFeedbackGivenDate(new Date());
+					}else if(emFeedbackRequest.getFeedbackGivenDate()!=null)
+					{
+						emRequest.setFeedbackGivenDate(emFeedbackRequest.getFeedbackGivenDate());
+					}
 					emRequest.setFeedbackUpdatedDate(new Date());
 					emRequest.setFeedbackReply(emFeedbackRequest.getFeedbackReply());
+					emRequest.setProjectId(emFeedbackRequest.getProjectId());
+					emRequest.setTaskId(emFeedbackRequest.getTaskId());
+					emRequest.setBlindRequest(emFeedbackRequest.getBlindRequest());
+					emRequest.setDescription(emFeedbackRequest.getDescription());
 					// update feedbackDao.createFeedBackRequest(emRequest);
 					feedbackDao.updateFeedbackRequest(emRequest);
 
@@ -291,6 +320,117 @@ public class FeedbackServiceImpl implements FeedbackService {
 			responseDTO.setErrorMsg(e.getMessage());
 			responseDTO.setErrorCode(411);
 			logger.error("error in createFeedbackRequest",e);
+		}
+		return responseDTO;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.FeedbackService#getFeedback(com.gomap.performance.organisastion.dto.EmFeedbackRequestDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO getFeedback(EmFeedbackRequestDto emFeedbackRequest) throws Exception {
+		// TODO Auto-generated method stub
+		logger.info("getFeedback---------");
+		ResponseDTO responseDTO=new ResponseDTO();
+		try {
+			EmFeedbackRequest emRequest=new EmFeedbackRequest();
+			if(emFeedbackRequest.getFeedbackFromId()!=null)
+			{
+				emRequest.setFeedbackFromId(emFeedbackRequest.getFeedbackFromId());
+			}
+			if(emFeedbackRequest.getFeedbackRequesterId()!=null)
+			{
+				emRequest.setFeedbackRequesterId(emFeedbackRequest.getFeedbackRequesterId());
+			}if(emFeedbackRequest.getFeedbackReply()!=null)
+			{
+				emRequest.setFeedbackReply(emFeedbackRequest.getFeedbackReply());
+			}if(emFeedbackRequest.getFeedbackStatus()!=null)
+			{
+				emRequest.setFeedbackStatus(emFeedbackRequest.getFeedbackStatus());
+			}
+			if(emFeedbackRequest.getfeedbackForId()!=null)
+			{
+				emRequest.setfeedbackForId(emFeedbackRequest.getfeedbackForId());
+			}
+			if(emFeedbackRequest.getProjectId()!=null)
+			{
+				emRequest.setProjectId(emFeedbackRequest.getProjectId());
+			}
+			if(emFeedbackRequest.getDescription()!=null)
+			{
+				emRequest.setDescription(emFeedbackRequest.getDescription());
+			}
+			if(emFeedbackRequest.getTaskId()!=null)
+			{
+				emRequest.setTaskId(emFeedbackRequest.getTaskId());
+			}
+			if(emFeedbackRequest.getBlindRequest()!=null)
+			{
+				emRequest.setBlindRequest(emFeedbackRequest.getBlindRequest());
+			}
+			if(emFeedbackRequest.getFeedbackCreatedDate()!=null)
+			{
+				emRequest.setFeedbackCreatedDate(emFeedbackRequest.getFeedbackCreatedDate());
+			}
+			List<EmFeedbackRequest> feedBackLst=feedbackDao.getFeedbackList(emRequest);
+			List<EmFeedbackRequestDto> emFeedbackRequestList=null;
+			if(feedBackLst!=null && !feedBackLst.isEmpty())
+			{
+				emFeedbackRequestList=new ArrayList<EmFeedbackRequestDto>();
+				List<FeedbackRequestParaMpg> feedbackRequestParaMpgs=null;
+				List<FeedbackRequestParaMpgDto> feedbackRequestParaMpgDtos=null;
+				FeedbackRequestParaMpgDto mpgDto=null;
+				
+				EmFeedbackRequestDto emFeedbackRequestDto=new EmFeedbackRequestDto();
+				for(EmFeedbackRequest feedbackRequest:feedBackLst)
+				{
+					emFeedbackRequestDto=new EmFeedbackRequestDto();
+					feedbackRequestParaMpgDtos=new ArrayList<FeedbackRequestParaMpgDto>();
+					feedbackRequestParaMpgs=feedbackDao.getFeedbackParam(feedbackRequest.getFeedbackRequestId());
+					if(feedbackRequestParaMpgs!=null && !feedbackRequestParaMpgs.isEmpty())
+					{
+						for(FeedbackRequestParaMpg feedbackRequestParaMpg:feedbackRequestParaMpgs)
+						{
+							mpgDto=new FeedbackRequestParaMpgDto();
+							mpgDto.setFeedbackRequestMpgId(feedbackRequestParaMpg.getFeedbackRequestMpgId());
+							mpgDto.setParamId(feedbackRequestParaMpg.getParamId());
+							mpgDto.setDescription(feedbackRequestParaMpg.getDescription());
+							mpgDto.setRating(feedbackRequestParaMpg.getRating());
+							mpgDto.setActivateFlag(feedbackRequestParaMpg.getActivateFlag());
+							mpgDto.setCreatedDate(feedbackRequestParaMpg.getCreatedDate());
+							feedbackRequestParaMpgDtos.add(mpgDto);
+						}
+					
+						emFeedbackRequestDto.setFeedbackParameteres(feedbackRequestParaMpgDtos);
+						emFeedbackRequestDto.setProjectId(feedbackRequest.getProjectId());
+						emFeedbackRequestDto.setfeedbackForId(feedbackRequest.getfeedbackForId());
+						emFeedbackRequestDto.setFeedbackFromId(feedbackRequest.getFeedbackFromId());
+						emFeedbackRequestDto.setFeedbackRequesterId(feedbackRequest.getFeedbackRequesterId());
+						emFeedbackRequestDto.setFeedbackReply(feedbackRequest.getFeedbackReply());
+						emFeedbackRequestDto.setFeedbackStatus(feedbackRequest.getFeedbackStatus());
+						emFeedbackRequestDto.setFeedbackRequestId(feedbackRequest.getFeedbackRequestId());
+						emFeedbackRequestDto.setBlindRequest(feedbackRequest.getBlindRequest());
+						emFeedbackRequestDto.setDescription(feedbackRequest.getDescription());
+						emFeedbackRequestDto.setTaskId(feedbackRequest.getTaskId());
+						emFeedbackRequestDto.setFeedbackCreatedDate(feedbackRequest.getFeedbackCreatedDate());
+						emFeedbackRequestDto.setFeedbackUpdatedDate(feedbackRequest.getFeedbackUpdatedDate());
+						emFeedbackRequestList.add(emFeedbackRequestDto);
+					}
+				}
+			}
+			responseDTO.setDataObj(emFeedbackRequestList);
+			responseDTO.setSuccessMsg("Feedback data sent");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+			logger.error("error in getFeedback",e);
 		}
 		return responseDTO;
 	}

@@ -97,7 +97,12 @@ public class EmProject implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "activate_flag")
     private Integer activateFlag;
-
+    @Column(name = "project_status")
+    private String projectStatus;
+    @Column(name = "comment")
+    private String comment;
+    @Column(name = "reply")
+    private String reply;
     public EmProject() {
     }
 
@@ -239,6 +244,48 @@ public class EmProject implements Serializable {
 	 */
 	public void setActivateFlag(Integer activateFlag) {
 		this.activateFlag = activateFlag;
+	}
+
+	/**
+	 * @return the projectStatus
+	 */
+	public String getProjectStatus() {
+		return projectStatus;
+	}
+
+	/**
+	 * @param projectStatus the projectStatus to set
+	 */
+	public void setProjectStatus(String projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	/**
+	 * @return the reply
+	 */
+	public String getReply() {
+		return reply;
+	}
+
+	/**
+	 * @param reply the reply to set
+	 */
+	public void setReply(String reply) {
+		this.reply = reply;
 	}
     
 }

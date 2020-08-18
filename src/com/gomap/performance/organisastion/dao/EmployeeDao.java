@@ -18,7 +18,7 @@ import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
 public interface EmployeeDao {
 	public EmEmployee getUserByUserId(String userId) throws Exception;
 	public EmEmployee storeEmployeeData(EmEmployee employeeMaster) throws Exception;
-	public List<EmEmployee> getEmployeeList(Integer employeeId) throws Exception;
+	public List<EmEmployee> getEmployeeList(Integer employeeId,String email) throws Exception;
 	public EmEmployee updateEmployee(EmEmployee employeeMaster) throws Exception;
 	public List<Object> getAllEmplyeeData() throws Exception;
 	public EmployeeElementMpg mapEmployeeElement(EmployeeElementMpg employeeElementMpg) throws Exception;

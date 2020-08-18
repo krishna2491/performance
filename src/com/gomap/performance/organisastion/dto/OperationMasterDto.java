@@ -43,4 +43,84 @@ public class OperationMasterDto implements Serializable {
     }
 
 
+	/**
+	 * @return the operationId
+	 */
+	public Integer getOperationId() {
+		return operationId;
+	}
+
+
+	/**
+	 * @param operationId the operationId to set
+	 */
+	public void setOperationId(Integer operationId) {
+		this.operationId = operationId;
+	}
+
+
+	/**
+	 * @return the operationName
+	 */
+	public String getOperationName() {
+		return operationName;
+	}
+
+
+	/**
+	 * @param operationName the operationName to set
+	 */
+	public void setOperationName(String operationName) {
+		this.operationName = operationName;
+	}
+
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+	/**
+	 * @return the updatedDate
+	 */
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+
+	/**
+	 * @param updatedDate the updatedDate to set
+	 */
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+
+	/**
+	 * @return the activateFlag
+	 */
+	public Integer getActivateFlag() {
+		return activateFlag;
+	}
+
+
+	/**
+	 * @param activateFlag the activateFlag to set
+	 */
+	public void setActivateFlag(Integer activateFlag) {
+		this.activateFlag = activateFlag;
+	}
+
+
 	  }

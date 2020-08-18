@@ -18,5 +18,6 @@ public ResponseDTO createFeedbackRequest(EmFeedbackRequestDto emFeedbackRequest)
 public ResponseDTO getPendingFeedback(Integer employeeId,Integer level) throws Exception;
 public ResponseDTO deleteFeedback(EmFeedbackRequestDto emFeedbackRequest) throws Exception;
 public ResponseDTO provideFeedback(EmFeedbackRequestDto emFeedbackRequest) throws Exception;
+public ResponseDTO getFeedback(EmFeedbackRequestDto emFeedbackRequest) throws Exception;
 
 }

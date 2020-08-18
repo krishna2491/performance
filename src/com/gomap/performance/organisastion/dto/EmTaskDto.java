@@ -29,6 +29,8 @@ public class EmTaskDto implements Serializable {
     private String taskStatus;
     private Date taskCreatedDate;
     private Date taskUpdatedDate;
+    private String comment;
+    private String reply;
 
     public EmTaskDto() {
     }
@@ -165,5 +167,33 @@ public class EmTaskDto implements Serializable {
     public String toString() {
         return "com.gomap.performance.organisation.EmTask[ taskId=" + taskId + " ]";
     }
+
+		/**
+		 * @return the comment
+		 */
+		public String getComment() {
+			return comment;
+		}
+
+		/**
+		 * @param comment the comment to set
+		 */
+		public void setComment(String comment) {
+			this.comment = comment;
+		}
+
+		/**
+		 * @return the reply
+		 */
+		public String getReply() {
+			return reply;
+		}
+
+		/**
+		 * @param reply the reply to set
+		 */
+		public void setReply(String reply) {
+			this.reply = reply;
+		}
     
 }

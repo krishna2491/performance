@@ -64,12 +64,25 @@ public class FeedBackDaoImpl implements FeedbackDao{
 		if(emFeedbackRequest.getfeedbackForId()!=null)
 		{
 			criteria.add(Restrictions.eq("feedbackForId", emFeedbackRequest.getfeedbackForId()));
-			criteria.add(Restrictions.eq("feedbackStatus", AppConstants.SUBMITTED));
+			//criteria.add(Restrictions.eq("feedbackStatus", AppConstants.SUBMITTED));
+			criteria.add(Restrictions.in("feedbackStatus",new String[] { AppConstants.SUBMITTED,AppConstants.COMPLETED}));
 			
 		}if(emFeedbackRequest.getFeedbackFromId()!=null)
 		{
 			criteria.add(Restrictions.eq("feedbackFromId", emFeedbackRequest.getFeedbackFromId()));
-			criteria.add(Restrictions.eq("feedbackStatus", AppConstants.CREATED));
+			//criteria.add(Restrictions.eq("feedbackStatus", AppConstants.CREATED));
+		}
+		if(emFeedbackRequest.getProjectId()!=null)
+		{
+			criteria.add(Restrictions.eq("projectId", emFeedbackRequest.getProjectId()));
+		}
+		if(emFeedbackRequest.getTaskId()!=null)
+		{
+			criteria.add(Restrictions.eq("taskId", emFeedbackRequest.getTaskId()));
+		}
+		if(emFeedbackRequest.getFeedbackCreatedDate()!=null)
+		{
+			criteria.add(Restrictions.eq("feedbackCreatedDate", emFeedbackRequest.getFeedbackCreatedDate()));
 		}
 			criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 			criteria.addOrder(Order.desc("feedbackCreatedDate"));

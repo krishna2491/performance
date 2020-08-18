@@ -91,6 +91,14 @@ public class TaskServiceImpl implements TaskService {
 			{
 				emTask.setTaskStatus(emTaskDto.getTaskStatus());
 			}
+			if(emTaskDto.getComment()!=null)
+			{
+				emTask.setComment(emTaskDto.getComment());
+			}
+			if(emTaskDto.getReply()!=null)
+			{
+				emTask.setReply(emTaskDto.getReply());
+			}
 			emTask.setTaskCreatedDate(new Date());
 			
 			taskDao.createTask(emTask);
@@ -172,6 +180,14 @@ public class TaskServiceImpl implements TaskService {
 							if(emTaskDto.getTaskStatus()!=null)
 							{
 								emTask.setTaskStatus(emTaskDto.getTaskStatus());
+							}
+							if(emTaskDto.getComment()!=null)
+							{
+								emTask.setComment(emTaskDto.getComment());
+							}
+							if(emTaskDto.getReply()!=null)
+							{
+								emTask.setReply(emTaskDto.getReply());
 							}
 							emTask.setTaskUpdatedDate(new Date());
 							
@@ -428,6 +444,51 @@ public class TaskServiceImpl implements TaskService {
 				logger.error("Error in getEmployeeTaskList...... ",e);
 				
 			}
+			return responseDTO;
+		}
+
+		/* (non-Javadoc)
+		 * @see com.gomap.performance.organisastion.service.TaskService#getMyTeamTask(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
+		 */
+		@Override
+		@Transactional
+		public ResponseDTO getMyTeamTask(Integer createdBy, Integer assignToId, Integer asssignById, Integer projectId,
+				Integer teamId) throws Exception {
+			ResponseDTO responseDTO =new ResponseDTO();
+			logger.info("getMyTeamTask...... start ");
+			try {
+				if(createdBy==-1)
+				{
+					createdBy=null;
+				}
+				if(assignToId==-1)
+				{
+					assignToId=null;
+				}
+				if(asssignById==-1)
+				{
+					asssignById=null;
+				}
+				if(projectId==-1)
+				{
+					projectId=null;
+				}
+				if(teamId==-1)
+				{
+					teamId=null;
+				}
+				responseDTO.setDataObj(taskDao.getMyTeamTask(createdBy, assignToId, asssignById, projectId, teamId));
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				responseDTO.setSuccessMsg("Employee with task details sent");
+			} catch (Exception e) {
+				// TODO: handle exception
+				logger.error("error in ");
+				responseDTO.setDataObj(e);
+				responseDTO.setErrorMsg("problem while getting team task");
+				responseDTO.setErrorCode(411);
+				
+			}
+			// TODO Auto-generated method stub
 			return responseDTO;
 		}
 

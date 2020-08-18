@@ -96,12 +96,50 @@ public class EmFeedbackRequest implements Serializable {
     @Column(name = "feedback_updated_date")
     @Temporal(TemporalType.DATE)
     private Date feedbackUpdatedDate;
+    @Column(name = "feedback_given_date")
+    @Temporal(TemporalType.DATE)
+    private Date feedbackGivenDate;
     @Basic(optional = false)
     @Size(min = 1, max = 5)
     @Column(name = "activate_flag")
     private Integer activateFlag;
-
+    @Column(name = "description")
+    private String description;
+  
+    @Column(name = "blind_request")
+    private Boolean blindRequest;
+    @Column(name = "task_id")
+    private Integer taskId;
+  
     /**
+	 * @return the taskId
+	 */
+	public Integer getTaskId() {
+		return taskId;
+	}
+
+	/**
+	 * @param taskId the taskId to set
+	 */
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
+	}
+
+	/**
+	 * @return the blindRequest
+	 */
+	public Boolean getBlindRequest() {
+		return blindRequest;
+	}
+
+	/**
+	 * @param blindRequest the blindRequest to set
+	 */
+	public void setBlindRequest(Boolean blindRequest) {
+		this.blindRequest = blindRequest;
+	}
+
+	/**
 	 * @return the activateFlag
 	 */
 	public Integer getActivateFlag() {
@@ -244,6 +282,34 @@ public class EmFeedbackRequest implements Serializable {
 	 */
 	public void setFeedbackUpdatedDate(Date feedbackUpdatedDate) {
 		this.feedbackUpdatedDate = feedbackUpdatedDate;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the feedbackGivenDate
+	 */
+	public Date getFeedbackGivenDate() {
+		return feedbackGivenDate;
+	}
+
+	/**
+	 * @param feedbackGivenDate the feedbackGivenDate to set
+	 */
+	public void setFeedbackGivenDate(Date feedbackGivenDate) {
+		this.feedbackGivenDate = feedbackGivenDate;
 	}
 
 	/**

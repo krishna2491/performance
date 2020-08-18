@@ -11,15 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.CommonDao;
 import com.gomap.performance.organisastion.dto.DepartmentDto;
 import com.gomap.performance.organisastion.dto.ElementMasterDto;
 import com.gomap.performance.organisastion.dto.EmParamsConfigDto;
+import com.gomap.performance.organisastion.dto.OperationMasterDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.model.ElementMaster;
 import com.gomap.performance.organisastion.model.EmDepartment;
 import com.gomap.performance.organisastion.model.EmParamsConfig;
+import com.gomap.performance.organisastion.model.OperationMaster;
 import com.gomap.performance.organisastion.service.CommonService;
 
 /**
@@ -161,6 +164,31 @@ public class CommonServiceImpl implements CommonService {
 			;
 			responseDTO.setErrorCode(411);
 			logger.error("Error getParamter", e);
+		}
+		return responseDTO;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.CommonService#createOperation(com.gomap.performance.organisastion.dto.OperationMasterDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO createOperation(OperationMasterDto operationMasterDto) throws Exception {
+		// TODO Auto-generated method stub\
+		ResponseDTO responseDTO = new ResponseDTO();
+		logger.info("here createOperation");
+		try {
+			OperationMaster opr=new OperationMaster();
+			opr.setActivateFlag(AppConstants.ACTIVE_FLAG);
+			opr.setOperationName(operationMasterDto.getOperationName());
+			opr.setCreatedDate(new Date());
+			responseDTO.setDataObj(cmnDao.createOperation(opr));
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(null);
+			responseDTO.setErrorCode(411);
+			logger.error("here error ",e);
 		}
 		return responseDTO;
 	}

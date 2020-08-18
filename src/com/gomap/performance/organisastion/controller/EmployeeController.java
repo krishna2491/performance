@@ -51,7 +51,7 @@ public class EmployeeController {
 				responseDTO=new ResponseDTO();
 			//	responseDTO.setDataObj(employeeDto);
 				responseDTO=(ResponseDTO) employeeService.addEmployee(employeeDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
@@ -81,7 +81,9 @@ public class EmployeeController {
 		return responseDTO;
 	}
 	@CrossOrigin(origins = AppConstants.CORS)
+	
 	@RequestMapping(value = {UrlConstants.API_GET_EMPLOYEE}, method = RequestMethod.POST)
+	
 	public @ResponseBody ResponseDTO getEmployee(@RequestBody EmEmployeeDto emEmployeeDto,BindingResult result) {
 		ResponseDTO  responseDTO = null;
 		try {  
@@ -90,7 +92,7 @@ public class EmployeeController {
 				responseDTO.setErrorCode(300);
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
-				responseDTO=employeeService.getEmployeeList(emEmployeeDto.getEmployeeId());
+				responseDTO=employeeService.getEmployeeList(emEmployeeDto.getEmployeeId(),emEmployeeDto.getEmployeeEmail());
 			}
 			
 		} catch (Exception e) {
@@ -124,7 +126,7 @@ public class EmployeeController {
 				
 				responseDTO=employeeService.getEmployeeWithElements(employeeId);
 				
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			//	responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -149,7 +151,7 @@ public class EmployeeController {
 				responseDTO=new ResponseDTO();
 			//	responseDTO.setDataObj(employeeDto);
 				responseDTO=(ResponseDTO) employeeService.deleteEmployee(employeeDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);

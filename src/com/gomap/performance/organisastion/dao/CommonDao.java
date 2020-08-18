@@ -20,5 +20,6 @@ public interface CommonDao {
 	public ElementMaster createElement(ElementMaster elementMaster);
 	public EmParamsConfig createParams(EmParamsConfig emParamsConfig);
 	public List<EmParamsConfig> getParameter(Integer type);
+	public OperationMaster createOperation(OperationMaster operationMaster);
 
 }

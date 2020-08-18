@@ -24,6 +24,8 @@ import com.gomap.performance.organisastion.dto.EmParamsConfigDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.exception.PerformanceException;
+import com.gomap.performance.organisastion.model.AuditLog;
+import com.gomap.performance.organisastion.service.AuditLogService;
 import com.gomap.performance.organisastion.service.CommonService;
 import com.gomap.performance.organisastion.util.ResponseWriter;
 
@@ -38,6 +40,8 @@ public class CommonController {
 	
 	@Autowired
 	private CommonService cmnService;
+	@Autowired
+	private AuditLogService auditLogService;
 	
 	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_ELEMENT}, method = RequestMethod.GET)
@@ -70,7 +74,7 @@ public class CommonController {
 				responseDTO = ResponseWriter.writeResponse(responseDTO);
 			} else {
 				responseDTO=cmnService.createElement(elementMasterDto);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -89,7 +93,7 @@ public class CommonController {
 		try {  
 			
 				responseDTO=cmnService.getOperation();
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -112,7 +116,7 @@ public class CommonController {
 					responseDTO = ResponseWriter.writeResponse(responseDTO);
 				} else {
 					responseDTO=cmnService.createParameter(emParamsConfigDto);
-					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+					//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 				}
 			} catch (PerformanceException ex) {
 				responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -135,7 +139,7 @@ public class CommonController {
 				paramType=1;
 			}
 				responseDTO=cmnService.getParameter(paramType);
-				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			//	responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
@@ -147,5 +151,27 @@ public class CommonController {
 		} 
 		return responseDTO;
 	}
-
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_AUDIT_LOG}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getAuditLog(@RequestBody AuditLog auditLog, BindingResult result) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			if(result.hasErrors()){
+				responseDTO = new ResponseDTO();
+				responseDTO.setErrorCode(300);
+				responseDTO = ResponseWriter.writeResponse(responseDTO);
+			} else {
+				responseDTO=auditLogService.getAuditLog(auditLog.getAction(), auditLog.getActionType(), auditLog.getCreatedBy(), auditLog.getCreatedDate());
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			}
+		} catch (PerformanceException ex) {
+			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
+			logger.error("error",ex);
+		} 
+		catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 }

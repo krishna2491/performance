@@ -72,7 +72,11 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 			{
 			employeeMaster.setPassword(employeeDto.getPassword());	
 			}
-			
+			UserDto user=new UserDto();
+			user.setEmail(employeeMaster.getEmail());
+			user.setName(employeeMaster.getfName());
+			user.setPassword(employeeMaster.getPassword());
+			//addUser(user);
 			employeeMaster.setCreatedDate(new Date());
 			employeeMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
 			
@@ -143,6 +147,8 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 						employeeMaster.setActivateFlag(employeeDto.getActivateFlag());
 							
 					}
+					
+					
 					adminEmployeeDao.updateEmployee(employeeMaster);
 					
 					responseDTO.setDataObj(employeeMaster);
@@ -255,50 +261,52 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 	public ResponseDTO addUser(UserDto userDto) {
 		// TODO Auto-generated method stub
 		logger.info("addUser.....");
-		ResponseDTO responseDTO=new ResponseDTO();
+		ResponseDTO responseDTO = new ResponseDTO();
 		try {
-			UserMaster userMaster=new UserMaster();
-			if(userDto.getEmail()!=null)
-			{
-				userMaster=adminEmployeeDao.getUserData(userDto.getEmail(), null, null);
-				if(userMaster!=null)
-				{
+			UserMaster userMaster = new UserMaster();
+			if (userDto.getEmail() != null) {
+				userMaster = adminEmployeeDao.getUserData(userDto.getEmail(), null, null);
+				if (userMaster != null) {
 					responseDTO.setDataObj(userDto);
 					responseDTO.setErrorMsg("User is already available in system, please login");
 					responseDTO.setErrorCode(411);
 					return responseDTO;
 				}
-				userMaster=new UserMaster();
-				userMaster.setEmail(userDto.getEmail());	
+				userMaster = new UserMaster();
+				userMaster.setEmail(userDto.getEmail());
 			}
-		
-			if(userDto.getName()!=null)
-			{
-			userMaster.setName(userDto.getName());	
+
+			if (userDto.getName() != null) {
+				userMaster.setName(userDto.getName());
 			}
-				if(userDto.getPassword()!=null)
-			{
-			userMaster.setPassword(userDto.getPassword());	
+			if (userDto.getPassword() != null) {
+				userMaster.setPassword(userDto.getPassword());
 			}
-			
+			if (userDto.getUserRole() != null) {
+				userMaster.setUserRole(userDto.getUserRole());
+			}
+			if (userDto.getCompanyInfo() != null) {
+				userMaster.setCompanyInfo(userDto.getCompanyInfo());
+			}
+
 			userMaster.setCreatedDate(new Date());
 			userMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
 			userMaster.setEmailVerification(0);
-			userMaster.setEmailToken("emf"+System.currentTimeMillis());
+			userMaster.setEmailToken("emf" + System.currentTimeMillis());
 			adminEmployeeDao.storeUserData(userMaster);
 			emailService.sendEmail(userMaster.getEmailToken(), userMaster.getEmail());
 			responseDTO.setDataObj(userMaster);
 			responseDTO.setSuccessMsg("User  Added");
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
-				} catch (Exception e) {
-					logger.error("Errro whhile adding User");
-					responseDTO.setDataObj(e);
-					responseDTO.setErrorMsg(e.getMessage());
-					responseDTO.setErrorCode(411);
+		} catch (Exception e) {
+			logger.error("Errro whhile adding User");
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
 			// TODO: handle exception
 		}
 		return responseDTO;
-	
+
 	}
 
 	/* (non-Javadoc)
@@ -328,6 +336,8 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 					userDto.setName(userMaster.getName());
 					userDto.setEmailVerification(userMaster.getEmailVerification());
 					userDto.setEmailToken(userMaster.getEmailToken());
+					userDto.setCompanyInfo(userMaster.getCompanyInfo());
+					userDto.setUserRole(userMaster.getUserRole());
 					responseDTO.setDataObj(userDto);
 					responseDTO.setSuccessMsg("Email verification completed");
 					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -348,7 +358,7 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 					}
 			
 				} catch (Exception e) {
-					logger.error("Errro whhile adding User");
+					logger.error("Errro while adding User");
 					responseDTO.setDataObj(e);
 					responseDTO.setErrorMsg(e.getMessage());
 					responseDTO.setErrorCode(411);
@@ -397,6 +407,48 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 	public ResponseDTO getUserByTokenId(String tokenId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.master.service.AdminEmployeeService#updateUser(com.gomap.performance.master.dto.UserDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO updateUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		logger.info("updateUser.....");
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			UserMaster userMaster = new UserMaster();
+			if (userDto.getEmail() != null) {
+				userMaster = adminEmployeeDao.getUserData(userDto.getEmail(), null, userDto.getUserId());
+				if (userMaster != null) {
+					if (userDto.getName() != null) {
+						userMaster.setName(userDto.getName());
+					}
+					if (userDto.getPassword() != null) {
+						userMaster.setPassword(userDto.getPassword());
+					}
+					userMaster.setUpdatedDate(new Date());
+
+					adminEmployeeDao.updateUser(userMaster);
+					responseDTO.setDataObj(userMaster);
+					responseDTO.setErrorMsg("User data updated");
+					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error("Errro whhile adding User");
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+			// TODO: handle exception
+		}
+		return responseDTO;
+
 	}
 
 	

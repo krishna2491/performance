@@ -17,11 +17,11 @@ public final class AppConstants {
 	public static final String  SUBMITTED="2";
 	public static final String  COMPLETED="3";
 //	public static final String SAMPLE_FILE="C:\\Users\\Administrator\\Desktop\\SampleLocation\\sample.war";
-//	public static final String GENERATED_FILE="C:\\xampp\\tomcat\\webapps\\";
+	public static final String GENERATED_FILE="C:\\xampp\\tomcat\\webapps\\";
 
 	
-	public static final String SAMPLE_FILE="C:\\\\Program Files\\\\SampleFile\\sample.war";
-	public static final String GENERATED_FILE="C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\";
+	public static final String SAMPLE_FILE="C:\\\\Program Files\\\\sample.war";
+//	public static final String GENERATED_FILE="C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\";
 
 	
 	

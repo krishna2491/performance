@@ -17,6 +17,8 @@ import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.TaskDao;
 import com.gomap.performance.organisastion.model.EmTask;
 import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
+import com.gomap.performance.organisastion.model.TeamGoals;
+import com.gomap.performance.organisastion.model.TeamTask;
 
 /**
  * @author krishnakant.bairagi
@@ -69,6 +71,10 @@ public class TaskDaoImpl implements TaskDao {
 		{
 			criteria.add(Restrictions.eq("taskId", emTask.getTaskId()));
 		}
+		if(emTask!=null && emTask.getProjectId()!=null)
+		{
+			criteria.add(Restrictions.eq("projectId", emTask.getProjectId()));
+		}
 		if(emTask.getDepartmentId()!=null)
 		{
 			criteria.add(Restrictions.eq("departmentId", emTask.getDepartmentId()));
@@ -82,6 +88,10 @@ public class TaskDaoImpl implements TaskDao {
 			criteria.add(Restrictions.eq("assignedToId", emTask.getAssignedToId()));
 		}
 		if(emTask.getTaskDueDate()!=null)
+		{
+			criteria.add(Restrictions.eq("taskDueDate", emTask.getTaskDueDate()));
+		}
+		if(emTask.getTaskStatus()!=null)
 		{
 			criteria.add(Restrictions.eq("taskDueDate", emTask.getTaskDueDate()));
 		}
@@ -129,6 +139,42 @@ public class TaskDaoImpl implements TaskDao {
 		criteria.addOrder(Order.desc("createdDate"));
 		return criteria.list();
 	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.TaskDao#getMyTeamTask(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public List<TeamTask> getMyTeamTask(Integer createdBy, Integer assignToId, Integer asssignById, Integer projectId,
+			Integer teamId) {
+		// TODO Auto-generated method stub
+		StringBuilder bd=new StringBuilder("select new com.gomap.performance.organisastion.model.TeamTask(emp,team,task) from EmEmployee as emp,");
+		bd.append("EmTeam as team,EmTeamMember as tmember,EmTask as task");
+		bd.append(" where team.activateFlag=1 and tmember.activateFlag=1 and tmember.employeeId=emp.employeeId and tmember.teamId=team.teamId  and emp.activateFlag=1 and task.activateFlag=1");
+		bd.append(" and task.assignedToId=tmember.employeeId");
+		if(createdBy!=null)
+		{
+			bd.append(" and team.teamCreatedBy= "+createdBy);
+		}
+		if(projectId!=null)
+		{
+			bd.append(" and team.projectId= "+projectId);
+		}
+		if(assignToId!=null)
+		{
+			bd.append(" and task.assignedToId="+assignToId);
+		}
+		if(asssignById!=null)
+		{
+			bd.append(" and task.assignedById="+asssignById);
+		}
+		if(teamId!=null)
+		{
+			bd.append(" and team.teamId="+teamId);
+		}
+		
+		List<TeamTask> objList=this.sessionFactory.getCurrentSession().createQuery(bd.toString()).list();
+		return objList;
 	}
 	
 	}

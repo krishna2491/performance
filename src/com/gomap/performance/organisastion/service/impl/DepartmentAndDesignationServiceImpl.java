@@ -69,7 +69,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 				}else {
 					responseDTO.setDataObj(deptList);
 					responseDTO.setErrorCode(411);
-					responseDTO.setSuccessMsg("Department is already available in system");
+					responseDTO.setErrorMsg("Department is already available in system");
 					
 				}
 				

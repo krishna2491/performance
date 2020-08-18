@@ -54,12 +54,16 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#getEmployeeList(java.lang.Integer)
 	 */
 	@Override
-	public List<EmEmployee> getEmployeeList(Integer employeeId) throws Exception {
+	public List<EmEmployee> getEmployeeList(Integer employeeId,String email) throws Exception {
 		// TODO Auto-generated method stub
 		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(EmEmployee.class);
 		if(employeeId!=null)
 		{
 			criteria.add(Restrictions.eq("employeeId", employeeId));
+		}
+		if(email!=null)
+		{
+			criteria.add(Restrictions.eq("employeeEmail", email));
 		}
 		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		criteria.addOrder(Order.desc("employeeCreatedDate"));

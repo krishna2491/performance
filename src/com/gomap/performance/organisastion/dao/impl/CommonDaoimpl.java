@@ -93,6 +93,17 @@ public class CommonDaoimpl implements CommonDao{
 	}
 
 	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.CommonDao#createOperation(com.gomap.performance.organisastion.model.OperationMaster)
+	 */
+	@Override
+	public OperationMaster createOperation(OperationMaster operationMaster) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().save(operationMaster);
+		return operationMaster;
+	
+	}
+
+	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.dao.CommonDao#createElement()
 	 */
 	

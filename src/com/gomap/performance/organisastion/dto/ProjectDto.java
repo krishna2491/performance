@@ -23,6 +23,10 @@ public class ProjectDto {
 	private Date projectStartDate;
     private Date projectDueDate;
     private String projectDescription;
+    private String projectStatus;
+    private Date projectCreatedDate;
+    private String comment;
+    private String reply;
     
 	/**
 	 * @return the projectId
@@ -131,6 +135,54 @@ public class ProjectDto {
 	 */
 	public void setProjectDescription(String projectDescription) {
 		this.projectDescription = projectDescription;
+	}
+	/**
+	 * @return the projectStatus
+	 */
+	public String getProjectStatus() {
+		return projectStatus;
+	}
+	/**
+	 * @param projectStatus the projectStatus to set
+	 */
+	public void setProjectStatus(String projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+	/**
+	 * @return the projectCreatedDate
+	 */
+	public Date getProjectCreatedDate() {
+		return projectCreatedDate;
+	}
+	/**
+	 * @param projectCreatedDate the projectCreatedDate to set
+	 */
+	public void setProjectCreatedDate(Date projectCreatedDate) {
+		this.projectCreatedDate = projectCreatedDate;
+	}
+	/**
+	 * @return the reply
+	 */
+	public String getReply() {
+		return reply;
+	}
+	/**
+	 * @param reply the reply to set
+	 */
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

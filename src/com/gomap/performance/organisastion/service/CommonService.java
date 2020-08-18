@@ -6,6 +6,7 @@ package com.gomap.performance.organisastion.service;
 import com.gomap.performance.organisastion.dto.DepartmentDto;
 import com.gomap.performance.organisastion.dto.ElementMasterDto;
 import com.gomap.performance.organisastion.dto.EmParamsConfigDto;
+import com.gomap.performance.organisastion.dto.OperationMasterDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 
 /**
@@ -24,6 +25,8 @@ public interface CommonService {
 	 * @throws Exception
 	 */
 	ResponseDTO getParameter(Integer type) throws Exception;
+	public ResponseDTO createOperation(OperationMasterDto operationMasterDto) throws Exception;
+
 	
 
 
