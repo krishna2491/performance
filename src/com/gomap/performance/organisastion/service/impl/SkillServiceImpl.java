@@ -320,9 +320,10 @@ public class SkillServiceImpl implements SkillService {
 				}
 			}
 			
-			//responseDTO.setDataObj(emEmployeeSkillMpgDtoList);
+		//responseDTO.setDataObj(emEmployeeSkillMpgDtoList);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			responseDTO.setSuccessMsg("Skill Mapped with employee successfully");
+			
 			
 			
 		} catch (Exception e) {
