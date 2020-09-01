@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.CommonDao;
+import com.gomap.performance.organisastion.model.DashBoardInfo;
 import com.gomap.performance.organisastion.model.ElementMaster;
 import com.gomap.performance.organisastion.model.EmParamsConfig;
 import com.gomap.performance.organisastion.model.OperationMaster;
@@ -101,6 +102,15 @@ public class CommonDaoimpl implements CommonDao{
 		this.sessionFactory.getCurrentSession().save(operationMaster);
 		return operationMaster;
 	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.CommonDao#getDashBoardInfo(java.lang.Integer)
+	 */
+	@Override
+	public DashBoardInfo getDashBoardInfo(Integer employeeId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/* (non-Javadoc)

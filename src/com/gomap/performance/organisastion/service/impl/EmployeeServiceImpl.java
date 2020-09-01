@@ -327,7 +327,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 												// insert new  operation
 											}else
 											{
-												if(emploElementOperationDto.getEmployeeElementOperationId()!=null && emploElementOperationDto.getActivateFlag().equals(AppConstants.IN_ACTIVE_FLAG))
+												if(emploElementOperationDto.getEmployeeElementOperationId()!=null && emploElementOperationDto.getActivateFlag()!=null && emploElementOperationDto.getActivateFlag().equals(AppConstants.IN_ACTIVE_FLAG))
 												{
 													//inactive operation here
 													EmployeeElementOperationMpg employeeElementOperationMpg=new EmployeeElementOperationMpg();
@@ -364,7 +364,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			// TODO: handle exception
 			responseDTO.setErrorCode(411);
 			responseDTO.setErrorMsg(e.getMessage());
-			logger.error("Getting Error while updating Employee");
+			logger.error("Getting Error while updating Employee",e);
 		}
 		// TODO Auto-generated method stub
 		return responseDTO;

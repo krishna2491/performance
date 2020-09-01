@@ -45,6 +45,7 @@ public class StartupLoaderListener implements ApplicationListener<ContextRefresh
 	public CommonDao cmnDao;
 	@Autowired
 	public CommonService cmnService;
+	
 	/* This method will call on start-up
 	 * fetch look up data from db
 	 */

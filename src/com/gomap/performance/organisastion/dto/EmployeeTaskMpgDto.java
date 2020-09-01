@@ -19,20 +19,34 @@ import javax.validation.constraints.NotNull;
  * @author Fujitsu
  *
  */
-public class EmployeeTaskMpgDto implements Serializable{
+public class EmployeeTaskMpgDto implements Serializable {
 
+	private Integer employeeTaskId;
 
-    private Integer employeeTaskId;
-   
-    private Integer taskId;
-  
-    private Integer employeeId;
- 
-    private Date createdDate;
-   
-    private Date updatedDate;
-   
-    private Integer activateFlag;
+	private Integer taskId;
+
+	private Integer employeeId;
+
+	private Date createdDate;
+
+	private Date updatedDate;
+
+	private Integer activateFlag;
+	private String comment;
+	private String reply;
+	private Date completionDate;
+	private Date taskStartDate;
+	private Date taskDueDate;
+	private String taskAttachment;
+	private String taskPriority;
+	private String taskStatus;
+	private String taskHeading;
+	private String taskDescription;
+	private Integer projectId;
+    private Integer assignedById;
+    private Boolean isSelfCreated;
+    private String employeeTaskStatus;
+    
 
 	/**
 	 * @return the employeeTaskId
@@ -117,6 +131,201 @@ public class EmployeeTaskMpgDto implements Serializable{
 	public void setActivateFlag(Integer activateFlag) {
 		this.activateFlag = activateFlag;
 	}
-	
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	/**
+	 * @return the reply
+	 */
+	public String getReply() {
+		return reply;
+	}
+
+	/**
+	 * @param reply the reply to set
+	 */
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+
+	/**
+	 * @return the completionDate
+	 */
+	public Date getCompletionDate() {
+		return completionDate;
+	}
+
+	/**
+	 * @param completionDate the completionDate to set
+	 */
+	public void setCompletionDate(Date completionDate) {
+		this.completionDate = completionDate;
+	}
+
+	/**
+	 * @return the taskStartDate
+	 */
+	public Date getTaskStartDate() {
+		return taskStartDate;
+	}
+
+	/**
+	 * @param taskStartDate the taskStartDate to set
+	 */
+	public void setTaskStartDate(Date taskStartDate) {
+		this.taskStartDate = taskStartDate;
+	}
+
+	/**
+	 * @return the taskDueDate
+	 */
+	public Date getTaskDueDate() {
+		return taskDueDate;
+	}
+
+	/**
+	 * @param taskDueDate the taskDueDate to set
+	 */
+	public void setTaskDueDate(Date taskDueDate) {
+		this.taskDueDate = taskDueDate;
+	}
+
+	/**
+	 * @return the taskAttachment
+	 */
+	public String getTaskAttachment() {
+		return taskAttachment;
+	}
+
+	/**
+	 * @param taskAttachment the taskAttachment to set
+	 */
+	public void setTaskAttachment(String taskAttachment) {
+		this.taskAttachment = taskAttachment;
+	}
+
+	/**
+	 * @return the taskPriority
+	 */
+	public String getTaskPriority() {
+		return taskPriority;
+	}
+
+	/**
+	 * @param taskPriority the taskPriority to set
+	 */
+	public void setTaskPriority(String taskPriority) {
+		this.taskPriority = taskPriority;
+	}
+
+	/**
+	 * @return the taskStatus
+	 */
+	public String getTaskStatus() {
+		return taskStatus;
+	}
+
+	/**
+	 * @param taskStatus the taskStatus to set
+	 */
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
+	}
+
+	/**
+	 * @return the taskHeading
+	 */
+	public String getTaskHeading() {
+		return taskHeading;
+	}
+
+	/**
+	 * @param taskHeading the taskHeading to set
+	 */
+	public void setTaskHeading(String taskHeading) {
+		this.taskHeading = taskHeading;
+	}
+
+	/**
+	 * @return the taskDescription
+	 */
+	public String getTaskDescription() {
+		return taskDescription;
+	}
+
+	/**
+	 * @param taskDescription the taskDescription to set
+	 */
+	public void setTaskDescription(String taskDescription) {
+		this.taskDescription = taskDescription;
+	}
+
+	/**
+	 * @return the projectId
+	 */
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+
+	/**
+	 * @return the assignedById
+	 */
+	public Integer getAssignedById() {
+		return assignedById;
+	}
+
+	/**
+	 * @param assignedById the assignedById to set
+	 */
+	public void setAssignedById(Integer assignedById) {
+		this.assignedById = assignedById;
+	}
+
+	/**
+	 * @return the isSelfCreated
+	 */
+	public Boolean getIsSelfCreated() {
+		return isSelfCreated;
+	}
+
+	/**
+	 * @param isSelfCreated the isSelfCreated to set
+	 */
+	public void setIsSelfCreated(Boolean isSelfCreated) {
+		this.isSelfCreated = isSelfCreated;
+	}
+
+	/**
+	 * @return the employeeTaskStatus
+	 */
+	public String getEmployeeTaskStatus() {
+		return employeeTaskStatus;
+	}
+
+	/**
+	 * @param employeeTaskStatus the employeeTaskStatus to set
+	 */
+	public void setEmployeeTaskStatus(String employeeTaskStatus) {
+		this.employeeTaskStatus = employeeTaskStatus;
+	}
 
 }

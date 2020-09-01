@@ -21,6 +21,12 @@ public final class AppConstants {
 
 	
 	public static final String SAMPLE_FILE="C:\\\\Program Files\\\\sample.war";
+	
+	public static final String PROJECT_STATUS_PENDING="";
+	public static final String PROJECT_STATUS_COMPLETED="Completed";
+	public static final String PROJECT_STATUS_DUE="Delayed";
+	public static final String PROJECT_STATUS_INPROGRESS="In Progress";
+	
 //	public static final String GENERATED_FILE="C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\";
 
 	

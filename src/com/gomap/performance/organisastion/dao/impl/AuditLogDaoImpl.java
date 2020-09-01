@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.gomap.performance.organisastion.dao.AuditLogDao;
 import com.gomap.performance.organisastion.model.AuditLog;
@@ -18,6 +19,7 @@ import com.gomap.performance.organisastion.model.AuditLog;
  * @author Fujitsu
  *
  */
+@Repository
 public class AuditLogDaoImpl implements AuditLogDao{
 
 	/* (non-Javadoc)

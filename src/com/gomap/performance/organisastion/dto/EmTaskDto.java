@@ -17,9 +17,7 @@ public class EmTaskDto implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer taskId;
     private Integer departmentId;
-    private String taskHeading;
-    private String taskDescription;
-    private Integer projectId;
+   
     private Integer assignedById;
     private Integer assignedToId;
     private Date taskStartDate;
@@ -27,6 +25,9 @@ public class EmTaskDto implements Serializable {
     private String taskAttachment;
     private String taskPriority;
     private String taskStatus;
+    private String taskHeading;
+    private String taskDescription;
+    private Integer projectId;
     private Date taskCreatedDate;
     private Date taskUpdatedDate;
     private String comment;

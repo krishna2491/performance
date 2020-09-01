@@ -3,7 +3,11 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,17 +17,34 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.CommonDao;
+import com.gomap.performance.organisastion.dao.FeedbackDao;
+import com.gomap.performance.organisastion.dao.GoalDao;
+import com.gomap.performance.organisastion.dao.ProjectDao;
+import com.gomap.performance.organisastion.dao.TaskDao;
+import com.gomap.performance.organisastion.dao.TeamManagmentDao;
 import com.gomap.performance.organisastion.dto.DepartmentDto;
 import com.gomap.performance.organisastion.dto.ElementMasterDto;
 import com.gomap.performance.organisastion.dto.EmParamsConfigDto;
 import com.gomap.performance.organisastion.dto.OperationMasterDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
+import com.gomap.performance.organisastion.model.DashBoardInfo;
 import com.gomap.performance.organisastion.model.ElementMaster;
 import com.gomap.performance.organisastion.model.EmDepartment;
+import com.gomap.performance.organisastion.model.EmFeedbackRequest;
+import com.gomap.performance.organisastion.model.EmGoal;
 import com.gomap.performance.organisastion.model.EmParamsConfig;
+import com.gomap.performance.organisastion.model.EmProject;
+import com.gomap.performance.organisastion.model.EmTask;
+import com.gomap.performance.organisastion.model.EmTeam;
+import com.gomap.performance.organisastion.model.EmTeamMember;
+import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
+import com.gomap.performance.organisastion.model.FeedbackRequestParaMpg;
 import com.gomap.performance.organisastion.model.OperationMaster;
 import com.gomap.performance.organisastion.service.CommonService;
+import com.gomap.performance.organisastion.service.ProjectService;
+import com.gomap.performance.organisastion.service.TaskService;
+import com.gomap.performance.organisastion.service.TeamManagmentService;
 
 /**
  * @author Fujitsu
@@ -36,6 +57,16 @@ public class CommonServiceImpl implements CommonService {
 
 	@Autowired
 	private CommonDao cmnDao;
+	@Autowired
+	private ProjectDao projDao;
+	@Autowired
+	private TaskDao taskDao;
+	@Autowired
+	private TeamManagmentDao teamDao;
+	@Autowired
+	private GoalDao goalDao;
+	@Autowired
+	private FeedbackDao feedBackDao;
 
 	/*
 	 * (non-Javadoc)
@@ -189,6 +220,196 @@ public class CommonServiceImpl implements CommonService {
 			responseDTO.setDataObj(null);
 			responseDTO.setErrorCode(411);
 			logger.error("here error ",e);
+		}
+		return responseDTO;
+	}
+	@Override
+	@Transactional
+	public ResponseDTO getDashBoardData(Integer employeeId) throws Exception {
+		// TODO Auto-generated method stub
+		ResponseDTO responseDTO = new ResponseDTO();
+		logger.info("here getDashBoardData"+employeeId);
+		try {
+			EmGoal emGoal = new EmGoal();
+			EmTeam emTeam = new EmTeam();
+			EmTask emTask = new EmTask();
+			EmFeedbackRequest emFeedbackRequest=new EmFeedbackRequest();
+			
+			Integer inProgresssCount = 0;
+			Integer completedCount = 0;
+			Integer dueCount = 0;
+			EmTeamMember emTeamMember = new EmTeamMember();
+			if (employeeId != -1) {
+				emGoal.setEmployeeId(employeeId);
+				emTeamMember.setEmployeeId(employeeId);
+				emTask.setAssignedToId(employeeId);
+				emFeedbackRequest.setfeedbackForId(employeeId);
+			}
+
+			List<EmGoal> goalList = goalDao.getGoal(emGoal);
+			List<EmTeam> teamData = null;
+			List<EmTeam> teamList = new ArrayList<EmTeam>();
+			List<EmTask> taskList = taskDao.getTask(emTask);
+			List<EmProject> projectList = new ArrayList<EmProject>();
+			DashBoardInfo dashBoardInfo = new DashBoardInfo();
+			List<EmTeamMember> teamMemberList = teamDao.getTeamMember(emTeamMember);
+			if (teamMemberList != null && !teamMemberList.isEmpty()) {
+				teamList = new ArrayList<EmTeam>();
+				for (EmTeamMember teamMember : teamMemberList) {
+					teamData = new ArrayList<EmTeam>();
+					if (teamMember.getTeamId() != null) {
+						emTeam = new EmTeam();
+						emTeam.setTeamId(teamMember.getTeamId());
+						teamData = teamDao.getTeam(emTeam);
+						if (teamData != null && !teamData.isEmpty()) {
+							teamList.add(teamData.get(0));
+						}
+
+					}
+
+				}
+			}
+			List<EmProject> projectData = null;
+			if (teamList != null && !teamList.isEmpty()) {
+				for (EmTeam etm : teamList) {
+					if (etm.getProjectId() != null && etm.getProjectId() != -1) {
+						projectData = projDao.getProjectList(etm.getProjectId(), null, null);
+						if (projectData != null && !projectData.isEmpty()) {
+							projectList.add(projectData.get(0));
+						}
+					}
+				}
+			}
+			List<EmployeeTaskMpg> taskMpgList = taskDao.getEmployeeTask(employeeId, null);
+
+			if (taskMpgList != null && !taskMpgList.isEmpty()) {
+				for (EmployeeTaskMpg taskMpg : taskMpgList) {
+					if (taskMpg.getEmployeeTaskStatus() != null) {
+						if(taskMpg.getEmployeeTaskStatus().equals(AppConstants.PROJECT_STATUS_INPROGRESS))
+						{
+							inProgresssCount++;
+						}else if(taskMpg.getEmployeeTaskStatus().equals(AppConstants.PROJECT_STATUS_COMPLETED))
+						{
+							completedCount++;
+						}else {
+							dueCount++;
+						}
+
+					}
+				}
+			}
+dashBoardInfo.setCompletedTask(completedCount);
+dashBoardInfo.setInprogressTask(inProgresssCount);
+dashBoardInfo.setDueTask(dueCount);
+			dashBoardInfo.setTotalGoal(goalList.size());
+			dashBoardInfo.setTotalProject(projectList.size());
+			dashBoardInfo.setTotalTask(taskList.size());
+			dashBoardInfo.setTotalTeam(teamList.size());
+			
+			//dashBoardInfo.setProjectList(projectList);
+			//dashBoardInfo.setGoalList(goalList);
+			//dashBoardInfo.setTaskList(taskList);
+			//dashBoardInfo.setTeamList(teamList);
+
+//			 SimpleDateFormat  sdfo  = new SimpleDateFormat("yyyy-MM-dd"); 
+//	  
+//	        // Get the two dates to be compared 
+//	        Date d1 = sdfo.parse(); 
+//	        Date d2 = sdfo.parse("2012-03-31"); 
+			 inProgresssCount = 0;
+			 completedCount = 0;
+			 dueCount = 0;
+			 
+			 if(goalList!=null && !goalList.isEmpty())
+			 {
+				 for(EmGoal goal:goalList)
+				 {
+					 if(goal.getGoalStatus()!=null)
+					 {
+
+							if(goal.getGoalStatus().equals(AppConstants.PROJECT_STATUS_INPROGRESS))
+							{
+								inProgresssCount++;
+							}else if(goal.getGoalStatus().equals(AppConstants.PROJECT_STATUS_COMPLETED))
+							{
+								completedCount++;
+							}else {
+								dueCount++;
+							}
+
+						 
+					 }
+				 }
+			 }
+
+			 dashBoardInfo.setCompletedGoals(completedCount);
+			 dashBoardInfo.setInprogressGoals(inProgresssCount);
+			 dashBoardInfo.setDueGoals(dueCount);
+			 
+			 inProgresssCount = 0;
+			 completedCount = 0;
+			 dueCount = 0;
+			 
+			if (projectList != null && !projectList.isEmpty()) {
+				for (EmProject prjObj : projectList) {
+					if (prjObj.getProjectStatus() != null && prjObj.equals(AppConstants.PROJECT_STATUS_INPROGRESS)) {
+						inProgresssCount++;
+					} else if (prjObj.getProjectStatus() != null
+							&& prjObj.equals(AppConstants.PROJECT_STATUS_COMPLETED)) {
+						completedCount++;
+					} else {
+						dueCount++;
+					}
+				}
+			}
+			dashBoardInfo.setCompletedProject(completedCount);
+			dashBoardInfo.setDueProjet(dueCount);
+			dashBoardInfo.setInprogressProject(inProgresssCount);
+			HashMap<String,Integer> ratingMap=new HashMap<String,Integer>();
+			
+			List<EmFeedbackRequest> feedBackList=feedBackDao.getFeedbackList(emFeedbackRequest);
+			List<FeedbackRequestParaMpg> feedbackRequestParaMpgs=null;
+			int empRating=0;
+			int count=0;
+			int totalRating=0;
+			if(feedBackList!=null && !feedBackList.isEmpty())
+			{
+				for(EmFeedbackRequest feedback:feedBackList)
+				{
+					if (feedback.getFeedbackRequestId() != null) {
+						feedbackRequestParaMpgs=feedBackDao.getFeedbackParam(feedback.getFeedbackRequestId());
+						for(FeedbackRequestParaMpg paraMpg:feedbackRequestParaMpgs)
+						{
+							if(paraMpg.getRating()!=null)
+							{
+								empRating=empRating+paraMpg.getRating();
+							}
+							count++;
+						}
+						totalRating=empRating/count;
+						empRating=0;
+						count=0;
+					}
+					if(ratingMap.containsKey("rating-"+totalRating))
+					{
+						ratingMap.put("rating-"+totalRating,ratingMap.get("rating-"+totalRating)+1);
+					}else {
+						ratingMap.put("rating-"+totalRating,1);
+					}
+					totalRating=0;
+				}
+			}
+			dashBoardInfo.setRatingCount(ratingMap);
+			responseDTO.setDataObj(dashBoardInfo);
+			responseDTO.setSuccessMsg("Dashboard  data sent");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+
+		} catch (Exception e) {
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			;
+			responseDTO.setErrorCode(411);
+			logger.error("Error getDashBoardData", e);
 		}
 		return responseDTO;
 	}

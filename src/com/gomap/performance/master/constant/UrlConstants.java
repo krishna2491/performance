@@ -94,6 +94,7 @@ public final class UrlConstants {
 	public static final String API_GET_MY_TEAM_GOAL = "emf/getMyTeamGoals";
 	public static final String API_GET_MY_TEAM_TASK = "emf/getMyTeamTask";
 	public static final String API_GET_AUDIT_LOG = "emf/getAuditLog";
+	public static final String API_GET_DASHBOARD = "emf/getDashBoard";
 
 //	Lead
 

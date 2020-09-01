@@ -344,8 +344,8 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 												// insert new  operation
 											}else
 											{
-												if(roleElementOperationMpgDto.getRoleElementOperationId()!=null && 
-														roleElementOperationMpgDto.getActivateFlag().equals(AppConstants.IN_ACTIVE_FLAG))
+												if(roleElementOperationMpgDto.getRoleElementOperationId()!=null && roleElementOperationMpgDto.getActivateFlag()!=null
+														 && roleElementOperationMpgDto.getActivateFlag().equals(AppConstants.IN_ACTIVE_FLAG))
 												{
 													//inactive operation here
 													RoleElementOperationMpg roleElementOperationMpg=new RoleElementOperationMpg();

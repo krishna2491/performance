@@ -5,6 +5,7 @@ package com.gomap.performance.organisastion.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.model.EmTask;
 import com.gomap.performance.organisastion.model.EmTeamMember;
 import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
+import com.gomap.performance.organisastion.model.TeamTask;
 import com.gomap.performance.organisastion.service.TaskService;
 
 /**
@@ -367,6 +369,26 @@ public class TaskServiceImpl implements TaskService {
 						{
 							employeeTaskMpg.setTaskId(dtEmployeeTaskMpgDto.getTaskId());
 						}
+						if(dtEmployeeTaskMpgDto.getComment()!=null)
+						{
+							employeeTaskMpg.setComment(dtEmployeeTaskMpgDto.getComment());
+						}
+						if(dtEmployeeTaskMpgDto.getReply()!=null)
+						{
+							employeeTaskMpg.setReply(dtEmployeeTaskMpgDto.getReply());
+						}
+						if(dtEmployeeTaskMpgDto.getCompletionDate()!=null)
+						{
+							employeeTaskMpg.setCompletionDate(dtEmployeeTaskMpgDto.getCompletionDate());
+						}
+						if(dtEmployeeTaskMpgDto.getEmployeeTaskStatus()!=null)
+						{
+							employeeTaskMpg.setEmployeeTaskStatus(dtEmployeeTaskMpgDto.getEmployeeTaskStatus());
+						}
+						if(dtEmployeeTaskMpgDto.getAssignedById()!=null)
+						{
+							employeeTaskMpg.setAssignedById(dtEmployeeTaskMpgDto.getAssignedById());
+						}
 						//teamManagmentDao.addTeamMember(emTeamMember);
 						taskDao.mapEMployeeTask(employeeTaskMpg);
 					}else
@@ -391,9 +413,41 @@ public class TaskServiceImpl implements TaskService {
 						{
 							employeeTaskMpg.setCreatedDate(dtEmployeeTaskMpgDto.getCreatedDate());	
 						}
-					
+						if(dtEmployeeTaskMpgDto.getComment()!=null)
+						{
+							employeeTaskMpg.setComment(dtEmployeeTaskMpgDto.getComment());
+						}
+						if(dtEmployeeTaskMpgDto.getReply()!=null)
+						{
+							employeeTaskMpg.setReply(dtEmployeeTaskMpgDto.getReply());
+						}
+						if(dtEmployeeTaskMpgDto.getCompletionDate()!=null)
+						{
+							employeeTaskMpg.setCompletionDate(dtEmployeeTaskMpgDto.getCompletionDate());
+						}
+						if(dtEmployeeTaskMpgDto.getEmployeeTaskStatus()!=null)
+						{
+							employeeTaskMpg.setEmployeeTaskStatus(dtEmployeeTaskMpgDto.getEmployeeTaskStatus());
+						}
+						if(dtEmployeeTaskMpgDto.getAssignedById()!=null)
+						{
+							employeeTaskMpg.setAssignedById(dtEmployeeTaskMpgDto.getAssignedById());
+						}
 						taskDao.updateEmplyeeTaskMpg(employeeTaskMpg);
-						
+						if(employeeTaskMpg.getAssignedById()!=null && employeeTaskMpg.getEmployeeId()!=null 
+								&& employeeTaskMpg.getAssignedById().equals(employeeTaskMpg.getEmployeeId()))
+						{
+							EmTask emTask=new EmTask();
+							emTask.setTaskId(employeeTaskMpg.getTaskId());
+							List<EmTask> taskList=taskDao.getTask(emTask);
+							if(taskList!=null && !taskList.isEmpty())
+							{
+								emTask=taskList.get(0);
+								emTask.setTaskStatus(employeeTaskMpg.getEmployeeTaskStatus());
+								emTask.setTaskUpdatedDate(new Date());
+								taskDao.updateTask(emTask);
+							}
+						}
 					}
 					employeeTaskList.add(employeeTaskMpg);
 							
@@ -430,7 +484,51 @@ public class TaskServiceImpl implements TaskService {
 			
 				List<EmployeeTaskMpg> employeeTaskList=new ArrayList<EmployeeTaskMpg>();
 				employeeTaskList=taskDao.getEmployeeTask(employeeId, taskId);
-				responseDTO.setDataObj(employeeTaskList);
+				EmployeeTaskMpgDto mpgDto=new EmployeeTaskMpgDto();
+				List<EmployeeTaskMpgDto> employeeTaskDetails=new ArrayList<EmployeeTaskMpgDto>();
+				EmTask emTask=null;
+				for(EmployeeTaskMpg employeeTaskMpg:employeeTaskList)
+				{
+					mpgDto.setActivateFlag(employeeTaskMpg.getActivateFlag());
+					mpgDto.setEmployeeId(employeeTaskMpg.getEmployeeId());
+					
+					mpgDto.setEmployeeTaskId(employeeTaskMpg.getEmployeeTaskId());
+					mpgDto.setTaskId(employeeTaskMpg.getTaskId());
+					mpgDto.setComment(employeeTaskMpg.getComment());
+					mpgDto.setCompletionDate(employeeTaskMpg.getCompletionDate());
+					mpgDto.setReply(employeeTaskMpg.getReply());
+					mpgDto.setEmployeeTaskStatus(employeeTaskMpg.getEmployeeTaskStatus());
+					if(employeeTaskMpg.getTaskId()!=null)
+					{
+						emTask=new EmTask();
+						emTask.setTaskId(employeeTaskMpg.getTaskId());
+						List<EmTask> taskList=taskDao.getTask(emTask);
+						if(taskList!=null && !taskList.isEmpty())
+						{
+							emTask=taskList.get(0);
+							mpgDto.setProjectId(emTask.getProjectId());
+							mpgDto.setTaskAttachment(emTask.getTaskAttachment());
+							mpgDto.setTaskDescription(emTask.getTaskDescription());
+							mpgDto.setTaskHeading(emTask.getTaskHeading());
+							mpgDto.setTaskDueDate(emTask.getTaskDueDate());
+							mpgDto.setProjectId(emTask.getProjectId());
+							mpgDto.setTaskStartDate(emTask.getTaskStartDate());
+							mpgDto.setTaskPriority(emTask.getTaskPriority());
+							mpgDto.setTaskStatus(emTask.getTaskStatus());
+							mpgDto.setAssignedById(emTask.getAssignedById());
+							if(mpgDto.getAssignedById()!=null && mpgDto.getEmployeeId()!=null && 
+									mpgDto.getEmployeeId().equals(mpgDto.getAssignedById()))
+							{
+								mpgDto.setIsSelfCreated(true);
+							}else {
+								mpgDto.setIsSelfCreated(false);
+							}
+							
+						}
+					}
+					employeeTaskDetails.add(mpgDto);
+				}
+				responseDTO.setDataObj(employeeTaskDetails);
 				responseDTO.setSuccessMsg("Employee with task details sent");
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 				logger.info("getEmployeeTaskList...... successfully completed ");
@@ -477,7 +575,44 @@ public class TaskServiceImpl implements TaskService {
 				{
 					teamId=null;
 				}
-				responseDTO.setDataObj(taskDao.getMyTeamTask(createdBy, assignToId, asssignById, projectId, teamId));
+				
+				List<TeamTask> teamDataList=taskDao.getMyTeamTask(createdBy, assignToId, asssignById, projectId, teamId);
+				List<TeamTask> teamData=new ArrayList<TeamTask>();
+				String teamName="";
+				HashMap<String,List<TeamTask>> dataMap=new HashMap<String, List<TeamTask>>();
+				TeamTask teamTask=new TeamTask();
+				List<TeamTask> finalList=new ArrayList<TeamTask>();
+				if(teamDataList!=null && !teamDataList.isEmpty())
+				{
+					for (TeamTask teamObj : teamDataList) {
+
+						if (dataMap.containsKey(teamObj.getTeamName())) {
+							teamData = dataMap.get(teamObj.getTeamName());
+							teamData.add(teamObj);
+							dataMap.put(teamObj.getTeamName(), teamData);
+							teamTask.setTeamTaskList(teamData);
+						} else {
+							if (teamTask.getTeamTaskList() != null && !teamTask.getTeamTaskList().isEmpty()) {
+								finalList.add(teamTask);
+							}
+							teamTask = new TeamTask();
+							teamData = new ArrayList<TeamTask>();
+							teamTask.setTeamId(teamObj.getTeamId());
+							teamTask.setTeamName(teamObj.getTeamName());
+							teamData.add(teamObj);
+							teamTask.setTeamTaskList(teamData);
+							dataMap.put(teamObj.getTeamName(), teamData);
+						}
+						
+					}
+					finalList.add(teamTask);
+				}
+				List<Object> objList=new ArrayList<Object>();
+				for(String teamStr:dataMap.keySet())
+				{
+					
+				}
+				responseDTO.setDataObj(finalList);
 				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 				responseDTO.setSuccessMsg("Employee with task details sent");
 			} catch (Exception e) {

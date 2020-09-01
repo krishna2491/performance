@@ -45,6 +45,18 @@ public class EmployeeTaskMpg implements Serializable {
 	    private Date updatedDate;
 	    @Column(name = "activate_flag")
 	    private Integer activateFlag;
+	    
+	    @Column(name = "comment")
+	    private String comment;
+	    @Column(name = "reply")
+	    private String reply;
+	    @Column(name = "completion_date")
+	    @Temporal(TemporalType.DATE)
+	    private Date completionDate;
+	    @Column(name = "employee_task_status")
+	    private String employeeTaskStatus;
+	    @Column(name = "assigned_by_id")
+	    private Integer assignedById;
 		/**
 		 * @return the employeeTaskId
 		 */
@@ -116,6 +128,66 @@ public class EmployeeTaskMpg implements Serializable {
 		 */
 		public void setActivateFlag(Integer activateFlag) {
 			this.activateFlag = activateFlag;
+		}
+		/**
+		 * @return the comment
+		 */
+		public String getComment() {
+			return comment;
+		}
+		/**
+		 * @param comment the comment to set
+		 */
+		public void setComment(String comment) {
+			this.comment = comment;
+		}
+		/**
+		 * @return the reply
+		 */
+		public String getReply() {
+			return reply;
+		}
+		/**
+		 * @param reply the reply to set
+		 */
+		public void setReply(String reply) {
+			this.reply = reply;
+		}
+		/**
+		 * @return the completionDate
+		 */
+		public Date getCompletionDate() {
+			return completionDate;
+		}
+		/**
+		 * @param completionDate the completionDate to set
+		 */
+		public void setCompletionDate(Date completionDate) {
+			this.completionDate = completionDate;
+		}
+		/**
+		 * @return the employeeTaskStatus
+		 */
+		public String getEmployeeTaskStatus() {
+			return employeeTaskStatus;
+		}
+		/**
+		 * @param employeeTaskStatus the employeeTaskStatus to set
+		 */
+		public void setEmployeeTaskStatus(String employeeTaskStatus) {
+			this.employeeTaskStatus = employeeTaskStatus;
+		}
+		/**
+		 * @return the assignedById
+		 */
+		public Integer getAssignedById() {
+			return assignedById;
+		}
+		/**
+		 * @param assignedById the assignedById to set
+		 */
+		public void setAssignedById(Integer assignedById) {
+			this.assignedById = assignedById;
 		}
 
 }

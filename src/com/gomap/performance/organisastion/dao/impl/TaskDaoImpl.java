@@ -3,6 +3,7 @@
  */
 package com.gomap.performance.organisastion.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -148,10 +149,16 @@ public class TaskDaoImpl implements TaskDao {
 	public List<TeamTask> getMyTeamTask(Integer createdBy, Integer assignToId, Integer asssignById, Integer projectId,
 			Integer teamId) {
 		// TODO Auto-generated method stub
-		StringBuilder bd=new StringBuilder("select new com.gomap.performance.organisastion.model.TeamTask(emp,team,task) from EmEmployee as emp,");
-		bd.append("EmTeam as team,EmTeamMember as tmember,EmTask as task");
-		bd.append(" where team.activateFlag=1 and tmember.activateFlag=1 and tmember.employeeId=emp.employeeId and tmember.teamId=team.teamId  and emp.activateFlag=1 and task.activateFlag=1");
-		bd.append(" and task.assignedToId=tmember.employeeId");
+		
+		StringBuilder bd=new StringBuilder("select new com.gomap.performance.organisastion.model.TeamTask(team.teamName,team.teamId,emp.employeeFname,"
+				+ "emp.employeeMname,emp.employeeId ");
+				bd.append(" ,task.taskId,task.taskDescription,task.taskPriority,task.taskDueDate,taskMpg.employeeTaskStatus,taskMpg.employeeTaskId"
+						+ " ,taskMpg.comment,taskMpg.reply,taskMpg.completionDate,task.taskStartDate ) from EmEmployee as emp,");
+				
+		bd.append("EmTeam as team,EmTeamMember as tmember,EmTask as task,EmployeeTaskMpg as taskMpg");
+		bd.append(" where team.activateFlag=1 and tmember.activateFlag=1 and tmember.employeeId=emp.employeeId and tmember.teamId=team.teamId "
+				+ " and emp.activateFlag=1 and task.activateFlag=1 and taskMpg.activateFlag=1 and taskMpg.employeeId=tmember.employeeId and task.taskId=taskMpg.taskId order by team.teamName");
+		
 		if(createdBy!=null)
 		{
 			bd.append(" and team.teamCreatedBy= "+createdBy);
@@ -160,14 +167,14 @@ public class TaskDaoImpl implements TaskDao {
 		{
 			bd.append(" and team.projectId= "+projectId);
 		}
-		if(assignToId!=null)
-		{
-			bd.append(" and task.assignedToId="+assignToId);
-		}
-		if(asssignById!=null)
-		{
-			bd.append(" and task.assignedById="+asssignById);
-		}
+//		if(assignToId!=null)
+//		{
+//			bd.append(" and task.assignedToId="+assignToId);
+//		}
+//		if(asssignById!=null)
+//		{
+//			bd.append(" and task.assignedById="+asssignById);
+//		}
 		if(teamId!=null)
 		{
 			bd.append(" and team.teamId="+teamId);

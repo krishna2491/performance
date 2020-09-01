@@ -34,7 +34,7 @@ public class CompanyMaster {
 	private Integer activateFlag;
 	private Date createdDate;
 	private Date updatedDate;
-	private Integer companySize;
+	private String companySize;
 	/**
 	 * @return the companyId
 	 */
@@ -201,13 +201,13 @@ public class CompanyMaster {
 	 * @return the companySize
 	 */
 	@Column(name = "company_size", nullable = true)
-	public Integer getCompanySize() {
+	public String getCompanySize() {
 		return companySize;
 	}
 	/**
 	 * @param companySize the companySize to set
 	 */
-	public void setCompanySize(Integer companySize) {
+	public void setCompanySize(String companySize) {
 		this.companySize = companySize;
 	}
 

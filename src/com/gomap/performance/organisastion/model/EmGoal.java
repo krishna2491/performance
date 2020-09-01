@@ -111,7 +111,7 @@ public class EmGoal implements Serializable {
     private Integer activateFlag;
     @Column(name = "goal_percentage")
     
-    private Integer goalPercantage;
+    private Integer goalPercentage;
     @Column(name = "comment")
     private String comment;
     @Column(name = "reply")
@@ -276,15 +276,15 @@ public void prePersist() {
 /**
  * @return the goalPercantage
  */
-public Integer getGoalPercantage() {
-	return goalPercantage;
+public Integer getGoalPercentage() {
+	return goalPercentage;
 }
 
 /**
  * @param goalPercantage the goalPercantage to set
  */
-public void setGoalPercantage(Integer goalPercantage) {
-	this.goalPercantage = goalPercantage;
+public void setGoalPercantage(Integer goalPercentage) {
+	this.goalPercentage = goalPercentage;
 }
 
 /**

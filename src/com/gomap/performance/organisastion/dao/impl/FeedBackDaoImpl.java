@@ -65,7 +65,10 @@ public class FeedBackDaoImpl implements FeedbackDao{
 		{
 			criteria.add(Restrictions.eq("feedbackForId", emFeedbackRequest.getfeedbackForId()));
 			//criteria.add(Restrictions.eq("feedbackStatus", AppConstants.SUBMITTED));
-			criteria.add(Restrictions.in("feedbackStatus",new String[] { AppConstants.SUBMITTED,AppConstants.COMPLETED}));
+		
+				criteria.add(Restrictions.in("feedbackStatus",new String[] { AppConstants.SUBMITTED,AppConstants.COMPLETED}));
+						
+			
 			
 		}if(emFeedbackRequest.getFeedbackFromId()!=null)
 		{
@@ -110,5 +113,9 @@ public class FeedBackDaoImpl implements FeedbackDao{
 		sessionFactory.getCurrentSession().update(emFeedbackRequest);
 		return emFeedbackRequest;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.FeedbackDao#getFeedbackList(com.gomap.performance.organisastion.model.EmFeedbackRequest)
+	 */
 	
 }

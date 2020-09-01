@@ -24,8 +24,14 @@ public interface CommonService {
 	 * @return
 	 * @throws Exception
 	 */
-	ResponseDTO getParameter(Integer type) throws Exception;
+	public ResponseDTO getParameter(Integer type) throws Exception;
 	public ResponseDTO createOperation(OperationMasterDto operationMasterDto) throws Exception;
+	/**
+	 * @param employeeId
+	 * @return
+	 * @throws Exception
+	 */
+	public ResponseDTO getDashBoardData(Integer employeeId) throws Exception;
 
 	
 

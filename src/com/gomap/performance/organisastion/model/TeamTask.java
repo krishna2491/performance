@@ -4,61 +4,269 @@
 package com.gomap.performance.organisastion.model;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Fujitsu
  *
  */
 public class TeamTask implements Serializable {
-	private EmEmployee employee;
-	private EmTeam team;
-	private EmTask task;
+
+	private String teamName;
+	private Integer teamId;
+	private String employeeFName;
+	private String employeeMName;
+	private Integer employeeId;
+	private Integer taskId;
+	private String taskName;
+
+	private String taskPriority;
+	private Date taskDueDate;
+	private String employeeTaskStatus;
+	private Integer employeeTaskId;
+	private String comment;
+	private String reply;
+	private Date completionDate;
+	private Date taskStartDate;
+	private List<TeamTask> teamTaskList;
+	
 	/**
-	 * @return the employee
+	 * @return the teamName
 	 */
-	public EmEmployee getEmployee() {
-		return employee;
+	public String getTeamName() {
+		return teamName;
 	}
 	/**
-	 * @param employee the employee to set
+	 * @param teamName the teamName to set
 	 */
-	public void setEmployee(EmEmployee employee) {
-		this.employee = employee;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 	/**
-	 * @return the team
+	 * @return the teamId
 	 */
-	public EmTeam getTeam() {
-		return team;
+	public Integer getTeamId() {
+		return teamId;
 	}
 	/**
-	 * @param team the team to set
+	 * @param teamId the teamId to set
 	 */
-	public void setTeam(EmTeam team) {
-		this.team = team;
+	public void setTeamId(Integer teamId) {
+		this.teamId = teamId;
 	}
 	/**
-	 * @return the task
+	 * @return the employeeFName
 	 */
-	public EmTask getTask() {
-		return task;
+	public String getEmployeeFName() {
+		return employeeFName;
 	}
 	/**
-	 * @param task the task to set
+	 * @param employeeFName the employeeFName to set
 	 */
-	public void setTask(EmTask task) {
-		this.task = task;
+	public void setEmployeeFName(String employeeFName) {
+		this.employeeFName = employeeFName;
 	}
 	/**
-	 * @param employee
-	 * @param team
-	 * @param task
+	 * @return the employeeMName
 	 */
-	public TeamTask(EmEmployee employee, EmTeam team, EmTask task) {
+	public String getEmployeeMName() {
+		return employeeMName;
+	}
+	/**
+	 * @param employeeMName the employeeMName to set
+	 */
+	public void setEmployeeMName(String employeeMName) {
+		this.employeeMName = employeeMName;
+	}
+	/**
+	 * @return the employeeId
+	 */
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+	/**
+	 * @param employeeId the employeeId to set
+	 */
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+	/**
+	 * @return the taskId
+	 */
+	public Integer getTaskId() {
+		return taskId;
+	}
+	/**
+	 * @param taskId the taskId to set
+	 */
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
+	}
+	/**
+	 * @return the taskName
+	 */
+	public String getTaskName() {
+		return taskName;
+	}
+	/**
+	 * @param taskName the taskName to set
+	 */
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+	/**
+	 * @return the taskPriority
+	 */
+	public String getTaskPriority() {
+		return taskPriority;
+	}
+	/**
+	 * @param taskPriority the taskPriority to set
+	 */
+	public void setTaskPriority(String taskPriority) {
+		this.taskPriority = taskPriority;
+	}
+	/**
+	 * @return the taskDueDate
+	 */
+	public Date getTaskDueDate() {
+		return taskDueDate;
+	}
+	/**
+	 * @param taskDueDate the taskDueDate to set
+	 */
+	public void setTaskDueDate(Date taskDueDate) {
+		this.taskDueDate = taskDueDate;
+	}
+	/**
+	 * @return the employeeTaskStatus
+	 */
+	public String getEmployeeTaskStatus() {
+		return employeeTaskStatus;
+	}
+	/**
+	 * @param employeeTaskStatus the employeeTaskStatus to set
+	 */
+	public void setEmployeeTaskStatus(String employeeTaskStatus) {
+		this.employeeTaskStatus = employeeTaskStatus;
+	}
+	/**
+	 * @return the employeeTaskId
+	 */
+	public Integer getEmployeeTaskId() {
+		return employeeTaskId;
+	}
+	/**
+	 * @param employeeTaskId the employeeTaskId to set
+	 */
+	public void setEmployeeTaskId(Integer employeeTaskId) {
+		this.employeeTaskId = employeeTaskId;
+	}
+	/**
+	 * @param teamName
+	 * @param teamId
+	 * @param employeeFName
+	 * @param employeeMName
+	 * @param employeeId
+	 * @param taskId
+	 * @param taskName
+	 * @param taskPriority
+	 * @param taskDueDate
+	 * @param employeeTaskStatus
+	 * @param employeeTaskId
+	 */
+	public TeamTask(String teamName, Integer teamId, String employeeFName, String employeeMName, Integer employeeId,
+			Integer taskId, String taskName, String taskPriority, Date taskDueDate, String employeeTaskStatus,
+			Integer employeeTaskId,String comment, String reply, Date completionDate, Date taskStartDate) {
 		super();
-		this.employee = employee;
-		this.team = team;
-		this.task = task;
+		this.teamName = teamName;
+		this.teamId = teamId;
+		this.employeeFName = employeeFName;
+		this.employeeMName = employeeMName;
+		this.employeeId = employeeId;
+		this.taskId = taskId;
+		this.taskName = taskName;
+		this.taskPriority = taskPriority;
+		this.taskDueDate = taskDueDate;
+		this.employeeTaskStatus = employeeTaskStatus;
+		this.employeeTaskId = employeeTaskId;
+		this.comment = comment;
+		this.reply = reply;
+		this.completionDate = completionDate;
+		this.taskStartDate = taskStartDate;
 	}
-public TeamTask() {}
+	public TeamTask() {}
+	/**
+	 * @return the createdDate
+	 */
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	/**
+	 * @return the reply
+	 */
+	public String getReply() {
+		return reply;
+	}
+	/**
+	 * @param reply the reply to set
+	 */
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+	/**
+	 * @return the completionDate
+	 */
+	public Date getCompletionDate() {
+		return completionDate;
+	}
+	/**
+	 * @param completionDate the completionDate to set
+	 */
+	public void setCompletionDate(Date completionDate) {
+		this.completionDate = completionDate;
+	}
+	/**
+	 * @return the taskStartDate
+	 */
+	public Date getTaskStartDate() {
+		return taskStartDate;
+	}
+	/**
+	 * @param taskStartDate the taskStartDate to set
+	 */
+	public void setTaskStartDate(Date taskStartDate) {
+		this.taskStartDate = taskStartDate;
+	}
+	/**
+	 * @param comment
+	 * @param reply
+	 * @param completionDate
+	 * @param taskStartDate
+	 */
+	/**
+	 * @return the teamTaskList
+	 */
+	public List<TeamTask> getTeamTaskList() {
+		return teamTaskList;
+	}
+	/**
+	 * @param teamTaskList the teamTaskList to set
+	 */
+	public void setTeamTaskList(List<TeamTask> teamTaskList) {
+		this.teamTaskList = teamTaskList;
+	}
+
+
 }

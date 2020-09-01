@@ -20,6 +20,7 @@ import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.model.EmEmployeeSkillMpg;
 import com.gomap.performance.organisastion.model.EmSkill;
+import com.gomap.performance.organisastion.service.AuditLogService;
 import com.gomap.performance.organisastion.service.SkillService;
 
 /**
@@ -34,6 +35,8 @@ public class SkillServiceImpl implements SkillService {
 	 */
 	@Autowired
 	private SkillDao skillDao;
+	@Autowired
+	private AuditLogService auditSrvc;
 	
 	
 	@Override
@@ -51,6 +54,7 @@ public class SkillServiceImpl implements SkillService {
 			emSkill.setSkillName(emSkillDto.getSkillName());
 			emSkill.setActivateFlag(AppConstants.ACTIVE_FLAG);
 			skillDao.createSkill(emSkill);
+			auditSrvc.saveAuditLog("Skill  Created", "Skill Module", "1", new Date());
 			responseDTO.setDataObj(emSkill);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			responseDTO.setSuccessMsg("Skill successfully created");

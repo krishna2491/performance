@@ -5,6 +5,7 @@ package com.gomap.performance.organisastion.dao;
 
 import java.util.List;
 
+import com.gomap.performance.organisastion.model.DashBoardInfo;
 import com.gomap.performance.organisastion.model.ElementMaster;
 import com.gomap.performance.organisastion.model.EmParamsConfig;
 import com.gomap.performance.organisastion.model.OperationMaster;
@@ -21,5 +22,6 @@ public interface CommonDao {
 	public EmParamsConfig createParams(EmParamsConfig emParamsConfig);
 	public List<EmParamsConfig> getParameter(Integer type);
 	public OperationMaster createOperation(OperationMaster operationMaster);
+	public DashBoardInfo getDashBoardInfo(Integer employeeId);
 
 }

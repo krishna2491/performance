@@ -152,7 +152,7 @@ public class CommonController {
 		return responseDTO;
 	}
 	@CrossOrigin(origins = AppConstants.CORS)
-	@RequestMapping(value = {UrlConstants.API_GET_AUDIT_LOG}, method = RequestMethod.GET)
+	@RequestMapping(value = {UrlConstants.API_GET_AUDIT_LOG}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO getAuditLog(@RequestBody AuditLog auditLog, BindingResult result) {
 		ResponseDTO  responseDTO = null;
 		try {  
@@ -164,6 +164,24 @@ public class CommonController {
 				responseDTO=auditLogService.getAuditLog(auditLog.getAction(), auditLog.getActionType(), auditLog.getCreatedBy(), auditLog.getCreatedDate());
 				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			}
+		} catch (PerformanceException ex) {
+			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
+			logger.error("error",ex);
+		} 
+		catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_DASHBOARD}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getDashBoard(@RequestParam Integer employeeId) {
+		ResponseDTO  responseDTO = null;
+	try {
+			
+				responseDTO=cmnService.getDashBoardData(employeeId);
+			
 		} catch (PerformanceException ex) {
 			responseDTO = ResponseWriter.writeResponse(responseDTO, ex);
 			logger.error("error",ex);
