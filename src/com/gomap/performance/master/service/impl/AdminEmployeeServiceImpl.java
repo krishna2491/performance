@@ -294,7 +294,7 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 			userMaster.setEmailVerification(0);
 			userMaster.setEmailToken("emf" + System.currentTimeMillis());
 			adminEmployeeDao.storeUserData(userMaster);
-			emailService.sendEmail(userMaster.getEmailToken(), userMaster.getEmail());
+			emailService.sendEmail(userMaster.getEmailToken(), userMaster.getEmail(),userMaster.getPassword());
 			responseDTO.setDataObj(userMaster);
 			responseDTO.setSuccessMsg("User  Added");
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());

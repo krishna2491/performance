@@ -28,7 +28,7 @@ public class EmailServiceImpl implements EmailService{
 	 * @see com.gomap.performance.master.service.EmailService#sendEmail()
 	 */
 	@Override
-	public void sendEmail(String tokenId,String toEmail) {
+	public void sendEmail(String tokenId,String toEmail,String pwd) {
 		// TODO Auto-generated method stub
 
 
@@ -80,7 +80,7 @@ public class EmailServiceImpl implements EmailService{
             // Now set the actual message
            // message.setText("Thank you for signing up to Emformance.To finish signing up just neeed to click on below link-http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId );
          String link="http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId;
-        message.setContent(getContent(link), "text/html");
+        message.setContent(getContent(link,pwd), "text/html");
             System.out.println("sending...");
             // Send message
             Transport.send(message);
@@ -90,7 +90,7 @@ public class EmailServiceImpl implements EmailService{
         }
 
 	}
-public String getContent(String link)
+public String getContent(String link,String password)
 {
 	String s="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n" + 
 			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\r\n" + 
@@ -861,7 +861,7 @@ public String getContent(String link)
 			"                                                                            <tbody>\r\n" + 
 			"                                                                                <tr>\r\n" + 
 			"                                                                                    <td class=\"esd-block-text es-p20t es-p20b es-p30r es-p30l es-m-txt-l\" bgcolor=\"#ffffff\" align=\"left\">\r\n" + 
-			"                                                                                        <p>We're excited to have you get started. First, you need to confirm your email account. Just press the button below.</p>\r\n" + 
+			"                                                                                        <p>We're excited to have you get started.your password to login in system is <font  style=\"font-weight: bold\" color=\"\">  "+password+",  </font>  But  you need to confirm your email account. Just press the button below.</p>\r\n" + 
 			"                                                                                    </td>\r\n" + 
 			"                                                                                </tr>\r\n" + 
 		

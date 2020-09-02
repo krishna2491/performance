@@ -489,6 +489,7 @@ public class TaskServiceImpl implements TaskService {
 				EmTask emTask=null;
 				for(EmployeeTaskMpg employeeTaskMpg:employeeTaskList)
 				{
+					mpgDto=new EmployeeTaskMpgDto();
 					mpgDto.setActivateFlag(employeeTaskMpg.getActivateFlag());
 					mpgDto.setEmployeeId(employeeTaskMpg.getEmployeeId());
 					
