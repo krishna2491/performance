@@ -51,7 +51,7 @@ public EmProject updateProject(EmProject emProject) throws Exception {
 	 * @see com.gomap.performance.organisastion.dao.ProjectDao#getProjectList()
 	 */
 	@Override
-	public List<EmProject> getProjectList(Integer projId,String projectName,Integer deptId) throws Exception {
+	public List<EmProject> getProjectList(Integer projId,String projectName,Integer deptId,Integer projectCreatedBy) throws Exception {
 		// TODO Auto-generated method stub
 		Criteria crt=this.sessionFactory.getCurrentSession().createCriteria(EmProject.class);
 		if(projId!=null)
@@ -65,6 +65,10 @@ public EmProject updateProject(EmProject emProject) throws Exception {
 		if(deptId!=null)
 		{
 			crt.add(Restrictions.eq("departmentId", deptId));
+		}
+		if(projectCreatedBy!=null)
+		{
+			crt.add(Restrictions.eq("projectCreatedBy", projectCreatedBy));
 		}
 		crt.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
 		crt.addOrder(Order.desc("projectCreatedDate"));

@@ -62,6 +62,8 @@ public class EmDepartment implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "activate_flag")
     private Integer activateFlag;
+    @Column(name = "default_dept")
+    private String defaultDept;
     
 
     public EmDepartment() {
@@ -151,5 +153,19 @@ public class EmDepartment implements Serializable {
 	    if(activateFlag == null) //We set default value in case if the value is not set yet.
 	        activateFlag = 1;
 	    System.out.println("coming here");
+	}
+
+	/**
+	 * @return the defaultDept
+	 */
+	public String getDefaultDept() {
+		return defaultDept;
+	}
+
+	/**
+	 * @param defaultDept the defaultDept to set
+	 */
+	public void setDefaultDept(String defaultDept) {
+		this.defaultDept = defaultDept;
 	}    
 }

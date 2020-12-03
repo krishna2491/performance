@@ -5,6 +5,7 @@ package com.gomap.performance.organisastion.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,7 +21,9 @@ import com.gomap.performance.organisastion.dto.FeedbackRequestParaMpgDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.model.EmFeedbackRequest;
+import com.gomap.performance.organisastion.model.FeedbackEvaluation;
 import com.gomap.performance.organisastion.model.FeedbackRequestParaMpg;
+import com.gomap.performance.organisastion.model.Reviewer;
 import com.gomap.performance.organisastion.service.FeedbackService;
 
 /**
@@ -424,6 +427,84 @@ public class FeedbackServiceImpl implements FeedbackService {
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			
 			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setDataObj(e);
+			responseDTO.setErrorMsg(e.getMessage());
+			responseDTO.setErrorCode(411);
+			logger.error("error in getFeedback",e);
+		}
+		return responseDTO;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.FeedbackService#provideFeedbackEvalution(com.gomap.performance.organisastion.dto.EmFeedbackRequestDto)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO provideFeedbackEvalution(Integer employeeId) {
+		// TODO Auto-generated method stub
+		logger.info("provideFeedbackEvalution---------");
+		ResponseDTO responseDTO=new ResponseDTO();
+		try {
+			EmFeedbackRequest emRequest=new  EmFeedbackRequest();
+			emRequest.setfeedbackForId(employeeId);
+			List<FeedbackEvaluation> objList=feedbackDao.getFeedbackRatings(employeeId);
+			HashMap<Long,FeedbackEvaluation> myMap=new HashMap<Long, FeedbackEvaluation>();
+			List<FeedbackEvaluation> evalutionList=null;
+			List<Reviewer> reviewers=null;
+			Reviewer reviewerObj=null;
+			evalutionList=new ArrayList<FeedbackEvaluation>();
+			if(objList!=null && !objList.isEmpty())
+			{
+				for(FeedbackEvaluation evaluation:objList)
+				{
+					reviewerObj=new Reviewer();
+					if(myMap.containsKey(evaluation.getParamId()))
+					{
+						FeedbackEvaluation ev=myMap.get(evaluation.getParamId());
+						reviewerObj=evaluation.getReview();
+						ev.getReviewer().add(reviewerObj);
+						
+						myMap.put(evaluation.getParamId(), ev);
+						
+					}else
+					{
+						reviewers=new ArrayList<Reviewer>();
+						reviewers.add(evaluation.getReview());
+						evaluation.setReviewer(reviewers);
+						myMap.put(evaluation.getParamId(), evaluation);
+					}
+				} 
+				
+				int rating=0;
+				double count=0;
+				double avaRat=0;
+				if(myMap!=null)
+				{
+					for(FeedbackEvaluation eva1:myMap.values())
+					{
+						avaRat=0;
+						if(eva1.getReviewer()!=null)
+						{
+							for(Reviewer rw:eva1.getReviewer())
+							{
+								count++;
+								rating=rating+rw.getRating();
+							}
+							avaRat=rating/count;
+							eva1.setReview(null);
+							eva1.setAverageRating(avaRat);
+						}
+						evalutionList.add(eva1);
+					}
+				}
+				responseDTO.setDataObj(evalutionList);
+				responseDTO.setSuccessMsg("Feedback data sent");
+				responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+				
+			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception

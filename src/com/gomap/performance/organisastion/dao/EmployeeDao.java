@@ -9,6 +9,7 @@ import com.gomap.performance.organisastion.model.DesignationElementMaping;
 import com.gomap.performance.organisastion.model.EmEmployee;
 import com.gomap.performance.organisastion.model.EmployeeElementMpg;
 import com.gomap.performance.organisastion.model.EmployeeElementOperationMpg;
+import com.gomap.performance.organisastion.model.Person;
 import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
 
 /**
@@ -29,4 +30,7 @@ public interface EmployeeDao {
 	
 	public List<EmployeeElementMpg> getEmployeeElement(Integer employeeId ) throws Exception;
 	public List<EmployeeElementOperationMpg> getEmployeeElementOperation(Integer employeeElementMpgId) throws Exception;
+	public Person storePerson(Person person);
+	public List<Person> getPerson(Integer id);
+	
 }

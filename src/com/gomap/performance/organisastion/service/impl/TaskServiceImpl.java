@@ -25,6 +25,7 @@ import com.gomap.performance.organisastion.model.EmTask;
 import com.gomap.performance.organisastion.model.EmTeamMember;
 import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
 import com.gomap.performance.organisastion.model.TeamTask;
+import com.gomap.performance.organisastion.service.AuditLogService;
 import com.gomap.performance.organisastion.service.TaskService;
 
 /**
@@ -40,6 +41,9 @@ public class TaskServiceImpl implements TaskService {
 	 */
 	@Autowired
 	private TaskDao taskDao;
+	
+	@Autowired
+	private AuditLogService auditSrvc;
 	
 	@Override
 	@Transactional
@@ -104,6 +108,22 @@ public class TaskServiceImpl implements TaskService {
 			emTask.setTaskCreatedDate(new Date());
 			
 			taskDao.createTask(emTask);
+			auditSrvc.saveAuditLog("Task  Created", "Task Module", emTask.getAssignedById()+"", new Date());
+			EmployeeTaskMpg employeeTaskMpg=null;
+			/*if(emTaskDto.getAssignedById()!=null && emTaskDto.getAssignedToId()!=null  
+					&& emTaskDto.getAssignedToId().equals(emTaskDto.getAssignedById()))
+			{
+				employeeTaskMpg=new EmployeeTaskMpg();
+				employeeTaskMpg.setEmployeeId(emTaskDto.getAssignedById());
+				employeeTaskMpg.setTaskId(emTask.getTaskId());
+				employeeTaskMpg.setCreatedDate(new Date());
+				employeeTaskMpg.setEmployeeTaskStatus(AppConstants.CREATED);
+				employeeTaskMpg.setActivateFlag(AppConstants.ACTIVE_FLAG);
+				employeeTaskMpg.setAssignedById(emTaskDto.getAssignedById());
+				
+				taskDao.mapEMployeeTask(employeeTaskMpg);
+				
+			}*/
 			responseDTO.setDataObj(emTask);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			responseDTO.setSuccessMsg("Task successfully created");

@@ -48,8 +48,8 @@ public class EmDesignation implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "designation_name")
     private String designationName;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
+   
     @Column(name = "department_id")
     private Integer departmentId;
     @Basic(optional = false)
@@ -73,6 +73,9 @@ public class EmDesignation implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "activate_flag")
     private Integer activateFlag;
+    
+    @Column(name = "default_designation")
+    private String defaultDesignation;
     
     public EmDesignation() {
     }
@@ -190,6 +193,20 @@ public class EmDesignation implements Serializable {
 		this.designationCreatedDate = designationCreatedDate;
 		this.designationUpdatedDate = designationUpdatedDate;
 		this.activateFlag = activateFlag;
+	}
+
+	/**
+	 * @return the defaultDesignation
+	 */
+	public String getDefaultDesignation() {
+		return defaultDesignation;
+	}
+
+	/**
+	 * @param defaultDesignation the defaultDesignation to set
+	 */
+	public void setDefaultDesignation(String defaultDesignation) {
+		this.defaultDesignation = defaultDesignation;
 	}
 
 	/**

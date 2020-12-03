@@ -3,6 +3,15 @@
  */
 package com.gomap.performance.organisastion.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.util.Date;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gomap.performance.master.aop.logging.EmailTest;
 import com.gomap.performance.master.constant.AppConstants;
@@ -25,8 +35,11 @@ import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.exception.PerformanceException;
 import com.gomap.performance.organisastion.model.AuditLog;
+import com.gomap.performance.organisastion.model.FileMaster;
+import com.gomap.performance.organisastion.model.Person;
 import com.gomap.performance.organisastion.service.AuditLogService;
 import com.gomap.performance.organisastion.service.CommonService;
+import com.gomap.performance.organisastion.service.EmployeeService;
 import com.gomap.performance.organisastion.util.ResponseWriter;
 
 /**
@@ -42,6 +55,10 @@ public class CommonController {
 	private CommonService cmnService;
 	@Autowired
 	private AuditLogService auditLogService;
+	
+	@Autowired
+	private EmployeeService employeeService;
+	private static final int BUFFER_SIZE = 4096;
 	
 	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_GET_ELEMENT}, method = RequestMethod.GET)
@@ -187,6 +204,83 @@ public class CommonController {
 			logger.error("error",ex);
 		} 
 		catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_UPLOAD_FILE}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO uploadFile(@RequestParam("file") MultipartFile file,
+			@RequestParam("id") Integer id,@RequestParam("module") String module,HttpServletRequest request,HttpServletResponse response) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			responseDTO=cmnService.storeFiles(module, file, id)	;
+					
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_EMPLOYEE_IMAGE}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getEmployeeImage(
+			@RequestParam("fileId") Integer fileId,HttpServletRequest request,HttpServletResponse response) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			
+				
+				responseDTO=cmnService.getEmployeeFiles(fileId);
+				
+				
+
+				ServletContext context = request.getServletContext();
+				String appPath = context.getRealPath("");
+				System.out.println("appPath = " + appPath);
+				
+				// construct the complete absolute path of the file
+				//String fullPath = appPath + filePath;
+				File downloadFile =new File(responseDTO.getDataObj().toString());
+				//System.out.println("responseDTO.getDataObj().toString()"+responseDTO.getDataObj().toString());
+				FileInputStream inputStream = new FileInputStream(downloadFile);
+				
+				// get MIME type of the fileresponseDTO.getDataObj().toString()
+				String mimeType =context.getMimeType(responseDTO.getDataObj().toString());
+				if (mimeType == null) {
+				// set to binary type if MIME mapping not found
+				mimeType = "application/octet-stream";
+				}
+				System.out.println("MIME type: " + mimeType);
+				
+				// set content attributes for the response
+				response.setContentType(mimeType);
+				response.setContentLength((int) downloadFile.length());
+				
+				// set headers for the response
+				String headerKey = "Content-Disposition";
+				String headerValue = String.format("attachment; filename=\"%s\"",
+				downloadFile.getName());
+				response.setHeader(headerKey, headerValue);
+				
+				// get output stream of the response
+				OutputStream outStream = response.getOutputStream();
+				
+				byte[] buffer = new byte[BUFFER_SIZE];
+				int bytesRead = -1;
+				
+				// write bytes read from the input stream into the output stream
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outStream.write(buffer, 0, bytesRead);
+				}
+				
+				inputStream.close();
+				outStream.close();
+				
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+		} catch (Exception e) {
 			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
 			logger.error("error",e);
 		} 

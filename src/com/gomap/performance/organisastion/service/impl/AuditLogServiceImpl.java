@@ -64,7 +64,7 @@ public class AuditLogServiceImpl implements AuditLogService{
 		ResponseDTO responseDTO = new ResponseDTO();
 		logger.info("here getAuditLog");
 		try {
-			AuditLog log=new AuditLog(action, action_Type, createdBy, new Date());
+			AuditLog log=new AuditLog(action, action_Type, createdBy, createdDate);
 		
 			responseDTO.setDataObj(	auditLogDao.getAuditLogData(log));
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());

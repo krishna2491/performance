@@ -16,8 +16,23 @@ import com.gomap.performance.organisastion.model.EmDesignation;
 public class EmEmployeeDto implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer employeeId;
+    private Integer departmentId;
     private Integer designationId;
-    private String employeeFname;
+    /**
+	 * @return the designationId
+	 */
+	public Integer getDesignationId() {
+		return designationId;
+	}
+
+	/**
+	 * @param designationId the designationId to set
+	 */
+	public void setDesignationId(Integer designationId) {
+		this.designationId = designationId;
+	}
+
+	private String employeeFname;
     private String employeeMname;
     private String employeeEmail;
     private String employeePassword;
@@ -28,6 +43,7 @@ public class EmEmployeeDto implements Serializable {
     private EmDesignation designation;
     private String gender;
     private String employeeCode;
+    private Integer fileId;
 
     private Integer activateFlag;
     private List<EmployeeElementMpgDto> employeeElementMappingList;
@@ -46,20 +62,7 @@ public class EmEmployeeDto implements Serializable {
 		this.employeeId = employeeId;
 	}
 
-	/**
-	 * @return the designationId
-	 */
-	public Integer getDesignationId() {
-		return designationId;
-	}
-
-	/**
-	 * @param designationId the designationId to set
-	 */
-	public void setDesignationId(Integer designationId) {
-		this.designationId = designationId;
-	}
-
+	
 	/**
 	 * @return the employeeFname
 	 */
@@ -247,5 +250,33 @@ public class EmEmployeeDto implements Serializable {
 	 */
 	public void setEmployeeCode(String employeeCode) {
 		this.employeeCode = employeeCode;
+	}
+
+	/**
+	 * @return the fileId
+	 */
+	public Integer getFileId() {
+		return fileId;
+	}
+
+	/**
+	 * @param fileId the fileId to set
+	 */
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
+	}
+
+	/**
+	 * @return the departmentId
+	 */
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	/**
+	 * @param departmentId the departmentId to set
+	 */
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
 	}
 }

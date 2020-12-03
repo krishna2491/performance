@@ -25,7 +25,6 @@ public final class UrlConstants {
 	public static final String API_GET_DESIGNATION = "emf/getDesignation";
 	public static final String API_UPDATE_DESIGNATION = "emf/updateDesignation";
 	public static final String API_UPDATE_DEPARTMENT = "emf/updateDepartment";
-
 	public static final String API_EMPLOYEE_DEPARTMENT_MPG = "emf/employeeDepartmentMpg";
 	public static final String API_ADD_SKILL = "emf/addSkill";
 	public static final String API_ADD_GOAL = "emf/addGoal";
@@ -46,13 +45,10 @@ public final class UrlConstants {
 	public static final String API_GET_EMPLOYEE_LIST = "emf/getEmployeeList";
 	public static final String API_GET_TASK = "emf/getTask";
 	public static final String API_UPDATE_TASK = "emf/updateTask";
-
 	public static final String API_UPDATE_GOAL = "emf/updateGoal";
-
 	public static final String API_UPDATE_SKILL = "emf/updateSkill";
 	public static final String API_MAP_EMPLOYEE_SKILL = "emf/mapEmployeeSkill";
 	public static final String API_UPDATE_EMPLOYEE_SKILL = "emf/updateEmployeeSkill";
-
 	public static final String API_GET_EMPLOYEE_SKILL = "emf/getEmployeeSkill";
 	public static final String API_ADD_COMPANY = "emf/addCompany";
 	public static final String API_GET_COMPANY = "emf/getCompany";
@@ -73,7 +69,6 @@ public final class UrlConstants {
 	public static final String API_EMPLOYEE_ELEMETNS = "emf/getEmployeeElements";
 	public static final String API_CHECK_PORTALNAME = "emf/checkPortalName";
 	public static final String API_GET_INDUSTRY = "emf/getIndustry";
-
 	public static final String API_DELETE_EMPLOYEE_SKILL = "emf/deleteEmployeeSkill";
 	public static final String API_DELETE_TASK = "emf/deleteTask";
 	public static final String API_DELETE_DEPARTMENT = "emf/deleteDepartment";
@@ -95,7 +90,25 @@ public final class UrlConstants {
 	public static final String API_GET_MY_TEAM_TASK = "emf/getMyTeamTask";
 	public static final String API_GET_AUDIT_LOG = "emf/getAuditLog";
 	public static final String API_GET_DASHBOARD = "emf/getDashBoard";
-
+	public static final String API_ADD_EXIT_INETERVIEW_PARAM = "emf/addExitInterviewParam";
+	public static final String API_UPDATE_EXIT_INETERVIEW_PARAM = "emf/updateExitInterviewParam";
+	public static final String API_GET_EXIT_INETERVIEW_PARAM = "emf/getExitInterviewParam";
+	public static final String API_ADD_INTERVIEW_RESPONSE = "emf/saveInterviewResponse";
+	public static final String API_UPDATE_INTERVIEW_RESPONSE = "emf/updateInterviewResponse";
+	public static final String API_GET_INTERVIEW_RESPONSE = "emf/getInterviewResponse";
+	public static final String API_GET_INTERVIEW_RESPONSE_DETAIL = "emf/getInterviewResponseDetail";
+	public static final String API_STORE_FILE = "emf/storeFile";
+	public static final String API_ADD_PERIOD = "emf/createPeriod";
+	public static final String API_UPDATE_PERIOD = "emf/updatePeriod";
+	public static final String API_GET_CURRENT_PERIOD = "emf/getCurrentPeriod";
+	public static final String API_GET_ALL_PERIOD = "emf/getAllPeriod";
+	public static final String API_ADD_EVALUATION = "emf/evaluteEmployee";
+	public static final String API_UPDATE_EVALUATION = "emf/updateEmployeeEvalution";
+	public static final String API_GET_EVALUATION = "emf/getEmployeeEvalution";
+	public static final String API_UPLOAD_FILE = "emf/uploadFile";
+	public static final String API_GET_EMPLOYEE_IMAGE = "emf/getFile";
+	public static final String API_GET_FEEDBACK_RATING = "emf/getFeedbackRatingDetails";
+	public static final String API_CHECK_EVALUATION = "emf/checkEvalution";
 //	Lead
 
 }

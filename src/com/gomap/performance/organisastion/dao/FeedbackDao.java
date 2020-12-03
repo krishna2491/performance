@@ -6,6 +6,7 @@ package com.gomap.performance.organisastion.dao;
 import java.util.List;
 
 import com.gomap.performance.organisastion.model.EmFeedbackRequest;
+import com.gomap.performance.organisastion.model.FeedbackEvaluation;
 import com.gomap.performance.organisastion.model.FeedbackRequestParaMpg;
 
 /**
@@ -22,5 +23,7 @@ public interface FeedbackDao {
 	 * @return
 	 */
 	public EmFeedbackRequest updateFeedbackRequest(EmFeedbackRequest emFeedbackRequest);
+	public List<FeedbackEvaluation> getFeedbackRatings(Integer employee);
+	
 
 }

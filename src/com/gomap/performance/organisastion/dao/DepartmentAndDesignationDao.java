@@ -44,7 +44,10 @@ public interface DepartmentAndDesignationDao {
 	 * @return
 	 * @throws Exception
 	 */
-	List<EmDepartment> getDepartment(Integer departmentId, String departmentName) throws Exception;
+	public List<EmDepartment> getDepartment(Integer departmentId, String departmentName) throws Exception;
+	public List<EmDepartment> checkDefaultDept() throws Exception;
+	public List<EmDesignation> checkDefaultDesignation() throws Exception;
+	
 	
 	
 	

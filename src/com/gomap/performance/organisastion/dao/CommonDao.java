@@ -8,6 +8,7 @@ import java.util.List;
 import com.gomap.performance.organisastion.model.DashBoardInfo;
 import com.gomap.performance.organisastion.model.ElementMaster;
 import com.gomap.performance.organisastion.model.EmParamsConfig;
+import com.gomap.performance.organisastion.model.FileMaster;
 import com.gomap.performance.organisastion.model.OperationMaster;
 
 /**
@@ -23,5 +24,8 @@ public interface CommonDao {
 	public List<EmParamsConfig> getParameter(Integer type);
 	public OperationMaster createOperation(OperationMaster operationMaster);
 	public DashBoardInfo getDashBoardInfo(Integer employeeId);
+	public FileMaster storeFile(FileMaster fileMaster);
+	public FileMaster updateFile(FileMaster fileMaster);
+	public FileMaster getFile(Integer fileId);
 
 }

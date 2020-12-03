@@ -3,6 +3,8 @@
  */
 package com.gomap.performance.organisastion.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.gomap.performance.organisastion.dto.DepartmentDto;
 import com.gomap.performance.organisastion.dto.ElementMasterDto;
 import com.gomap.performance.organisastion.dto.EmParamsConfigDto;
@@ -32,6 +34,8 @@ public interface CommonService {
 	 * @throws Exception
 	 */
 	public ResponseDTO getDashBoardData(Integer employeeId) throws Exception;
+	public ResponseDTO  storeFiles(String module,MultipartFile file,Integer id) throws Exception;
+	public ResponseDTO  getEmployeeFiles(Integer fileId) throws Exception;
 
 	
 

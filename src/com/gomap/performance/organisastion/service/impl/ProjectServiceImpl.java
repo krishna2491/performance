@@ -45,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
 		try {
 
 			if (projectDto.getProjectName() != null && !("").equals(projectDto.getProjectName().trim())) {
-				List<EmProject> projectList = projectDao.getProjectList(null, projectDto.getProjectName(),projectDto.getDepartmentId());
+				List<EmProject> projectList = projectDao.getProjectList(null, projectDto.getProjectName(),projectDto.getDepartmentId(),null);
 				
 				if(projectList.isEmpty())
 				{
@@ -161,7 +161,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public ResponseDTO getProjectList(Integer projId) throws Exception {
 		// TODO Auto-generated method stub
 		ResponseDTO resSto=new ResponseDTO();
-		resSto.setDataObj(projectDao.getProjectList(projId,null,null));
+		resSto.setDataObj(projectDao.getProjectList(projId,null,null,null));
 		resSto.setSuccessMsg("project list sent..");
 		resSto.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 		
@@ -192,7 +192,7 @@ public class ProjectServiceImpl implements ProjectService {
 				responseDTO.setErrorMsg("Project parameter can not be null");
 			} else {
 				
-				List<EmProject> projList = projectDao.getProjectList(projectDto.getProjectId(),null,null);
+				List<EmProject> projList = projectDao.getProjectList(projectDto.getProjectId(),null,null,null);
 						
 				if (projList.isEmpty()) {
 					responseDTO.setErrorCode(412);

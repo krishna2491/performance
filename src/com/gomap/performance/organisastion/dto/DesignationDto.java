@@ -17,6 +17,7 @@ public class DesignationDto implements Serializable {
 	    private Integer departmentId;
 	    private Integer parentDesignationId;
 	    private Integer designationLevelNo;
+	    private String defaultDesignation;
 	
 	    private Date designationCreatedDate;
 	    private Date designationUpdatedDate;
@@ -120,6 +121,18 @@ public class DesignationDto implements Serializable {
 		/**
 		 * @return the designationElementMapingDtoList
 		 */
+		/**
+		 * @return the defaultDesignation
+		 */
+		public String getDefaultDesignation() {
+			return defaultDesignation;
+		}
+		/**
+		 * @param defaultDesignation the defaultDesignation to set
+		 */
+		public void setDefaultDesignation(String defaultDesignation) {
+			this.defaultDesignation = defaultDesignation;
+		}
 		
 	
 		

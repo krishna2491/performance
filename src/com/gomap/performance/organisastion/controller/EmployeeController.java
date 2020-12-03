@@ -3,6 +3,16 @@
  */
 package com.gomap.performance.organisastion.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.master.constant.UrlConstants;
@@ -22,6 +33,7 @@ import com.gomap.performance.organisastion.dto.EmployeeDto;
 import com.gomap.performance.organisastion.dto.ResponseDTO;
 import com.gomap.performance.organisastion.enumorg.ErrorCodeEnums;
 import com.gomap.performance.organisastion.exception.PerformanceException;
+import com.gomap.performance.organisastion.model.Person;
 import com.gomap.performance.organisastion.service.EmployeeService;
 import com.gomap.performance.organisastion.util.ResponseWriter;
 
@@ -35,12 +47,14 @@ import com.gomap.performance.organisastion.util.ResponseWriter;
 @RestController
 public class EmployeeController {
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+	private static final int BUFFER_SIZE = 4096;
 	
 	@Autowired
 	EmployeeService employeeService;
 	@CrossOrigin(origins = AppConstants.CORS)
 	@RequestMapping(value = {UrlConstants.API_ADD_EMPLOYEE}, method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addEmployee(@RequestBody EmEmployeeDto employeeDto, BindingResult result) {
+	//public @ResponseBody ResponseDTO addEmployee(@RequestBody EmEmployeeDto employeeDto,File file, BindingResult result) {
 		ResponseDTO  responseDTO = null;
 		try {  
 			if(result.hasErrors()){
@@ -159,4 +173,33 @@ public class EmployeeController {
 		} 
 		return responseDTO;
 	}
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_STORE_FILE}, method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO checkBlobEmployee(@RequestParam("file") MultipartFile file,
+			@RequestParam("id") Integer id,@RequestBody EmEmployeeDto employeeDto) {
+		ResponseDTO  responseDTO = null;
+		try {  
+			System.out.println(file.getContentType()+" "+file.getOriginalFilename());
+			
+				responseDTO=new ResponseDTO();
+			//	responseDTO.setDataObj(employeeDto);
+				byte[] bb=file.getBytes();
+				Person pp=new Person();
+				
+				
+				String type=file.getOriginalFilename().split("\\.")[1];
+				pp.setFileType(type);
+				
+				responseDTO=(ResponseDTO) employeeService.storeFiles(pp,bb);
+				pp.setId(id);
+				responseDTO=employeeService.getFiles(pp);
+				//responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
+	
 }

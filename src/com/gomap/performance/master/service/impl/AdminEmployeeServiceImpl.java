@@ -279,6 +279,10 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 			if (userDto.getName() != null) {
 				userMaster.setName(userDto.getName());
 			}
+			String pwd="Password@2020";
+			userMaster.setPassword(pwd);
+			userMaster.setFirstLogin("YES");
+			
 			if (userDto.getPassword() != null) {
 				userMaster.setPassword(userDto.getPassword());
 			}
@@ -294,7 +298,7 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 			userMaster.setEmailVerification(0);
 			userMaster.setEmailToken("emf" + System.currentTimeMillis());
 			adminEmployeeDao.storeUserData(userMaster);
-			emailService.sendEmail(userMaster.getEmailToken(), userMaster.getEmail(),userMaster.getPassword());
+			emailService.sendEmail(userMaster.getEmailToken(), userMaster.getEmail(),userMaster.getPassword(),userMaster.getName());
 			responseDTO.setDataObj(userMaster);
 			responseDTO.setSuccessMsg("User  Added");
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -428,6 +432,7 @@ public class AdminEmployeeServiceImpl implements AdminEmployeeService {
 					}
 					if (userDto.getPassword() != null) {
 						userMaster.setPassword(userDto.getPassword());
+						userMaster.setFirstLogin("NO");
 					}
 					userMaster.setUpdatedDate(new Date());
 

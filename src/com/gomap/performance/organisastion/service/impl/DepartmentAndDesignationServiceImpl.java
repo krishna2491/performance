@@ -61,7 +61,10 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 					emDepartment.setActivateFlag(1);
 					emDepartment.setDepartmentCreatedDate(new Date());
 					emDepartment.setDepartmentName(departmentDto.getDepartmentName());
-					
+					if(departmentDto.getDefaultDept()!=null)
+					{
+						emDepartment.setDefaultDept(departmentDto.getDefaultDept());	
+					}
 					departmentAndDesignationDao.createDepartment(emDepartment);
 					responseDTO.setDataObj(emDepartment);
 					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -122,12 +125,17 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 					{
 						emDesignation.setParentDesignationId(designationDto.getParentDesignationId());
 					}
+					if(designationDto.getDefaultDesignation()!=null)
+					{
+						emDesignation.setDefaultDesignation(designationDto.getDefaultDesignation());
+					}
 					if(designationDto.getDepartmentId()!=null)
 					{
 						emDesignation.setDepartmentId(designationDto.getDepartmentId());
 							
 					}else {
-						responseDTO.setErrorMsg("Department id can not be blank");
+						emDesignation.setDepartmentId(-1);
+						//responseDTO.setErrorMsg("Department id can not be blank");
 						
 					}
 					
@@ -165,7 +173,7 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 						}
 					}
 					
-					
+					responseDTO.setSuccessMsg("Designation Created");
 					responseDTO.setDataObj(emDesignation);
 					responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 				}else
@@ -219,6 +227,10 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 					{
 						department.setDepartmentName(departmentDto.getDepartmentName());
 						department.setDepartmentUpdatedDate(new Date());
+						if(departmentDto.getDefaultDept()!=null)
+						{
+							department.setDefaultDept(departmentDto.getDefaultDept());	
+						}
 						departmentAndDesignationDao.updateDepartment(department);
 						responseDTO.setDataObj(department);
 						responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -279,12 +291,17 @@ public class DepartmentAndDesignationServiceImpl implements DepartmentAndDesigna
 						{
 							emDesignation.setParentDesignationId(designationDto.getParentDesignationId());
 						}
+						if(designationDto.getDefaultDesignation()!=null)
+						{
+							emDesignation.setDefaultDesignation(designationDto.getDefaultDesignation());
+						}
 						if(designationDto.getDepartmentId()!=null)
 						{
 							emDesignation.setDepartmentId(designationDto.getDepartmentId());
 								
 						}else {
-							responseDTO.setErrorMsg("Department id can not be blank");
+							emDesignation.setDepartmentId(-1);
+							//responseDTO.setErrorMsg("Department id can not be blank");
 							
 						}
 				

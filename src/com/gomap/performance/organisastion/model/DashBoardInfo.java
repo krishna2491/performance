@@ -21,16 +21,24 @@ public class DashBoardInfo implements Serializable{
 	private Integer inprogressProject;
 	private Integer completedTask;
 	private Integer dueTask;
+	private Integer createdTask;
 	private Integer inprogressTask;
-	
-	private Integer completedGoals;
-	private Integer dueGoals;
-	private Integer inprogressGoals;
+	private Integer onHoldGoal;
+	private Integer createdProject;
+	private Integer completedGoal;
+	private Integer dueGoal;
+	private Integer inprogressGoal;
+	private Integer createdGoal;
 	private List<EmProject> projectList;	
 	private List<EmTask> taskList;
 	private List<EmTeam> teamList;
 	private List<EmGoal> goalList;
 	private HashMap<String,Integer> ratingCount;
+	private Integer feedbackBad;
+	private Integer feedbackOk;
+	private Integer feedbackGood;
+	private Integer feedbackVeryGood;
+	private Integer feedbackExcellent;
 	/**
 	 * @return the totalProject
 	 */
@@ -116,6 +124,114 @@ public class DashBoardInfo implements Serializable{
 		this.inprogressProject = inprogressProject;
 	}
 	/**
+	 * @return the completedTask
+	 */
+	public Integer getCompletedTask() {
+		return completedTask;
+	}
+	/**
+	 * @param completedTask the completedTask to set
+	 */
+	public void setCompletedTask(Integer completedTask) {
+		this.completedTask = completedTask;
+	}
+	/**
+	 * @return the dueTask
+	 */
+	public Integer getDueTask() {
+		return dueTask;
+	}
+	/**
+	 * @param dueTask the dueTask to set
+	 */
+	public void setDueTask(Integer dueTask) {
+		this.dueTask = dueTask;
+	}
+	/**
+	 * @return the createdTask
+	 */
+	public Integer getCreatedTask() {
+		return createdTask;
+	}
+	/**
+	 * @param createdTask the createdTask to set
+	 */
+	public void setCreatedTask(Integer createdTask) {
+		this.createdTask = createdTask;
+	}
+	/**
+	 * @return the inprogressTask
+	 */
+	public Integer getInprogressTask() {
+		return inprogressTask;
+	}
+	/**
+	 * @param inprogressTask the inprogressTask to set
+	 */
+	public void setInprogressTask(Integer inprogressTask) {
+		this.inprogressTask = inprogressTask;
+	}
+	/**
+	 * @return the createdProject
+	 */
+	public Integer getCreatedProject() {
+		return createdProject;
+	}
+	/**
+	 * @param createdProject the createdProject to set
+	 */
+	public void setCreatedProject(Integer createdProject) {
+		this.createdProject = createdProject;
+	}
+	/**
+	 * @return the completedGoal
+	 */
+	public Integer getCompletedGoal() {
+		return completedGoal;
+	}
+	/**
+	 * @param completedGoal the completedGoal to set
+	 */
+	public void setCompletedGoal(Integer completedGoal) {
+		this.completedGoal = completedGoal;
+	}
+	/**
+	 * @return the dueGoal
+	 */
+	public Integer getDueGoal() {
+		return dueGoal;
+	}
+	/**
+	 * @param dueGoal the dueGoal to set
+	 */
+	public void setDueGoal(Integer dueGoal) {
+		this.dueGoal = dueGoal;
+	}
+	/**
+	 * @return the inprogressGoal
+	 */
+	public Integer getInprogressGoal() {
+		return inprogressGoal;
+	}
+	/**
+	 * @param inprogressGoal the inprogressGoal to set
+	 */
+	public void setInprogressGoal(Integer inprogressGoal) {
+		this.inprogressGoal = inprogressGoal;
+	}
+	/**
+	 * @return the createdGoal
+	 */
+	public Integer getCreatedGoal() {
+		return createdGoal;
+	}
+	/**
+	 * @param createdGoal the createdGoal to set
+	 */
+	public void setCreatedGoal(Integer createdGoal) {
+		this.createdGoal = createdGoal;
+	}
+	/**
 	 * @return the projectList
 	 */
 	public List<EmProject> getProjectList() {
@@ -164,78 +280,6 @@ public class DashBoardInfo implements Serializable{
 		this.goalList = goalList;
 	}
 	/**
-	 * @return the completedTask
-	 */
-	public Integer getCompletedTask() {
-		return completedTask;
-	}
-	/**
-	 * @param completedTask the completedTask to set
-	 */
-	public void setCompletedTask(Integer completedTask) {
-		this.completedTask = completedTask;
-	}
-	/**
-	 * @return the dueTask
-	 */
-	public Integer getDueTask() {
-		return dueTask;
-	}
-	/**
-	 * @param dueTask the dueTask to set
-	 */
-	public void setDueTask(Integer dueTask) {
-		this.dueTask = dueTask;
-	}
-	/**
-	 * @return the inprogressTask
-	 */
-	public Integer getInprogressTask() {
-		return inprogressTask;
-	}
-	/**
-	 * @param inprogressTask the inprogressTask to set
-	 */
-	public void setInprogressTask(Integer inprogressTask) {
-		this.inprogressTask = inprogressTask;
-	}
-	/**
-	 * @return the completedGoals
-	 */
-	public Integer getCompletedGoals() {
-		return completedGoals;
-	}
-	/**
-	 * @param completedGoals the completedGoals to set
-	 */
-	public void setCompletedGoals(Integer completedGoals) {
-		this.completedGoals = completedGoals;
-	}
-	/**
-	 * @return the dueGols
-	 */
-	public Integer getDueGoals() {
-		return dueGoals;
-	}
-	/**
-	 * @param dueGols the dueGols to set
-	 */
-	public void setDueGoals(Integer dueGoals) {
-		this.dueGoals = dueGoals;
-	}
-	/**
-	 * @return the inprogressGoals
-	 */
-	public Integer getInprogressGoals() {
-		return inprogressGoals;
-	}
-	/**
-	 * @param inprogressGoals the inprogressGoals to set
-	 */
-	public void setInprogressGoals(Integer inprogressGoals) {
-		this.inprogressGoals = inprogressGoals;
-	}
-	/**
 	 * @return the ratingCount
 	 */
 	public HashMap<String, Integer> getRatingCount() {
@@ -247,5 +291,85 @@ public class DashBoardInfo implements Serializable{
 	public void setRatingCount(HashMap<String, Integer> ratingCount) {
 		this.ratingCount = ratingCount;
 	}
+	/**
+	 * @return the feedbackBad
+	 */
+	public Integer getFeedbackBad() {
+		return feedbackBad;
+	}
+	/**
+	 * @param feedbackBad the feedbackBad to set
+	 */
+	public void setFeedbackBad(Integer feedbackBad) {
+		this.feedbackBad = feedbackBad;
+	}
+	/**
+	 * @return the feedbackOk
+	 */
+	public Integer getFeedbackOk() {
+		return feedbackOk;
+	}
+	/**
+	 * @param feedbackOk the feedbackOk to set
+	 */
+	public void setFeedbackOk(Integer feedbackOk) {
+		this.feedbackOk = feedbackOk;
+	}
+	/**
+	 * @return the feedbackGood
+	 */
+	public Integer getFeedbackGood() {
+		return feedbackGood;
+	}
+	/**
+	 * @param feedbackGood the feedbackGood to set
+	 */
+	public void setFeedbackGood(Integer feedbackGood) {
+		this.feedbackGood = feedbackGood;
+	}
+	/**
+	 * @return the feedbackVeryGood
+	 */
+	public Integer getFeedbackVeryGood() {
+		return feedbackVeryGood;
+	}
+	/**
+	 * @param feedbackVeryGood the feedbackVeryGood to set
+	 */
+	public void setFeedbackVeryGood(Integer feedbackVeryGood) {
+		this.feedbackVeryGood = feedbackVeryGood;
+	}
+	/**
+	 * @return the feedbackExcellent
+	 */
+	public Integer getFeedbackExcellent() {
+		return feedbackExcellent;
+	}
+	/**
+	 * @param feedbackExcellent the feedbackExcellent to set
+	 */
+	public void setFeedbackExcellent(Integer feedbackExcellent) {
+		this.feedbackExcellent = feedbackExcellent;
+	}
+	/**
+	 * @return the onHoldTask
+	 */
+	public Integer getOnHoldGoal() {
+		return onHoldGoal;
+	}
+	/**
+	 * @param onHoldTask the onHoldTask to set
+	 */
+	public void setOnHoldGoal(Integer onHoldGoal) {
+		this.onHoldGoal = onHoldGoal;
+	}
+	
+	
+
+	
+	
+	
+	
+	
 
 }

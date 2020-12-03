@@ -24,6 +24,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.Type;
+
 /**
  *
  * @author Palash
@@ -101,7 +103,8 @@ public class EmGoal implements Serializable {
     @Column(name = "confirm_note")
     private String confirmNote;
     @Column(name = "goal_created_date")
-    @Temporal(TemporalType.DATE)
+   // @Temporal(TemporalType.DATE)
+    @Type(type = "date")
     private Date goalCreatedDate;
     @Column(name = "goal_updated_date")
     @Temporal(TemporalType.DATE)

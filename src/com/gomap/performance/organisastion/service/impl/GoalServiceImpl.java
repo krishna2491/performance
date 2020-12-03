@@ -3,6 +3,7 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class GoalServiceImpl implements GoalService {
 		ResponseDTO responseDTO=new ResponseDTO();
 		logger.info("Goal Creation started");
 		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			EmGoal emGoal=new EmGoal();
 			emGoal.setActivateFlag(AppConstants.ACTIVE_FLAG);
 			if(emGoalDto.getConfirmNote()!=null)
@@ -86,9 +88,9 @@ public class GoalServiceImpl implements GoalService {
 			{
 				emGoal.setGoalStatus(emGoalDto.getGoalStatus());
 			}
-			if(emGoalDto.getGoalPercantage()!=null)
+			if(emGoalDto.getGoalPercentage()!=null)
 			{
-				emGoal.setGoalPercantage(emGoalDto.getGoalPercantage());
+				emGoal.setGoalPercantage(emGoalDto.getGoalPercentage());
 			}
 			if(emGoalDto.getComment()!=null)
 			{
@@ -98,6 +100,7 @@ public class GoalServiceImpl implements GoalService {
 			{
 				emGoal.setReply(emGoalDto.getReply());
 			}
+			
 			emGoal.setGoalCreatedDate(new Date());
 			
 			goalDao.createGoal(emGoal);
@@ -181,9 +184,9 @@ public class GoalServiceImpl implements GoalService {
 						{
 							emGoal.setGoalStatus(emGoalDto.getGoalStatus());
 						}
-						if(emGoalDto.getGoalPercantage()!=null)
+						if(emGoalDto.getGoalPercentage()!=null)
 						{
-							emGoal.setGoalPercantage(emGoalDto.getGoalPercantage());
+							emGoal.setGoalPercantage(emGoalDto.getGoalPercentage());
 						}
 						if(emGoalDto.getComment()!=null)
 						{

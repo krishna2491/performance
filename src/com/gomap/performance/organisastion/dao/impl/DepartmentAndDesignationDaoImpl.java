@@ -213,6 +213,34 @@ this.sessionFactory.getCurrentSession().update(roleElementOperationMpg);
 	}
 
 	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#checkDefaultDept()
+	 */
+	@Override
+	public List<EmDepartment> checkDefaultDept() throws Exception {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(EmDepartment.class);
+		
+			criteria.add(Restrictions.eq("defaultDept", "Y"));
+		
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#checkDefaultDesignation()
+	 */
+	@Override
+	public List<EmDesignation> checkDefaultDesignation() throws Exception {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(EmDesignation.class);
+		
+		criteria.add(Restrictions.eq("defaultDesignation", "Y"));
+	
+	criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+	return criteria.list();
+	}
+
+	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.dao.DepartmentAndDesignationDao#getDesignationElementOperation(com.gomap.performance.organisastion.model.RoleElementOperationMpg)
 	 */
 	

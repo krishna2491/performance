@@ -9,7 +9,7 @@ package com.gomap.performance.master.service;
  *
  */
 public interface EmailService {
-	public void sendEmail(String tokenId,String toEmail,String password);
+	public void sendEmail(String tokenId,String toEmail,String password,String userName);
 	
 
 }

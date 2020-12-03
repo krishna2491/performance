@@ -17,6 +17,7 @@ import com.gomap.performance.organisastion.dao.CommonDao;
 import com.gomap.performance.organisastion.model.DashBoardInfo;
 import com.gomap.performance.organisastion.model.ElementMaster;
 import com.gomap.performance.organisastion.model.EmParamsConfig;
+import com.gomap.performance.organisastion.model.FileMaster;
 import com.gomap.performance.organisastion.model.OperationMaster;
 
 /**
@@ -111,6 +112,49 @@ public class CommonDaoimpl implements CommonDao{
 	public DashBoardInfo getDashBoardInfo(Integer employeeId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.CommonDao#storeFile(com.gomap.performance.organisastion.model.FileMaster)
+	 */
+	@Override
+	public FileMaster storeFile(FileMaster fileMaster) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().save(fileMaster);
+		return fileMaster;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.CommonDao#updateFile(com.gomap.performance.organisastion.model.FileMaster)
+	 */
+	@Override
+	public FileMaster updateFile(FileMaster fileMaster) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().update(fileMaster);
+		return fileMaster;
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.CommonDao#getFile(java.lang.Integer)
+	 */
+	@Override
+	public FileMaster getFile(Integer fileId) {
+		// TODO Auto-generated method stub
+		Criteria criteria=this.sessionFactory.getCurrentSession().createCriteria(FileMaster.class);
+		if(fileId!=null)
+		{
+			criteria.add(Restrictions.eq("fileId", fileId));
+		}
+		criteria.add(Restrictions.eq("activateFlag", AppConstants.ACTIVE_FLAG));
+		List<FileMaster> fileMasters=criteria.list();
+		FileMaster fileMaster=null;
+		if(fileMasters!=null && !fileMasters.isEmpty())
+		{
+			fileMaster=fileMasters.get(0);
+		}
+		return fileMaster;
+		
 	}
 
 	/* (non-Javadoc)

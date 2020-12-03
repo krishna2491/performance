@@ -3,12 +3,26 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +46,9 @@ import com.gomap.performance.organisastion.model.EmDesignation;
 import com.gomap.performance.organisastion.model.EmEmployee;
 import com.gomap.performance.organisastion.model.EmployeeElementMpg;
 import com.gomap.performance.organisastion.model.EmployeeElementOperationMpg;
+import com.gomap.performance.organisastion.model.Person;
 import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
+import com.gomap.performance.organisastion.service.AuditLogService;
 import com.gomap.performance.organisastion.service.EmployeeService;
 
 
@@ -48,6 +64,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDao empDao;
 	@Autowired
 	private HttpSession httpSession;
+	
+	 private static Session session;
+	 
+	 @Autowired
+		private AuditLogService auditSrvc;
+		
+	 
+	 @Autowired
+	 private SessionFactory sessionFactory;
 	/* (non-Javadoc)
 	 * @see com.gomap.performance.organisastion.service.EmployeeService#addEmployee(com.gomap.performance.organisastion.dto.EmEmployeeDto)
 	 */
@@ -58,14 +83,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 		try {
 			logger.debug("addEmployee ");
 			EmEmployee emEmployee=new EmEmployee();
+			String pwd="Password@2020";
+			emEmployee.setEmployeePassword(pwd);
+			
+			
+			if(employeeDto.getDepartmentId()!=null)
+			{
+				emEmployee.setDepartmentId(employeeDto.getDepartmentId());
+			}
 			if(employeeDto.getDesignationId()!=null)
 			{
-				emEmployee.setDesignationId(employeeDto.getDesignationId());
+				emEmployee.setDesignationId(employeeDto.getDepartmentId());
 			}
-			if(employeeDto.getGender()!=null)
-			{
-				emEmployee.setGender(employeeDto.getGender());
-			}
+//			if(employeeDto.getGender()!=null)
+//			{
+//				emEmployee.setGender(employeeDto.getGender());
+//			}
 			if(employeeDto.getEmployeeEmail()!=null)
 			{
 				emEmployee.setEmployeeEmail(employeeDto.getEmployeeEmail());
@@ -81,11 +114,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 			if(employeeDto.getEmployeeMobileNo()!=null)
 			{
 				emEmployee.setEmployeeMobileNo(employeeDto.getEmployeeMobileNo());
+			}else {
+				emEmployee.setEmployeeMobileNo("1111111111");
 			}
-			if(employeeDto.getEmployeePassword()!=null)
-			{
-				emEmployee.setEmployeePassword(employeeDto.getEmployeePassword());
-			}
+			
+			emEmployee.setFileId(-1);
+			
+				
+			
 			if(employeeDto.getEmployeeProfileImg()!=null)
 			{
 				emEmployee.setEmployeeProfileImg(employeeDto.getEmployeeProfileImg());
@@ -132,6 +168,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				}
 			}
 			
+			auditSrvc.saveAuditLog("Employee  Created", "Employee ", "1", new Date());
 			
 			responseDTO.setSuccessMsg("Employee created Successfully");
 			responseDTO.setDataObj(emEmployee);
@@ -228,14 +265,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 					return 	responseDTO;				
 				}else {
 					EmEmployee emEmployee=employeeList.get(0);
+							
+							if(employeeDto.getDepartmentId()!=null)
+							{
+								emEmployee.setDepartmentId(employeeDto.getDepartmentId());
+							}
+							
 							if(employeeDto.getDesignationId()!=null)
 							{
-								emEmployee.setDesignationId(employeeDto.getDesignationId());
+								emEmployee.setDesignationId(employeeDto.getDepartmentId());
 							}
-							if(employeeDto.getGender()!=null)
-							{
-								emEmployee.setGender(employeeDto.getGender());
-							}
+							
+//							if(employeeDto.getGender()!=null)
+//							{
+//								emEmployee.setGender(employeeDto.getGender());
+//							}
 							if(employeeDto.getEmployeeEmail()!=null)
 							{
 								emEmployee.setEmployeeEmail(employeeDto.getEmployeeEmail());
@@ -251,6 +295,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 							if(employeeDto.getEmployeeMobileNo()!=null)
 							{
 								emEmployee.setEmployeeMobileNo(employeeDto.getEmployeeMobileNo());
+							}else {
+								emEmployee.setEmployeeMobileNo("1111111111");
 							}
 							if(employeeDto.getEmployeePassword()!=null)
 							{
@@ -501,5 +547,133 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return responseDTO;
 
 	}
-	
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.EmployeeService#storeFiles()
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO storeFiles(Person pp,byte[] bb) throws Exception {
+		// TODO Auto-generated method stub
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			//String filePath="C:\\Users\\Fujitsu\\Downloads\\Emformance_HTML_New\\assets\\img\\face-3.jpg";
+			
+			 //File file = new File(filePath);
+			//FileInputStream inputStream = new FileInputStream(file);
+	        Blob blob = Hibernate.getLobCreator(sessionFactory.getCurrentSession())
+	                            .createBlob(bb);
+	        Blob blob1=BlobProxy.generateProxy(bb);
+	       
+	        
+	       
+	      
+			pp.setPhoto(blob1);
+			empDao.storePerson(pp);
+			responseDTO.setDataObj(pp);
+			responseDTO.setSuccessMsg("good");
+			
+		} catch (Exception e) {
+			// TODO: handle exceptionreturn null;
+			logger.error("error",e);
+			e.printStackTrace();
+	}
+	return responseDTO;
 		}
+	
+	@Override
+	@Transactional
+	public ResponseDTO getFiles(Person pp) throws Exception {
+		// TODO Auto-generated method stubPerson pp
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			List<Person> personList=empDao.getPerson(pp.getId());
+			
+			if(personList!=null && !personList.isEmpty())
+			{
+				
+				responseDTO.setDataObj(personList.get(0));
+			}
+		
+			
+			
+			InputStream is = personList.get(0).getPhoto().getBinaryStream();
+			//String str = convert(is);
+			
+			File file = new File("C:\\Files\\kk"+System.currentTimeMillis()+"."+personList.get(0).getFileType());
+			FileOutputStream outputStream = new FileOutputStream(file);
+			 byte[] buffer = new byte[1024];
+
+             // Get the binary stream of our BLOB data
+            // InputStream is = rs.getBinaryStream("image");
+             while (is.read(buffer) > 0) {
+            	 outputStream.write(buffer);
+             }
+			//BufferedImage bf=ImageIO.read(is);
+			//ImageIO.write(bf, "jpg", outputStream);
+			//outputStream.write(str.getBytes());
+             
+			outputStream.close();
+			responseDTO.setDataObj(file.getAbsolutePath());
+			
+			responseDTO.setSuccessMsg("good");
+			
+		} catch (Exception e) {
+			// TODO: handle exceptionreturn null;
+			logger.error("error",e);
+			e.printStackTrace();
+	}
+	return responseDTO;
+		}
+	 private static byte[] readBytesFromFile(String filePath) throws IOException {
+	        File inputFile = new File(filePath);
+	        FileInputStream inputStream = new FileInputStream(inputFile);
+	         
+	        byte[] fileBytes = new byte[(int) inputFile.length()];
+	        inputStream.read(fileBytes);
+	        inputStream.close();
+	         
+	        return fileBytes;
+	    }
+	 private static String convert(InputStream is) {
+			BufferedInputStream bis = new BufferedInputStream(is);
+			ByteArrayOutputStream buf = new ByteArrayOutputStream();
+			int result;
+			String str = null;
+			try {
+				result = bis.read();
+
+				while (result != -1) {
+					buf.write((byte) result);
+					result = bis.read();
+				}
+				str = buf.toString("UTF-8");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return str;
+		}
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.EmployeeService#mapEmployeeFile(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public EmEmployee mapEmployeeFile(Integer fileId, Integer employeeId) throws Exception {
+		// TODO Auto-generated method stub
+		EmEmployee emEmployee=new EmEmployee();
+		try {
+			List<EmEmployee> employeeList=empDao.getEmployeeList(employeeId,null);
+			if(employeeList!=null && !employeeList.isEmpty())
+			{
+				  emEmployee = employeeList.get(0);
+				 
+				 emEmployee.setFileId(fileId);
+				 empDao.updateEmployee(emEmployee);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("Error while update file id for employee");
+		}
+		return emEmployee;
+	}
+}

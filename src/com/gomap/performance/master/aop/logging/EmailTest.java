@@ -22,8 +22,8 @@ public class EmailTest {
 	public static void main(String[] args) {
 		
 		EmailServiceImpl em=new EmailServiceImpl();
-		em.sendEmail("kk", "krishna2491@gmail.com","Password@13566");
-	//	em.sendEmail("kk", "deepali.6nov@gmail.com","");
+		em.sendEmail("kk", "krishna2491@gmail.com","Password@13566","BOSS");
+		//em.sendEmail("kk", "deepali.6nov@gmail.com","12345678","kk");
 	}
 	public void sendEmail()
 	{

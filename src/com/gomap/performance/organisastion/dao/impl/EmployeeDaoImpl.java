@@ -20,6 +20,7 @@ import com.gomap.performance.organisastion.model.EmDesignation;
 import com.gomap.performance.organisastion.model.EmEmployee;
 import com.gomap.performance.organisastion.model.EmployeeElementMpg;
 import com.gomap.performance.organisastion.model.EmployeeElementOperationMpg;
+import com.gomap.performance.organisastion.model.Person;
 import com.gomap.performance.organisastion.model.RoleElementOperationMpg;
 
 /**
@@ -89,7 +90,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	
 	String empQuery="select new com.gomap.performance.organisastion.dto.EmployeeList(emp,des,dept) from EmEmployee as emp"+
 				 ",EmDesignation des" +
-		 ",EmDepartment dept where dept.departmentId=des.departmentId and des.designationId=emp.designationId and emp.activateFlag=1 and des.activateFlag=1 and dept.activateFlag=1";
+		 ",EmDepartment dept where dept.departmentId=emp.departmentId and des.designationId=emp.designationId "
+		 + "and emp.activateFlag=1 and des.activateFlag=1 and dept.activateFlag=1";
 	
 	List<Object> objList=this.sessionFactory.getCurrentSession().createQuery(empQuery).list();
 		return objList;
@@ -166,6 +168,27 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			throws Exception {
 		this.sessionFactory.getCurrentSession().update(employeeElementOperationMpg);
 		return employeeElementOperationMpg;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#storePerson(com.gomap.performance.organisastion.model.Person)
+	 */
+	@Override
+	public Person storePerson(Person person) {
+		// TODO Auto-generated method stub
+		this.sessionFactory.getCurrentSession().save(person);
+		return person;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.EmployeeDao#getPerson()
+	 */
+	@Override
+	public List<Person> getPerson(Integer id){
+		// TODO Auto-generated method stub
+		Criteria crit=this.sessionFactory.getCurrentSession().createCriteria(Person.class);
+		crit.add(Restrictions.eq("id", id));
+		return crit.list();
 	}
 
 	

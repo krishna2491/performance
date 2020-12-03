@@ -187,4 +187,20 @@ public class FeedbackController {
 		} 
 		return responseDTO;
 	}
+	
+	
+	@CrossOrigin(origins = AppConstants.CORS)
+	@RequestMapping(value = {UrlConstants.API_GET_FEEDBACK_RATING}, method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO getFeedbackRatingDetails(@RequestParam Integer employeeId) {
+		ResponseDTO  responseDTO=new ResponseDTO();
+		try {  
+			
+				responseDTO=feedbackSrvc.provideFeedbackEvalution(employeeId);
+			
+		} catch (Exception e) {
+			responseDTO = ResponseWriter.writeResponse(e.getCause(), e);
+			logger.error("error",e);
+		} 
+		return responseDTO;
+	}
 }

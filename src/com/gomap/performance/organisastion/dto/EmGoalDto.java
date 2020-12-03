@@ -44,7 +44,8 @@ public class EmGoalDto implements Serializable {
     private String confirmNote;
     private Date goalCreatedDate;
     private Date goalUpdatedDate;
-    private Integer goalPercentage;
+   private Integer goalPercentage;
+   // private Integer goalPercentageVal;
     private String comment;
     private String reply;
 	/**
@@ -215,24 +216,8 @@ public class EmGoalDto implements Serializable {
 	public void setGoalUpdatedDate(Date goalUpdatedDate) {
 		this.goalUpdatedDate = goalUpdatedDate;
 	}
-	/**
-	 * @return the goalPercantage
-	 */
-	public Integer getGoalPercantage() {
-		return goalPercentage;
-	}
-	/**
-	 * @param goalPercantage the goalPercantage to set
-	 */
-	public void setGoalPercantage(Integer goalPercentage) {
-		this.goalPercentage = goalPercentage;
-	}
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
+	
 	/**
 	 * @return the comment
 	 */
@@ -256,6 +241,18 @@ public class EmGoalDto implements Serializable {
 	 */
 	public void setReply(String reply) {
 		this.reply = reply;
+	}
+	/**
+	 * @return the goalPercentage
+	 */
+	public Integer getGoalPercentage() {
+		return goalPercentage;
+	}
+	/**
+	 * @param goalPercentage the goalPercentage to set
+	 */
+	public void setGoalPercentage(Integer goalPercentage) {
+		this.goalPercentage = goalPercentage;
 	}
 
 }

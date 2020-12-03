@@ -3,9 +3,11 @@
  */
 package com.gomap.performance.organisastion.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -15,7 +17,9 @@ import org.springframework.stereotype.Repository;
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.FeedbackDao;
 import com.gomap.performance.organisastion.model.EmFeedbackRequest;
+import com.gomap.performance.organisastion.model.FeedbackEvaluation;
 import com.gomap.performance.organisastion.model.FeedbackRequestParaMpg;
+import com.gomap.performance.organisastion.model.Reviewer;
 
 /**
  * @author krishnakant.bairagi
@@ -112,6 +116,118 @@ public class FeedBackDaoImpl implements FeedbackDao{
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().update(emFeedbackRequest);
 		return emFeedbackRequest;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.dao.FeedbackDao#getFeedbackRatings(java.lang.Integer)
+	 */
+	@Override
+	public List<FeedbackEvaluation> getFeedbackRatings(Integer employeeId) {
+		// TODO Auto-generated method stub
+		
+		//String strQuesry="public List<FeedbackRequestParaMpg> getFeedbackParam(Integer feedbackRequestId);"
+		
+		StringBuilder bd1=new StringBuilder();
+		bd1.append(" select epc.param_Id ,epc.param_name,mpg.description, \r\n" + 
+				" mpg.rating ,ee.employee_id ,ee.employee_fname ,ee.employee_mname \r\n" + 
+				"\r\n" + 
+				"from em_feedback_request_mpg mpg,em_feedback_request mst,\r\n" + 
+				"em_employee ee ,em_params_config epc \r\n" + 
+				"\r\n" + 
+				"where mst.feedback_request_id=mpg.feedback_request_id\r\n" + 
+				" and mpg.param_id=epc.param_id " + 
+				" and ee.employee_id=mst.feedback_from_id "); 
+		if(employeeId!=null)
+		{
+			bd1.append(" and mst.feedback_for_id="+employeeId);
+		}
+		bd1.append(" and mst.feedback_status='2'");
+				bd1.append(" and epc.activate_flag=1 and mst.activate_flag=1  and mpg.activate_flag=1 order by epc.param_Id");
+
+				Query query=sessionFactory.getCurrentSession().createSQLQuery(bd1.toString());
+			
+				List lt=query.list();
+				int count=0;
+				Object[] dataArray=null;
+				int size=lt.size();
+				FeedbackEvaluation evaluation=null;
+				Reviewer reviewer=null;
+				List<FeedbackEvaluation> dataList=new ArrayList<FeedbackEvaluation>();
+				for(int i=0;i<size;i++)
+				{
+					evaluation=new FeedbackEvaluation();
+					reviewer=new Reviewer();
+					dataArray=(Object[]) lt.get(i);
+					if(dataArray[0]!=null)
+					{
+						evaluation.setParamId(Long.parseLong(dataArray[0].toString()));
+					}
+					if(dataArray[1]!=null)
+					{
+						evaluation.setParamName(dataArray[1].toString());
+					}
+					if(dataArray[2]!=null)
+					{
+						reviewer.setComment(dataArray[2].toString());
+						
+					}
+					if(dataArray[3]!=null)
+					{
+						reviewer.setRating(Integer.parseInt(dataArray[3].toString()));
+						
+					}
+					if(dataArray[4]!=null)
+					{
+						reviewer.setEmployeeId(Integer.parseInt(dataArray[4].toString()));
+						
+					}
+					if(dataArray[5]!=null)
+					{
+						reviewer.setEmployeeFname(dataArray[5].toString());
+						
+					}
+					if(dataArray[6]!=null)
+					{
+						reviewer.setEmployeeMname(dataArray[6].toString());
+						
+					}
+					evaluation.setReview(reviewer);
+					dataList.add(evaluation);
+				}
+//				if(lt!=null && !lt.isEmpty())
+//				{
+//					for(Object obj:lt)
+//					{
+//						dataArray[count]=obj;
+//					}
+//						//dataArray
+//				}
+				StringBuilder bd=
+						new StringBuilder("select new com.gomap.performance.organisastion.model.FeedbackEvaluation (epc.paramName,epc.paramId "
+				
+				//StringBuilder bd=new StringBuilder("select new com.gomap.performance.organisastion.model.
+						//+ "FeedbackEvaluation(epc.paramName,epc.paramId "
+//						+ " new com.gomap.performance.organisastion.model.Reviewer(ee.employeeId, "
+//						+ "ee.employeeFname ,ee.employeeMname,mpg.rating ) "
+						+ ") from EmEmployee as ee,");
+				
+						bd.append(" FeedbackRequestParaMpg as mpg,emFeedbackRequest as mst, EmParamsConfig as epc");
+						bd.append(" where mst.feedbackRequestId=mpg.feedbackRequestId and mpg.paramId=epc.paramId");
+						bd.append(" and ee.employeeId=mst.feedbackFromId");
+						if(employeeId!=null)
+						{
+							bd.append(" and mst.feedbackForId="+employeeId);
+						}
+						bd.append(" and mst.feedbackStatus='2'");
+								bd.append(" and epc.activateFlag=1 and mst.activateFlag=1  and mpg.activateFlag=1 order by epc.paramId");
+
+								Query query1=sessionFactory.getCurrentSession().createSQLQuery(bd.toString());
+								
+								//List<FeedbackEvaluation> feedbackList=query1.list();
+								
+							//	System.out.println(feedbackList);
+								
+		return dataList;
 	}
 
 	/* (non-Javadoc)

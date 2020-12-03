@@ -54,7 +54,7 @@ public class SkillServiceImpl implements SkillService {
 			emSkill.setSkillName(emSkillDto.getSkillName());
 			emSkill.setActivateFlag(AppConstants.ACTIVE_FLAG);
 			skillDao.createSkill(emSkill);
-			auditSrvc.saveAuditLog("Skill  Created", "Skill Module", "1", new Date());
+			auditSrvc.saveAuditLog("Skill  Created", "Skill ", "1", new Date());
 			responseDTO.setDataObj(emSkill);
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
 			responseDTO.setSuccessMsg("Skill successfully created");

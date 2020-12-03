@@ -3,17 +3,25 @@
  */
 package com.gomap.performance.organisastion.service.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gomap.performance.master.constant.AppConstants;
 import com.gomap.performance.organisastion.dao.CommonDao;
@@ -40,8 +48,11 @@ import com.gomap.performance.organisastion.model.EmTeam;
 import com.gomap.performance.organisastion.model.EmTeamMember;
 import com.gomap.performance.organisastion.model.EmployeeTaskMpg;
 import com.gomap.performance.organisastion.model.FeedbackRequestParaMpg;
+import com.gomap.performance.organisastion.model.FileMaster;
 import com.gomap.performance.organisastion.model.OperationMaster;
+import com.gomap.performance.organisastion.model.Person;
 import com.gomap.performance.organisastion.service.CommonService;
+import com.gomap.performance.organisastion.service.EmployeeService;
 import com.gomap.performance.organisastion.service.ProjectService;
 import com.gomap.performance.organisastion.service.TaskService;
 import com.gomap.performance.organisastion.service.TeamManagmentService;
@@ -67,6 +78,11 @@ public class CommonServiceImpl implements CommonService {
 	private GoalDao goalDao;
 	@Autowired
 	private FeedbackDao feedBackDao;
+	@Autowired
+	private EmployeeService employeeService;
+	
+	 @Autowired
+	 private SessionFactory sessionFactory;
 
 	/*
 	 * (non-Javadoc)
@@ -238,12 +254,14 @@ public class CommonServiceImpl implements CommonService {
 			Integer inProgresssCount = 0;
 			Integer completedCount = 0;
 			Integer dueCount = 0;
+			Integer createdCount=0;
 			EmTeamMember emTeamMember = new EmTeamMember();
 			if (employeeId != -1) {
 				emGoal.setEmployeeId(employeeId);
 				emTeamMember.setEmployeeId(employeeId);
 				emTask.setAssignedToId(employeeId);
 				emFeedbackRequest.setfeedbackForId(employeeId);
+				
 			}
 
 			List<EmGoal> goalList = goalDao.getGoal(emGoal);
@@ -253,6 +271,7 @@ public class CommonServiceImpl implements CommonService {
 			List<EmProject> projectList = new ArrayList<EmProject>();
 			DashBoardInfo dashBoardInfo = new DashBoardInfo();
 			List<EmTeamMember> teamMemberList = teamDao.getTeamMember(emTeamMember);
+			Integer teamCount=0;
 			if (teamMemberList != null && !teamMemberList.isEmpty()) {
 				teamList = new ArrayList<EmTeam>();
 				for (EmTeamMember teamMember : teamMemberList) {
@@ -272,15 +291,36 @@ public class CommonServiceImpl implements CommonService {
 			List<EmProject> projectData = null;
 			if (teamList != null && !teamList.isEmpty()) {
 				for (EmTeam etm : teamList) {
+					teamCount++;
 					if (etm.getProjectId() != null && etm.getProjectId() != -1) {
-						projectData = projDao.getProjectList(etm.getProjectId(), null, null);
+						projectData = projDao.getProjectList(etm.getProjectId(), null, null,null);
 						if (projectData != null && !projectData.isEmpty()) {
 							projectList.add(projectData.get(0));
 						}
 					}
 				}
 			}
+			
+			//  get team created by me
+			if (employeeId != -1) 
+			{
+				emTeam.setTeamCreatedBy(employeeId);
+			}
+			List<EmTeam> myteamList=teamDao.getTeam(emTeam);
+			if(myteamList!=null && !myteamList.isEmpty())
+			{
+				teamCount=teamCount+myteamList.size();
+			}
+			
+			List<EmProject> myProjectList=new ArrayList<EmProject>();
+			if(employeeId!=-1)
+			{
+				myProjectList=projDao.getProjectList(null, null, null, employeeId)	;
+			}
+			
 			List<EmployeeTaskMpg> taskMpgList = taskDao.getEmployeeTask(employeeId, null);
+			
+			
 
 			if (taskMpgList != null && !taskMpgList.isEmpty()) {
 				for (EmployeeTaskMpg taskMpg : taskMpgList) {
@@ -291,20 +331,66 @@ public class CommonServiceImpl implements CommonService {
 						}else if(taskMpg.getEmployeeTaskStatus().equals(AppConstants.PROJECT_STATUS_COMPLETED))
 						{
 							completedCount++;
-						}else {
+						}
+						else if(taskMpg.getEmployeeTaskStatus().equals(AppConstants.PROJECT_STATUS_CREATED))
+						{
+							createdCount++;
+						}
+						
+						else {
 							dueCount++;
 						}
 
 					}
 				}
 			}
+			emTask=new EmTask();
+			if(employeeId!=-1)
+			{
+				emTask.setAssignedById(employeeId);
+			}
+			List<EmTask> myTaskList = taskDao.getTask(emTask);
+		
+			
+			if (myTaskList != null && !myTaskList.isEmpty()) {
+				for (EmTask emTaskObj: myTaskList) {
+					if (emTaskObj.getTaskStatus() != null) {
+						if(emTaskObj.getTaskStatus().equals(AppConstants.PROJECT_STATUS_INPROGRESS))
+						{
+							inProgresssCount++;
+						}else if(emTaskObj.getTaskStatus().equals(AppConstants.PROJECT_STATUS_COMPLETED))
+						{
+							completedCount++;
+						}
+						else if(emTaskObj.getTaskStatus().equals(AppConstants.PROJECT_STATUS_CREATED))
+						{
+							createdCount++;
+						}
+						
+						else {
+							dueCount++;
+						}
+
+					}
+				}
+			}
+			Integer totalTask=0;
+			if(taskMpgList!=null && !taskMpgList.isEmpty())
+			{
+				totalTask=taskMpgList.size();
+			}if(myTaskList!=null && !myTaskList.isEmpty())
+			{
+				totalTask=totalTask+myTaskList.size();	
+			}
 dashBoardInfo.setCompletedTask(completedCount);
 dashBoardInfo.setInprogressTask(inProgresssCount);
 dashBoardInfo.setDueTask(dueCount);
+dashBoardInfo.setCreatedTask(createdCount);
+dashBoardInfo.setTotalTask(totalTask);
+
 			dashBoardInfo.setTotalGoal(goalList.size());
-			dashBoardInfo.setTotalProject(projectList.size());
-			dashBoardInfo.setTotalTask(taskList.size());
-			dashBoardInfo.setTotalTeam(teamList.size());
+			
+			
 			
 			//dashBoardInfo.setProjectList(projectList);
 			//dashBoardInfo.setGoalList(goalList);
@@ -319,7 +405,8 @@ dashBoardInfo.setDueTask(dueCount);
 			 inProgresssCount = 0;
 			 completedCount = 0;
 			 dueCount = 0;
-			 
+			 createdCount=0;
+			 Integer onHoldCnt=0;
 			 if(goalList!=null && !goalList.isEmpty())
 			 {
 				 for(EmGoal goal:goalList)
@@ -333,7 +420,16 @@ dashBoardInfo.setDueTask(dueCount);
 							}else if(goal.getGoalStatus().equals(AppConstants.PROJECT_STATUS_COMPLETED))
 							{
 								completedCount++;
-							}else {
+							}
+							else if(goal.getGoalStatus().equals(AppConstants.PROJECT_STATUS_CREATED))
+							{
+								createdCount++;
+							}
+							else if(goal.getGoalStatus().equals(AppConstants.PROJECT_STATUS_ONHOLD))
+							{
+								onHoldCnt++;
+							}
+							else {
 								dueCount++;
 							}
 
@@ -342,28 +438,67 @@ dashBoardInfo.setDueTask(dueCount);
 				 }
 			 }
 
-			 dashBoardInfo.setCompletedGoals(completedCount);
-			 dashBoardInfo.setInprogressGoals(inProgresssCount);
-			 dashBoardInfo.setDueGoals(dueCount);
+			 dashBoardInfo.setCompletedGoal(completedCount);
+			 dashBoardInfo.setInprogressGoal(inProgresssCount);
+			 dashBoardInfo.setDueGoal(dueCount);
+			 dashBoardInfo.setCreatedGoal(createdCount);
+			 dashBoardInfo.setOnHoldGoal(onHoldCnt);
 			 
 			 inProgresssCount = 0;
 			 completedCount = 0;
 			 dueCount = 0;
+			 createdCount=0;
 			 
 			if (projectList != null && !projectList.isEmpty()) {
 				for (EmProject prjObj : projectList) {
-					if (prjObj.getProjectStatus() != null && prjObj.equals(AppConstants.PROJECT_STATUS_INPROGRESS)) {
+					if (prjObj.getProjectStatus() != null && prjObj.getProjectStatus().equals(AppConstants.PROJECT_STATUS_INPROGRESS)) {
 						inProgresssCount++;
 					} else if (prjObj.getProjectStatus() != null
-							&& prjObj.equals(AppConstants.PROJECT_STATUS_COMPLETED)) {
+							&& prjObj.getProjectStatus().equals(AppConstants.PROJECT_STATUS_COMPLETED)) {
 						completedCount++;
+					} else if (prjObj.getProjectStatus() != null
+							&& prjObj.getProjectStatus().equals(AppConstants.PROJECT_STATUS_CREATED)) {
+						createdCount++;
 					} else {
 						dueCount++;
 					}
 				}
 			}
+			Integer totalProject=0;
+			if(projectList!=null && !projectList.isEmpty())
+			{
+				totalProject=projectList.size();	
+			}
+			if(myProjectList!=null && !myProjectList.isEmpty())
+			{
+				totalProject=totalProject+myProjectList.size();
+			}
+			dashBoardInfo.setTotalProject(totalProject);
+			
+			
+			if (myProjectList != null && !myProjectList.isEmpty()) {
+				for (EmProject prjObj : myProjectList) {
+					if (prjObj.getProjectStatus() != null && prjObj.getProjectStatus().equals(AppConstants.PROJECT_STATUS_INPROGRESS)) {
+						inProgresssCount++;
+					} else if (prjObj.getProjectStatus() != null
+							&& prjObj.getProjectStatus().equals(AppConstants.PROJECT_STATUS_COMPLETED)) {
+						completedCount++;
+					} else if (prjObj.getProjectStatus() != null
+							&& prjObj.getProjectStatus().equals(AppConstants.PROJECT_STATUS_CREATED)) {
+						createdCount++;
+					} else {
+						dueCount++;
+					}
+				}
+			}
+			
+			
+			
+			
+			
 			dashBoardInfo.setCompletedProject(completedCount);
 			dashBoardInfo.setDueProjet(dueCount);
+			dashBoardInfo.setCreatedProject(createdCount);
 			dashBoardInfo.setInprogressProject(inProgresssCount);
 			HashMap<String,Integer> ratingMap=new HashMap<String,Integer>();
 			
@@ -372,6 +507,11 @@ dashBoardInfo.setDueTask(dueCount);
 			int empRating=0;
 			int count=0;
 			int totalRating=0;
+			int r1=0;
+			int r2=0;
+			int r3=0;
+			int r4=0;
+			int r5=0;
 			if(feedBackList!=null && !feedBackList.isEmpty())
 			{
 				for(EmFeedbackRequest feedback:feedBackList)
@@ -380,26 +520,43 @@ dashBoardInfo.setDueTask(dueCount);
 						feedbackRequestParaMpgs=feedBackDao.getFeedbackParam(feedback.getFeedbackRequestId());
 						for(FeedbackRequestParaMpg paraMpg:feedbackRequestParaMpgs)
 						{
-							if(paraMpg.getRating()!=null)
+							if(paraMpg.getRating()!=null )
 							{
-								empRating=empRating+paraMpg.getRating();
-							}
+								if(paraMpg.getRating()==1)
+								{
+								r1++;	
+								}else if(paraMpg.getRating()==2)
+								{
+								r2++;
+								}
+								else if(paraMpg.getRating()==3)
+								{
+								r3++;
+								}
+								else if(paraMpg.getRating()==4)
+								{
+								r4++;
+								}
+								else if(paraMpg.getRating()==5)
+								{
+								r5++;
+								}
+							
+							}else
 							count++;
 						}
-						totalRating=empRating/count;
-						empRating=0;
-						count=0;
+						
 					}
-					if(ratingMap.containsKey("rating-"+totalRating))
-					{
-						ratingMap.put("rating-"+totalRating,ratingMap.get("rating-"+totalRating)+1);
-					}else {
-						ratingMap.put("rating-"+totalRating,1);
-					}
-					totalRating=0;
+					
 				}
 			}
-			dashBoardInfo.setRatingCount(ratingMap);
+			dashBoardInfo.setFeedbackBad(r1);
+			dashBoardInfo.setFeedbackExcellent(r5);
+			dashBoardInfo.setFeedbackOk(r2);
+			dashBoardInfo.setFeedbackGood(r3);
+			dashBoardInfo.setFeedbackVeryGood(r4);
+			dashBoardInfo.setTotalTeam(teamCount);
+			//dashBoardInfo.setRatingCount(ratingMap);
 			responseDTO.setDataObj(dashBoardInfo);
 			responseDTO.setSuccessMsg("Dashboard  data sent");
 			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
@@ -410,6 +567,92 @@ dashBoardInfo.setDueTask(dueCount);
 			;
 			responseDTO.setErrorCode(411);
 			logger.error("Error getDashBoardData", e);
+		}
+		return responseDTO;
+	}
+	@Override
+	@Transactional
+	public ResponseDTO storeFiles(String module,MultipartFile file,Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			
+			String[] strArray=file.getOriginalFilename().split("\\.");
+			String type=strArray[strArray.length-1];
+			
+			FileMaster fileMaster=new FileMaster();
+			 fileMaster.setCreatedDate(new Date());
+			 fileMaster.setFileType(type);
+			 fileMaster.setModule(module);
+			 fileMaster.setActivateFlag(AppConstants.ACTIVE_FLAG);
+			 
+			 byte[] bbArray=file.getBytes();
+	        Blob blob = Hibernate.getLobCreator(sessionFactory.getCurrentSession())
+	                            .createBlob(bbArray);
+	        Blob blob1=BlobProxy.generateProxy(bbArray);
+	       
+	        
+	       
+	        fileMaster.setFile(blob1);
+			
+	        fileMaster=cmnDao.storeFile(fileMaster);
+	        
+	        if(module.equalsIgnoreCase("employee") && id!=null)
+	        {
+	        	employeeService.mapEmployeeFile(fileMaster.getFileId(), id);
+	        }
+			responseDTO.setDataObj(fileMaster.getFileId());
+			responseDTO.setSuccessMsg("file stored");
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			
+		} catch (Exception e) {
+			// TODO: handle exceptionreturn null;
+			logger.error("error",e);
+			e.printStackTrace();
+	}
+	return responseDTO;
+		}
+
+	/* (non-Javadoc)
+	 * @see com.gomap.performance.organisastion.service.CommonService#getEmployeeFiles(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public ResponseDTO getEmployeeFiles(Integer fileId) throws Exception {
+		// TODO Auto-generated method stub
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			FileMaster fileMst=cmnDao.getFile(fileId);
+			
+			InputStream is = fileMst.getFile().getBinaryStream();
+			//String str = convert(is);
+			
+			File file = new File("C:\\Files\\kk"+System.currentTimeMillis()+"."+fileMst.getFileType());
+			FileOutputStream outputStream = new FileOutputStream(file);
+			 byte[] buffer = new byte[1024];
+
+             // Get the binary stream of our BLOB data
+            // InputStream is = rs.getBinaryStream("image");
+             while (is.read(buffer) > 0) {
+            	 outputStream.write(buffer);
+             }
+			//BufferedImage bf=ImageIO.read(is);
+			//ImageIO.write(bf, "jpg", outputStream);
+			//outputStream.write(str.getBytes());
+             
+			outputStream.close();
+			responseDTO.setDataObj(file.getAbsolutePath());
+			
+			responseDTO.setSuccessMsg("good");
+
+			//responseDTO.setDataObj(file.getFile());
+			responseDTO.setErrorCode(ErrorCodeEnums.NO_ERROR.getErrorCode());
+			responseDTO.setSuccessMsg("File sent ");
+		} catch (Exception e) {
+			// TODO: handle exception
+			responseDTO.setErrorCode(411);
+			responseDTO.setDataObj(null);
+			responseDTO.setErrorMsg(e.getMessage());
 		}
 		return responseDTO;
 	}

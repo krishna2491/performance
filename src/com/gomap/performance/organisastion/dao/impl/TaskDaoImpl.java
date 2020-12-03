@@ -157,7 +157,7 @@ public class TaskDaoImpl implements TaskDao {
 				
 		bd.append("EmTeam as team,EmTeamMember as tmember,EmTask as task,EmployeeTaskMpg as taskMpg");
 		bd.append(" where team.activateFlag=1 and tmember.activateFlag=1 and tmember.employeeId=emp.employeeId and tmember.teamId=team.teamId "
-				+ " and emp.activateFlag=1 and task.activateFlag=1 and taskMpg.activateFlag=1 and taskMpg.employeeId=tmember.employeeId and task.taskId=taskMpg.taskId order by team.teamName");
+				+ " and emp.activateFlag=1 and task.activateFlag=1 and taskMpg.activateFlag=1 and taskMpg.employeeId=tmember.employeeId and task.taskId=taskMpg.taskId ");
 		
 		if(createdBy!=null)
 		{
@@ -179,7 +179,7 @@ public class TaskDaoImpl implements TaskDao {
 		{
 			bd.append(" and team.teamId="+teamId);
 		}
-		
+		bd.append(" order by team.teamName");
 		List<TeamTask> objList=this.sessionFactory.getCurrentSession().createQuery(bd.toString()).list();
 		return objList;
 	}

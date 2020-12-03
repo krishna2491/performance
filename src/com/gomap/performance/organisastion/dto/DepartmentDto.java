@@ -82,6 +82,19 @@ public class DepartmentDto {
 	    private Date departmentCreatedDate;
 	    private Date departmentUpdatedDate;
 	    private Integer activateFlag;
+	    private String defaultDept;
+		/**
+		 * @return the defaultDept
+		 */
+		public String getDefaultDept() {
+			return defaultDept;
+		}
+		/**
+		 * @param defaultDept the defaultDept to set
+		 */
+		public void setDefaultDept(String defaultDept) {
+			this.defaultDept = defaultDept;
+		}
 	   
 
 }

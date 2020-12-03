@@ -28,7 +28,7 @@ public class EmailServiceImpl implements EmailService{
 	 * @see com.gomap.performance.master.service.EmailService#sendEmail()
 	 */
 	@Override
-	public void sendEmail(String tokenId,String toEmail,String pwd) {
+	public void sendEmail(String tokenId,String toEmail,String pwd,String userName) {
 		// TODO Auto-generated method stub
 
 
@@ -80,7 +80,7 @@ public class EmailServiceImpl implements EmailService{
             // Now set the actual message
            // message.setText("Thank you for signing up to Emformance.To finish signing up just neeed to click on below link-http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId );
          String link="http://3.133.244.20:4200/EmailVerification?tokenId="+tokenId;
-        message.setContent(getContent(link,pwd), "text/html");
+        message.setContent(getContent(link,pwd,userName), "text/html");
             System.out.println("sending...");
             // Send message
             Transport.send(message);
@@ -90,7 +90,7 @@ public class EmailServiceImpl implements EmailService{
         }
 
 	}
-public String getContent(String link,String password)
+public String getContent(String link,String password,String userName)
 {
 	String s="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n" + 
 			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\r\n" + 
@@ -861,16 +861,19 @@ public String getContent(String link,String password)
 			"                                                                            <tbody>\r\n" + 
 			"                                                                                <tr>\r\n" + 
 			"                                                                                    <td class=\"esd-block-text es-p20t es-p20b es-p30r es-p30l es-m-txt-l\" bgcolor=\"#ffffff\" align=\"left\">\r\n" + 
-			"                                                                                        <p>We're excited to have you get started.your password to login in system is <font  style=\"font-weight: bold\" color=\"\">  "+password+",  </font>  But  you need to confirm your email account. Just press the button below.</p>\r\n" + 
+			"                                                                                        <p>Hi <font  style=\"font-weight: bold\" color=\"\"> "+userName+"</font>,</p>\r\n" + 
 			"                                                                                    </td>\r\n" + 
 			"                                                                                </tr>\r\n" + 
-		
-			"                                                                                <tr>\r\n" + 
-			"                                                                                    <td class=\"esd-block-text es-p20t es-p30r es-p30l es-m-txt-l\" align=\"left\" esd-links-color=\"#007775\"><a target=\"_blank\" href=\""+link+"\" style=\"color: #007775;\">"+link+"</a></td>\r\n" + 
-			"                                                                                </tr>\r\n" + 
+			"                                                                                \r\n" + 
+			"                                                                                \r\n" + 
 			"                                                                                <tr>\r\n" + 
 			"                                                                                    <td class=\"esd-block-text es-p20t es-p30r es-p30l es-m-txt-l\" align=\"left\">\r\n" + 
-			"                                                                                        <p>If you have any questions, just reply to this email—we're always happy to help out.</p>\r\n" + 
+			"                                                                                        <p>Welcome to Emformance – we are excited you’ve chosen to use product!<br>\r\n" + 
+			"Emformance is an exciting product this build with everyone within your company in mind. From executives to managers, to department heads, and the list goes on. The major benefits of Emformance is to guide Teams, leaders, employees to work and collaborate efficiently without stress. Leaders will have the ability to create teams, projects, feedbacks, evaluate performances of each individual employee, departments, Teams, projects, skills, etc. all in real time. \r\n" + 
+			"Let’s get started! Please click the <a target=\"_blank\" href=\""+link+"\" style=\"color: #007775;\"> Activate </a> link below in your browser\r\n" + 
+			" if the activation button does not redirect you to a sign in page in a few minutes. For your default password, please use <font  style=\"font-weight: bold\" color=\"\">"+password+"</font>.<br><br><br>\r\n" + 
+			"We are excited to have you onboard. Once you login, you will have a walk-in tour of the site and how to use the product. Do not forget to download our mobile app in the App and Google play store. Click here to send a link to download to your mobile device for conevenience.\r\n" + 
+			"</p>\r\n" + 
 			"                                                                                    </td>\r\n" + 
 			"                                                                                </tr>\r\n" + 
 			"                                                                                <tr>\r\n" + 
@@ -1033,6 +1036,6 @@ public String getContent(String link,String password)
 			"</body>\r\n" + 
 			"\r\n" + 
 			"</html>";
-	return s;
+			return s;
 	}
 }

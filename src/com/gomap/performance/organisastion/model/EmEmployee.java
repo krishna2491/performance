@@ -6,6 +6,7 @@
 package com.gomap.performance.organisastion.model;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -47,22 +49,20 @@ public class EmEmployee implements Serializable {
     private Integer employeeId;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "department_id")
+    private Integer departmentId;
+    
+    
+    
+    @Basic(optional = true)
+    
     @Column(name = "designation_id")
-    private int designationId;
-    /**
-	 * @return the designationId
-	 */
-	public int getDesignationId() {
-		return designationId;
-	}
-
-	/**
-	 * @param designationId the designationId to set
-	 */
-	public void setDesignationId(int designationId) {
-		this.designationId = designationId;
-	}
-
+    private Integer designationId;
+    
+    
+    @Column(name = "file_id")
+    private Integer fileId;
+  
 	@Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -83,8 +83,8 @@ public class EmEmployee implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "employee_password")
     private String employeePassword;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
+   
     @Size(min = 1, max = 255)
     @Column(name = "employee_mobile_no")
     private String employeeMobileNo;
@@ -106,14 +106,18 @@ public class EmEmployee implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "activate_flag")
     private Integer activateFlag;
-    @NotNull
-    @Size(min = 1, max = 6)
-    @Column(name = "gender")
-    private String gender;
+//    @NotNull
+//    @Size(min = 1, max = 6)
+//    @Column(name = "gender")
+//    private String gender;
     
-      @Size(min = 1, max = 255)
+    @Size(min = 1, max = 255)
     @Column(name = "employee_code")
     private String employeeCode;
+    
+    @Column(name="employee_img")
+	@Lob
+    private Blob employeeImage;
     /**
 	 * @return the employeeCode
 	 */
@@ -140,9 +144,9 @@ public class EmEmployee implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public EmEmployee(Integer employeeId, int designationId, String employeeFname, String employeeMname, String employeeEmail, String employeePassword, String employeeMobileNo, String employeeProfileImg) {
+    public EmEmployee(Integer employeeId, Integer departmentId, String employeeFname, String employeeMname, String employeeEmail, String employeePassword, String employeeMobileNo, String employeeProfileImg) {
         this.employeeId = employeeId;
-        this.designationId = designationId;
+        this.departmentId = departmentId;
         this.employeeFname = employeeFname;
         this.employeeMname = employeeMname;
         this.employeeEmail = employeeEmail;
@@ -192,7 +196,21 @@ public class EmEmployee implements Serializable {
         this.employeePassword = employeePassword;
     }
 
-    public String getEmployeeMobileNo() {
+    /**
+	 * @return the departmentId
+	 */
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	/**
+	 * @param departmentId the departmentId to set
+	 */
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public String getEmployeeMobileNo() {
         return employeeMobileNo;
     }
 
@@ -253,16 +271,33 @@ public class EmEmployee implements Serializable {
 	}
 
 	/**
-	 * @return the gender
+	 * @return the fileId
 	 */
-	public String getGender() {
-		return gender;
+	public Integer getFileId() {
+		return fileId;
 	}
 
 	/**
-	 * @param gender the gender to set
+	 * @param fileId the fileId to set
 	 */
-	public void setGender(String gender) {
-		this.gender = gender;
-	}    
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
+	}
+
+	/**
+	 * @return the designationId
+	 */
+	public Integer getDesignationId() {
+		return designationId;
+	}
+
+	/**
+	 * @param designationId the designationId to set
+	 */
+	public void setDesignationId(Integer designationId) {
+		this.designationId = designationId;
+	}
+
+	
+	
 }

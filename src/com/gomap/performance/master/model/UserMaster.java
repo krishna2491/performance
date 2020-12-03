@@ -79,6 +79,8 @@ public class UserMaster implements Serializable {
 	private String userRole;
 	@Column(name = "company_info")
 	private String companyInfo;
+	@Column(name = "first_login")
+	private String firstLogin;
 	/**
 	 * @return the emailToken
 	 */
@@ -222,6 +224,18 @@ public class UserMaster implements Serializable {
 	 */
 	public void setCompanyInfo(String companyInfo) {
 		this.companyInfo = companyInfo;
+	}
+	/**
+	 * @return the firstLogin
+	 */
+	public String getFirstLogin() {
+		return firstLogin;
+	}
+	/**
+	 * @param firstLogin the firstLogin to set
+	 */
+	public void setFirstLogin(String firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 	
 }
